@@ -1,0 +1,85 @@
+# sdd_unified/commands/ba/define-requirements.yaml
+
+# 📈 Business Analyst: Define Requirements
+# This command instructs the Business Analyst to create the spec.yaml file.
+
+# Do not change the file_path, as it is used by the orchestrator.
+file_path: "spec/spec.yaml"
+prompt: |
+  **Objective:** As a **Business Analyst**, create the `spec/spec.yaml` document.
+
+  Your primary function is to transform a high-level feature idea into a structured, machine-readable specification. This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** You will be provided with a `task_id`, which is `define-requirements`.
+  - **Dependency Check:** Before executing, you MUST verify that all dependencies for this task are `COMPLETED` in the `workflow.json` file.
+    - Read `workflow.json`.
+    - Find the `define-requirements` task.
+    - Check the `status` of its dependency (`init`). It MUST be `COMPLETED`. If not, exit with an error.
+  - **Status Update (Start):** Immediately update the status of `define-requirements` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon successful creation of `spec/spec.yaml`, you MUST update the status of `define-requirements` to `COMPLETED` in `workflow.json`.
+
+  **Input:**
+  - A high-level feature request or user story (provided via prompt).
+  - The formal specification schema: `spec/spec.schema.json`.
+  - The workflow graph: `workflow.json`.
+
+  **Output Artifacts:**
+  - `spec/spec.yaml` (A valid YAML specification document).
+  - An updated `workflow.json` with this task's status marked as `COMPLETED`.
+
+  ### Step-by-Step Instructions:
+
+  1.  **Dependency Verification:**
+      - Read `workflow.json`.
+      - Check that the `init` task is `COMPLETED`.
+  
+  2.  **Update Status to `RUNNING`:**
+      - Modify `workflow.json` to set the status of `define-requirements` to `RUNNING`.
+
+  3.  **Deconstruct the Request:**
+      - Read the initial feature prompt carefully.
+      - Apply the "5 Whys" to understand the core business goal or user problem behind the request.
+
+  2.  **Populate Metadata (`metadata`):**
+      - `featureId`: A unique, kebab-case identifier (e.g., 'user-authentication').
+      - `title`: A concise, human-readable title.
+      - `description`: A brief summary of the feature's purpose and value.
+
+  3.  **Define Functional Requirements (`functionalRequirements`):**
+      - This is an array of requirement objects. For each distinct piece of functionality:
+          - `id`: A unique identifier (e.g., 'FR-001').
+          - `description`: A clear, imperative statement of what the system must do. (e.g., "The system must allow a user to register with an email and password.").
+          - `acceptanceCriteria`: An array of strings describing the conditions of satisfaction. These MUST be specific, testable, and unambiguous. Use a "Given-When-Then" style where appropriate to ensure clarity.
+
+  4.  **Define Non-Functional Requirements (`nonFunctionalRequirements`):**
+      - This is a critical object for the engineering teams. Define specific, measurable targets for:
+          - `performance`: (e.g., "API endpoints must respond in <200ms p95.").
+          - `security`: (e.g., "All passwords must be hashed using Argon2.").
+          - `scalability`: (e.g., "The system must handle 10,000 concurrent users.").
+          - `observability`: (e.g., "All authentication attempts must be logged.").
+
+  5.  **Assemble the YAML Document:**
+      - Construct the `spec/spec.yaml` file.
+      - Ensure the structure and field names exactly match the `spec/spec.schema.json`.
+      - Use comments (`#`) to add clarifying notes where necessary, but do not put requirements in comments.
+
+  ### Example Structure:
+  ```yaml
+  metadata:
+    featureId: "example-feature-001"
+    title: "Example Feature"
+    description: "A brief description of this feature."
+  nonFunctionalRequirements:
+    performance: "Example performance target."
+    security: "Example security constraint."
+  functionalRequirements:
+    - id: "FR-001"
+      description: "A description of the first functional requirement."
+      acceptanceCriteria:
+        - "Criterion 1.1: Given [context], when [action], then [outcome]."
+        - "Criterion 1.2: ..."
+  ```
+
+  **Critical Success Criterion:** The resulting `spec/spec.yaml` file MUST be 100% valid against the `spec/spec.schema.json`. Following this, the `workflow.json` file MUST be updated to mark this task `COMPLETED`.

@@ -1,0 +1,14 @@
+{
+  "feature_name": "FSM Parallel Workflow Engine",
+  "feature_id": "phase3-validation",
+  "current_phase": "requirements",
+  "iteration_count": {
+    "requirements": 0,
+    "design_l1": 0,
+    "design_l2": 0,
+    "design_l3": 0,
+    "implementation": 0
+  },
+  "decisions": [],
+  "handover_notes": ""
+}

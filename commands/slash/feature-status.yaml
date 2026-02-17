@@ -1,0 +1,22 @@
+name: feature-status
+description: Show the current status of a feature's workflow
+category: Development
+handler: sdd-orchestrator-status
+
+parameters:
+  - name: feature_name
+    type: string
+    required: false
+    description: Feature name (default: current directory)
+
+execution:
+  entry_point: python3 sdd_unified/orchestrator/status.py
+  args:
+    - "{{feature_path}}"
+
+examples:
+  - command: "/feature-status"
+    description: Show status of current feature
+  
+  - command: "/feature-status user-auth-api"
+    description: Show status of specific feature

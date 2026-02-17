@@ -1,0 +1,23 @@
+# sdd_unified/commands/le/design-l3-rework.yaml
+
+file_path: "implementation/tasks/"
+prompt: |
+  **Objective:** As the **Lead Engineer**, rework the L3 Task Definitions based on reviewer feedback.
+
+  Your task is to revise the existing set of task files in `implementation/tasks/` to address the feedback provided by the review team. The goal is to produce an improved and corrected set of tasks.
+
+  **Input Artifacts:**
+  - The existing task files in `implementation/tasks/`.
+  - The `review.log` file, containing detailed feedback.
+  - All review outcome files, e.g., `review/l3_review_pe.json`.
+
+  **Output Artifacts:**
+  - An **updated** set of task files in `implementation/tasks/`.
+  - An updated `workflow.json`.
+
+  ### Instructions:
+  1.  Read the existing task files.
+  2.  Read the `review.log` and all `review/l3_review_*.json` files.
+  3.  Synthesize the feedback and create a plan for the rework. This may involve modifying, deleting, or adding new task files.
+  4.  Update the task files in `implementation/tasks/` to address all feedback.
+  5.  Update the status of `design-l3-rework` to `COMPLETED` in `workflow.json`.

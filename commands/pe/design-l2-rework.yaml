@@ -1,0 +1,23 @@
+# sdd_unified/commands/pe/design-l2-rework.yaml
+
+file_path: "design/l2_component_design.md"
+prompt: |
+  **Objective:** As the **Principal Engineer**, rework the L2 Component Design based on reviewer feedback.
+
+  Your task is to revise the existing L2 design to address the feedback provided by the review team. The goal is to produce an improved version of the `l2_component_design.md` that satisfies all quality and requirement checks.
+
+  **Input Artifacts:**
+  - The existing `design/l2_component_design.md`.
+  - The `review.log` file, containing detailed feedback.
+  - All review outcome files, e.g., `review/l2_review_architect.json`.
+
+  **Output Artifacts:**
+  - An **updated** `design/l2_component_design.md` file.
+  - An updated `workflow.json`.
+
+  ### Instructions:
+  1.  Read the existing `design/l2_component_design.md`.
+  2.  Read the `review.log` and all `review/l2_review_*.json` files.
+  3.  Synthesize the feedback and create a plan for the rework.
+  4.  Modify the `design/l2_component_design.md` to address all feedback.
+  5.  Update the status of `design-l2-rework` to `COMPLETED` in `workflow.json`.

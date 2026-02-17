@@ -1,0 +1,27 @@
+# SDD Manifest for feature-001-user-authentication-example
+# This file tracks the lifecycle state, artifact paths, and review statuses.
+
+feature:
+  name: "user-authentication"
+  version: "0.1.0"
+
+lifecycle:
+  stage: "L1_DESIGN_PENDING" # Initial state
+  history:
+    - stage: "L1_DESIGN_PENDING"
+      timestamp: "2025-10-05T11:51:35.501Z"
+      actor: "sdd-init"
+
+artifacts:
+  spec: "spec/spec.md"
+  l1_design: "design/l1_architecture.md"
+  l2_design: "design/l2_component_design.md"
+  l3_plan: "implementation/l3_plan.md"
+
+review:
+  l1:
+    status: "PENDING"
+  l2:
+    status: "PENDING"
+  l3:
+    status: "PENDING"

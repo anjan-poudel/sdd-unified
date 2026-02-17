@@ -1,0 +1,40 @@
+name: review-design-l1
+description: "L1 Design Review by Business Analyst"
+prompt: |
+  **Objective:** As a **Business Analyst**, you must perform a structured L1 design review.
+
+  This command operates as a task in a DAG-based workflow. Your purpose is to validate that the L1 design fulfills all business requirements.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** You will be provided with a `task_id`, which is `review-l1-ba`.
+  - **Dependency Check:** Before executing, you MUST verify that all dependencies for this task are `COMPLETED` in the `workflow.json` file.
+    - Read `workflow.json`.
+    - Find the `review-l1-ba` task.
+    - Check the `status` of its dependency (`design-l1`). It MUST be `COMPLETED`. If not, exit with an error.
+  - **Status Update (Start):** Immediately update the status of `review-l1-ba` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon completing your review, you MUST update the status of `review-l1-ba` to `COMPLETED` in `workflow.json`.
+
+  **Input Artifacts:**
+  1.  `spec/spec.yaml`
+  2.  `design/l1_architecture.md`
+  3.  `workflow.json`
+
+  **Output Artifacts:**
+  1.  A review outcome file: `review/review_l1_ba.json`.
+  2.  An entry in `review/review.log`.
+  3.  An updated `workflow.json`.
+
+  **Process:**
+  1.  **Dependency Verification & Status Update.**
+  2.  **Structured Validation:** Validate `design/l1_architecture.md` against `spec/spec.yaml`. For each requirement, verify the architecture addresses it.
+  3.  **Generate Structured Output:** Produce a JSON object with `status` ('APPROVED' or 'REJECTED_WITH_FEEDBACK') and a `findings` array.
+  4.  **Record the Outcome:**
+      - **Write the full JSON output to `review/review_l1_ba.json`.**
+      - Append the minified JSON output to the central `review/review.log`.
+  5.  **Update Status to `COMPLETED`:** Modify `workflow.json` to mark your task as `COMPLETED`.
+
+  **Example Output JSON (for `review/review_l1_ba.json`):**
+  ```json
+  {"status":"REJECTED_WITH_FEEDBACK","findings":[{"requirementId":"FR-002","issue":"The architecture does not specify a strategy for handling locked or disabled user accounts during login attempts.","recommendation":"The L1 design must include a mechanism to check account status before processing authentication."}]}
+  ```

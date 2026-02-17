@@ -1,0 +1,17 @@
+name: ba:define-requirements
+description: "Populates the spec.yaml file for a feature from a high-level prompt."
+args:
+  - name: feature
+    type: string
+    description: "The slug-cased name of the target feature workspace."
+    required: true
+  - name: prompt
+    type: string
+    description: "A string containing the high-level business requirement or user story."
+    required: true
+action:
+  agent:
+    role: ba
+    goal: "Translate the following business requirement into a structured spec.yaml file: {{args.prompt}}"
+    output:
+      path: "features/{{args.feature}}/spec.yaml"

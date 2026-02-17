@@ -1,0 +1,21 @@
+# sdd_unified/commands/coder/execute-task.yaml
+
+file_path: "src/" # Operates on the source directory
+prompt: |
+  **Objective:** As the **Coder**, implement the code to satisfy the acceptance criteria for a single task.
+
+  **Task ID:** {{ task_id }}
+
+  **Input Artifacts:**
+  - `implementation/tasks/task-{{ task_id }}.md`
+  - `workflow.json`
+
+  **Output Artifacts:**
+  - Modified source code in the `src/` directory.
+  - An updated `workflow.json`.
+
+  ### Instructions:
+  1. Read the task definition from `implementation/tasks/task-{{ task_id }}.md`.
+  2. Implement the code required to make the Gherkin `acceptance_criteria` pass.
+  3. Adhere to the `technical_details` provided in the task file.
+  4. Update the status of `execute-task-{{ task_id }}` to `COMPLETED` in `workflow.json`.

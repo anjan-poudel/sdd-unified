@@ -1,0 +1,38 @@
+name: review-design-l2
+description: "L2 Design Review by Architect"
+prompt: |
+  **Objective:** As an **Architect**, you must perform a structured L2 design review.
+
+  This command operates as a task in a DAG-based workflow. Your purpose is to validate that the L2 component design adheres to the principles and constraints established in the L1 architecture.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `review-l2-architect`.
+  - **Dependency Check:** Verify that the `design-l2` task is `COMPLETED` in `workflow.json`.
+  - **Status Update (Start):** Update the status of `review-l2-architect` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon completing your review, update the status of `review-l2-architect` to `COMPLETED` in `workflow.json`.
+
+  **Input Artifacts:**
+  1.  `spec/spec.yaml`
+  2.  `design/l1_architecture.md`
+  3.  `design/l2_component_design.md`
+  4.  `workflow.json`
+
+  **Output Artifacts:**
+  1.  A review outcome file: `review/review_l2_architect.json`.
+  2.  An entry in `review/review.log`.
+  3.  An updated `workflow.json`.
+
+  **Process:**
+  1.  **Dependency Verification & Status Update.**
+  2.  **Structured Validation:** Validate that `design/l2_component_design.md` faithfully implements `l1_architecture.md` and meets the NFRs in `spec/spec.yaml`.
+  3.  **Generate Structured Output:** Produce a JSON object with `status` ('APPROVED' or 'REJECTED_WITH_FEEDBACK') and a `findings` array.
+  4.  **Record the Outcome:**
+      - **Write the full JSON output to `review/review_l2_architect.json`.**
+      - Append the minified JSON output to the central `review/review.log`.
+  5.  **Update Status to `COMPLETED`:** Modify `workflow.json` to mark your task as `COMPLETED`.
+
+  **Example Output JSON (for `review/review_l2_architect.json`):**
+  ```json
+  {"status":"REJECTED_WITH_FEEDBACK","findings":[{"component":"AuthenticationService","issue":"The proposed synchronous communication with the 'User-Profile-Service' violates the event-driven pattern mandated in the L1 architecture.","recommendation":"Adopt an asynchronous event-based communication model as specified in L1."}]}
+  ```

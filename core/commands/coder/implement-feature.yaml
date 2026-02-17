@@ -1,0 +1,19 @@
+name: coder:implement-feature
+description: Generates source code from the feature workspace artifacts.
+args:
+  - name: feature
+    type: string
+    description: The slug-cased name of the target feature workspace.
+    required: true
+  - name: task
+    type: string
+    description: The specific sub-task from the plan.md to focus on.
+    required: false
+action:
+  agent:
+    role: coder
+    task: |
+      Read all artifacts (`spec.yaml`, `design.md`, `plan.md`, `review.md`) from the `features/{{feature}}` workspace.
+      Generate the necessary source code files based on the artifacts.
+      If a `task` is specified, focus on the implementation of that specific task from `plan.md`.
+      Write the generated code to the `features/{{feature}}/src/` directory.

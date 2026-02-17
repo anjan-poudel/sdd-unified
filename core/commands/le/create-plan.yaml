@@ -1,0 +1,19 @@
+name: le:create-plan
+description: Generates a detailed implementation plan based on the specification, design, and review artifacts.
+args:
+  - name: --feature
+    description: The slug-cased name of the target feature workspace.
+    required: true
+actions:
+  - agent:
+      role: le
+      task: |
+        As the Lead Engineer, your task is to create a detailed, step-by-step implementation plan.
+        Read the following artifacts from the feature workspace 'features/{{feature}}':
+        - spec.yaml
+        - design.md
+        - review.md
+
+        Synthesize these documents to produce a comprehensive implementation plan.
+        The plan should be written to `features/{{feature}}/plan.md`.
+        The plan must break down the implementation into granular tasks, estimate effort, and identify dependencies.

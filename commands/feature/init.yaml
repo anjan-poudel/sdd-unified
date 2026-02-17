@@ -1,0 +1,129 @@
+# sdd_unified/commands/feature/init.yaml
+
+# 🚀 Feature: Initialize Workspace
+# This command scaffolds the entire directory structure for a new feature.
+
+# This is a meta-command that executes a series of file system actions.
+# It ensures that every new feature workspace is created with a consistent,
+# predictable structure that supports the full end-to-end agile workflow.
+
+prompt: |
+  **Objective:** Create a new, fully structured feature workspace.
+
+  **User Input:** A slug-cased name for the feature (e.g., `user-authentication`).
+
+  **Actions:**
+  This command will execute the following file system operations to build the feature workspace. It creates the nested directory structure and populates it with the full DAG-based `workflow.json`.
+
+  ### Directory Structure to Create:
+  - `(feature_name)/`
+    - `.sdd-manifest.yaml`
+    - `workflow.json`
+    - `design/`
+      - `l1_architecture.md`
+      - `l2_component_design.md`
+    - `implementation/`
+      - `l3_plan.md`
+    - `review/`
+      - `l1_review_architect.md`
+      - `l1_review_pe.md`
+      - `l1_review_le.md`
+      - `l2_review_pe.md`
+      - `l2_review_le.md`
+      - `l3_review_le.md`
+      - `l3_review_coder.md`
+      - `code_review_le.md`
+      - `review.log`
+    - `spec/`
+      - `spec.yaml`
+    - `src/`
+      - `.gitkeep`
+
+# The following is a sequence of theoretical steps the orchestrator would perform.
+# In a real implementation, this might be a single script or function.
+steps:
+  - # Create the root feature directory
+  - filesystem:create_directory: "{{feature_name}}"
+  
+  - # Create the manifest file
+  - filesystem:write_file:
+      path: "{{feature_name}}/.sdd-manifest.yaml"
+      content: |
+        name: {{feature_name}}
+        status: '0_requirements_defined'
+        version: 0.1.0
+        created_at: {{timestamp}}
+
+  - # Create workflow file from template
+  - filesystem:write_file:
+      path: "{{feature_name}}/workflow.json"
+      content: |
+        {{ read_file('sdd_unified/templates/workflow.json.template') }}
+  - # Create core directories
+  - filesystem:create_directory: "{{feature_name}}/spec"
+  - filesystem:create_directory: "{{feature_name}}/design"
+  - filesystem:create_directory: "{{feature_name}}/implementation"
+  - filesystem:create_directory: "{{feature_name}}/review"
+  - filesystem:create_directory: "{{feature_name}}/src"
+  
+  - # Create placeholder artifacts
+  - filesystem:write_file:
+      path: "{{feature_name}}/spec/spec.yaml"
+      content: |
+        # Feature Specification: {{feature_name}}
+        # This file must adhere to the schema in sdd_unified/spec/spec.schema.json
+        metadata:
+          featureId: "{{feature_name}}"
+          title: "Title for {{feature_name}}"
+          description: "A brief description of this feature."
+        nonFunctionalRequirements:
+          performance: ""
+          security: ""
+          scalability: ""
+          observability: ""
+        functionalRequirements:
+          - id: "FR-001"
+            description: ""
+            acceptanceCriteria:
+              - ""
+  - filesystem:write_file:
+      path: "{{feature_name}}/design/l1_architecture.md"
+      content: "# L1 Architecture: {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/design/l2_component_design.md"
+      content: "# L2 Component Design: {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/implementation/l3_plan.md"
+      content: "# L3 Implementation Plan: {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/src/.gitkeep"
+      content: ""
+      
+  - # Create all review placeholders
+  - filesystem:write_file:
+      path: "{{feature_name}}/review/l1_review_architect.md"
+      content: "# L1 Review (Architect): {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/review/l1_review_pe.md"
+      content: "# L1 Review (Principal Engineer): {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/review/l1_review_le.md"
+      content: "# L1 Review (Lead Engineer): {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/review/l2_review_pe.md"
+      content: "# L2 Review (Principal Engineer): {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/review/l2_review_le.md"
+      content: "# L2 Review (Lead Engineer): {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/review/l3_review_le.md"
+      content: "# L3 Review (Lead Engineer): {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/review/l3_review_coder.md"
+      content: "# L3 Review (Coder): {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/review/code_review_le.md"
+      content: "# Code Review (Lead Engineer): {{feature_name}}"
+  - filesystem:write_file:
+      path: "{{feature_name}}/review/review.log"
+      content: ""

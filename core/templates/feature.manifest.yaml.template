@@ -1,0 +1,22 @@
+# Feature Manifest Template
+# This file tracks the state and artifacts of a single feature.
+
+feature_id: {{FEATURE_NAME}}  # Placeholder for the unique feature name.
+
+status: L1_DESIGN_PENDING  # Tracks the feature's current lifecycle stage.
+
+# A central repository for all documents and artifacts generated during the feature's lifecycle.
+artifacts:
+  spec_doc: "spec/spec.md"
+  l1_design_doc: "design/l1_architecture.md"
+  l2_design_doc: "design/l2_component_design.md"
+  l3_implementation_plan: "implementation/l3_plan.md"
+  # Add other artifact paths as needed.
+
+# A log of all review actions taken on this feature.
+review_history:
+  # - timestamp: 2023-10-27T10:00:00Z
+  #   reviewer: "PrincipalEngineer"
+  #   action: "APPROVED"
+  #   stage: "L1_DESIGN"
+  #   comment: "Architecture is sound and aligns with system goals."

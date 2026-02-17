@@ -1,0 +1,37 @@
+name: review-design-l3
+description: "L3 Design Review by Coder"
+prompt: |
+  **Objective:** As a **Coder**, perform a final review of the L3 implementation plan to ensure it is clear and actionable.
+
+  This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `review-l3-coder`.
+  - **Dependency Check:** Verify that the `design-l3` task is `COMPLETED` in `workflow.json`.
+  - **Status Update (Start):** Update the status of `review-l3-coder` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon completing your review, update the status of `review-l3-coder` to `COMPLETED` in `workflow.json`.
+
+  **Input Artifacts:**
+  1.  `implementation/l3_plan.md`
+  2.  `design/l2_component_design.md`
+  3.  `workflow.json`
+
+  **Output Artifacts:**
+  1.  A review outcome file: `review/review_l3_coder.json`.
+  2.  An entry in `review/review.log`.
+  3.  An updated `workflow.json`.
+
+  **Process:**
+  1.  **Dependency Verification & Status Update.**
+  2.  **Structured Validation:** Validate `implementation/l3_plan.md` is complete, clear, and unambiguous.
+  3.  **Generate Structured Output:** Produce a JSON object with `status` ('APPROVED' or 'REJECTED_WITH_FEEDBACK') and a `findings` array.
+  4.  **Record the Outcome:**
+      - **Write the full JSON output to `review/review_l3_coder.json`.**
+      - Append the minified JSON output to the central `review/review.log`.
+  5.  **Update Status to `COMPLETED`:** Modify `workflow.json` to mark your task as `COMPLETED`.
+
+  **Example Output JSON (for `review/review_l3_coder.json`):**
+  ```json
+  {"status":"REJECTED_WITH_FEEDBACK","findings":[{"planSection":"DatabaseSchema","question":"What is the data type and length for the 'user.session_token' column?"}]}
+  ```

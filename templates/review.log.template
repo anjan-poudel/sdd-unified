@@ -1,0 +1,8 @@
+{
+  "featureId": "{{ featureId }}",
+  "artifactReviewed": "{{ artifactPath }}",
+  "reviewerRole": "{{ reviewerRole }}",
+  "status": "{{ status }}",
+  "timestamp": "{{ timestamp }}",
+  "summary": "{{ summary }}"
+}

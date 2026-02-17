@@ -1,0 +1,70 @@
+# sdd_unified/commands/coder/implement-code.yaml
+
+# ⌨️ Coder: Implement Source Code
+# This command instructs the Coder to write the source code based on the L3 plan.
+
+# This is a special command that does not produce a single file.
+# It modifies the source code in the `src/` directory.
+file_path: "src/"
+prompt: |
+  **Objective:** As the **Coder**, write the Source Code based on the L3 Implementation Plan.
+
+  Your sole focus is to translate the L3 plan into clean, efficient, and correct source code. This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `implement-code`.
+  - **Dependency Check:** Verify that `review-l3-pe` and `review-l3-coder` tasks are both `COMPLETED` in `workflow.json`.
+  - **Status Update (Start):** Update the status of `implement-code` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon success, update the status of `implement-code` to `COMPLETED` in `workflow.json`.
+
+  **Your abstraction level is code and only code.**
+
+  **Input Artifacts:**
+  - `implementation/l3_plan.md`
+  - `workflow.json`
+
+  **Output Artifacts:**
+  - Source code in the `src/` directory.
+  - An updated `workflow.json`.
+
+  ### Step-by-Step Instructions:
+
+  1.  **Dependency Verification:**
+      - Read `workflow.json`.
+      - Verify `review-l3-pe` and `review-l3-coder` are `COMPLETED`.
+  
+  2.  **Update Status to `RUNNING`:**
+      - Modify `workflow.json` to set the status of `implement-code` to `RUNNING`.
+
+  3.  **Ingest the L3 Implementation Plan:**
+      - **Read [`implementation/l3_plan.md`](implementation/l3_plan.md) and treat it as your absolute source of truth.**
+      - Use the **Implementation Checklist** within the plan as your primary work-tracking tool.
+
+  2.  **Set Up the Directory Structure:**
+      - Following the "Project Structure" section of the L3 plan, create the specified directories and empty files within the `src/` folder. This ensures the scaffolding is in place before you write any logic.
+
+  3.  **Implement Incrementally (Follow the Checklist):**
+      - Go through the **Implementation Checklist** task by task.
+      - For each task:
+          - Navigate to the specified file.
+          - Write the class, method, or function exactly as defined in the L3 plan.
+          - Pay close attention to method signatures, property names, and the pseudocode provided.
+      - **Do not move to the next task until the current one is complete.**
+
+  4.  **Adhere to Clean Code Principles:**
+      - **Single Responsibility:** Each function and class you write must do one thing and do it well.
+      - **Readability:** Write code that is easy for humans to understand. Use clear variable names and add comments only to explain the "why," not the "what." The L3 plan should explain the "what."
+      - **DRY (Don't Repeat Yourself):** If you find yourself writing the same code block multiple times, abstract it into a reusable function, but only if it does not violate the L3 plan. If it does, flag it as a potential refactoring opportunity.
+
+  5.  **Write the Code:**
+      - Using your tools, create or modify the files in the `src/` directory.
+      - Ensure all code is well-formatted and adheres to the conventions of the chosen language and framework.
+      - Add necessary imports and handle dependencies as specified in the L3 plan.
+
+  6.  **Verify Completion:**
+      - Once you have completed every task in the **Implementation Checklist**, do a final pass.
+      - Ensure all files specified in the L3 plan have been created and populated.
+      - Ensure there are no placeholder comments like `// TODO: Implement this` left in the code.
+
+  **Critical Success Criterion:** The code in `src/` must be a direct implementation of the `implementation/l3_plan.md`. Following this, the `workflow.json` file MUST be updated to mark this task `COMPLETED`.

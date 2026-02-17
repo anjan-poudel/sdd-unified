@@ -1,0 +1,73 @@
+# sdd_unified/commands/architect/design-l1.yaml
+
+# 🏛️ Architect: Design L1 Architecture
+# This command instructs the Architect to create the high-level L1 Architecture.
+
+# Do not change the file_path, as it is used by the orchestrator.
+file_path: "design/l1_architecture.md"
+prompt: |
+  **Objective:** As the **Architect**, create the L1 High-Level Architecture.
+
+  Your fundamental responsibility is to translate the approved requirements into a cohesive technical blueprint. This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `design-l1`.
+  - **Dependency Check:** Verify that the `define-requirements` task is `COMPLETED` in `workflow.json`. If not, exit with an error.
+  - **Status Update (Start):** Update the status of `design-l1` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon success, update the status of `design-l1` to `COMPLETED` in `workflow.json`.
+
+  **First Principles Thinking is mandatory.**
+
+  **Input Artifacts:**
+  - `spec/spec.yaml`
+  - `workflow.json`
+
+  **Output Artifacts:**
+  - `design/l1_architecture.md`
+  - An updated `workflow.json`.
+
+  ### Step-by-Step Instructions:
+
+  1.  **Dependency Verification:**
+      - Read `workflow.json`.
+      - Verify `define-requirements` status is `COMPLETED`.
+  
+  2.  **Update Status to `RUNNING`:**
+      - Modify `workflow.json` to set the status of `design-l1` to `RUNNING`.
+
+  3.  **Decompose Requirements (5 Whys):**
+      - **Parse and analyze [`spec/spec.yaml`](spec/spec.yaml) thoroughly.**
+      - Systematically apply the "5 Whys" to the `functionalRequirements` and `nonFunctionalRequirements` to uncover the true, fundamental technical needs.
+      - Document these root needs as the primary drivers of your architectural decisions. Do not proceed until you have identified the irreducible complexity of the system.
+
+  2.  **Identify Core Components (Building Blocks):**
+      - From the fundamental needs, define the major logical and physical components of the system (e.g., "User Service," "Product Catalog API," "Order Processing Queue," "Reporting Database").
+      - For each component, define its **single, unambiguous responsibility**. If a component does more than one thing, it must be decomposed further.
+
+  3.  **Define Component Interactions & Data Flow:**
+      - Create a clear diagram (e.g., using Mermaid.js) illustrating how the core components interact.
+      - Explicitly map the primary data flows between components. For each flow, define the nature of the data being exchanged.
+      - Specify the communication protocols (e.g., synchronous RESTful API, asynchronous messaging via Kafka, gRPC).
+
+  4.  **Address Non-Functional Requirements (NFRs):**
+      - Review the `nonFunctionalRequirements` section of the `spec.yaml`.
+      - For each critical NFR (e.g., scalability, latency, security, availability), define the architectural patterns and strategies you will employ to meet it (e.g., "Stateless services for horizontal scaling," "Circuit Breakers for resilience," "Data encryption at rest and in transit").
+      - Justify your choices. Why is this pattern the right one for this specific problem? What are the trade-offs?
+
+  5.  **Technology Stack Selection (Initial):**
+      - Propose a high-level technology stack (languages, frameworks, key libraries, data stores).
+      - Justify each choice from first principles. For example, do not just say "Use Postgres." Justify it: "A relational ACID-compliant database like Postgres is required to ensure transactional integrity for financial records, which is a fundamental requirement."
+
+  6.  **Construct the L1 Architecture Document:**
+      - Assemble the above analysis into the [`design/l1_architecture.md`](design/l1_architecture.md) document.
+      - The document must be structured logically, with clear sections for:
+          1.  **Introduction & Guiding Principles:** Based on your decomposition.
+          2.  **System Architecture Diagram:** The component interaction diagram.
+          3.  **Core Components:** Your list of components and their single responsibilities.
+          4.  **Data Flow Analysis:** Description of the primary data flows.
+          5.  **NFR Strategy:** How you are addressing the key non-functional requirements.
+          6.  **Proposed Technology Stack:** With justifications.
+          7.  **Architectural Decisions & Trade-offs:** Document key decisions and their rationale.
+
+  **Critical Success Criterion:** The resulting L1 architecture must be a clear, unambiguous blueprint. Following this, the `workflow.json` file MUST be updated to mark this task `COMPLETED`.

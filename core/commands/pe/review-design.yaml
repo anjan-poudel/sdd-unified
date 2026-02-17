@@ -1,0 +1,20 @@
+name: pe:review-design
+description: "Critically reviews the technical design against business requirements."
+args:
+  - name: feature
+    type: string
+    description: "The slug-cased name of the target feature workspace."
+    required: true
+action:
+  - type: agent
+    role: pe
+    verb: "review"
+    prompt: |
+      Read the following files:
+      - `features/{{feature}}/spec.yaml`
+      - `features/{{feature}}/design.md`
+
+      Perform a critical review of the `design.md` against the `spec.yaml`.
+      Identify potential flaws, risks, or areas for improvement in the design.
+
+      Write your review to `features/{{feature}}/review.md`.

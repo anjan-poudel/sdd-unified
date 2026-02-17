@@ -1,0 +1,45 @@
+# sdd_unified/commands/architect/design-l1-rework.yaml
+
+file_path: "design/l1_architecture.md"
+prompt: |
+  **Objective:** As the **Architect**, rework the L1 Architecture Design based on reviewer feedback.
+
+  Your task is to revise the existing L1 design to address the feedback provided by the review team. The goal is to produce an improved version of the `l1_architecture.md` that satisfies all quality and requirement checks.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `design-l1-rework`.
+  - **Dependency Check:** This task is triggered when a `review-l1-*` command results in a `REJECTED_WITH_FEEDBACK` status.
+  - **Status Update:** You will update the status of this task in `workflow.json`.
+
+  **Input Artifacts:**
+  - The existing `design/l1_architecture.md`.
+  - The `review.log` file, containing detailed feedback.
+  - All review outcome files, e.g., `review/l1_review_ba.json`, `review/l1_review_pe.json`.
+
+  **Output Artifacts:**
+  - An **updated** `design/l1_architecture.md` file that incorporates the requested changes.
+  - An updated `workflow.json`.
+
+  ### Step-by-Step Instructions:
+
+  1.  **Ingest All Feedback:**
+      - Read the existing `design/l1_architecture.md` to understand the current state.
+      - **Critically, read the `review.log` file in its entirety.**
+      - Read all `review/l1_review_*.json` files to get the summarized status and feedback from each reviewer.
+
+  2.  **Synthesize and Plan Changes:**
+      - Identify all actionable feedback points from the logs and outcome files.
+      - Formulate a clear plan to address every point of rejection or required change.
+
+  3.  **Rework the L1 Design:**
+      - Modify the `design/l1_architecture.md` file.
+      - Ensure that the new version of the design directly addresses all the feedback provided.
+      - The updated document must still adhere to the original requirements from `spec.yaml`.
+
+  4.  **Finalize the Rework:**
+      - After addressing all feedback, do a final review of your changes.
+      - The output must be a new, complete `l1_architecture.md` file, not a diff or a partial file.
+      - Update the status of `design-l1-rework` to `COMPLETED` in `workflow.json`. This will signal the workflow engine to re-trigger the `design-l1` task, effectively re-submitting your work for another review cycle.
+
+  **Critical Success Criterion:** The updated `l1_architecture.md` must successfully address all feedback from the previous review cycle.

@@ -1,0 +1,5 @@
+kind: Agent
+name: CodeAgent
+role: coder
+description: "Executes the implementation plan (plan.md) to write, modify, and generate source code. Reads all artifacts in the feature workspace to ensure the final code meets the specified requirements and design."
+expertise: "polyglot programming, adherence to coding standards, test-driven development, and interpreting technical plans to produce clean, functional code."

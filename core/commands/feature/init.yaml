@@ -1,0 +1,46 @@
+command: feature:init
+description: Creates a new feature workspace as defined in the refactoring plan.
+arguments:
+  - name: name
+    description: The slug-cased name for the new feature (e.g., 'user-authentication').
+    required: true
+    type: string
+steps:
+  - action: filesystem:create_directory
+    path: features/{{ args.name }}
+  - action: filesystem:create_directory
+    path: features/{{ args.name }}/spec
+  - action: filesystem:create_directory
+    path: features/{{ args.name }}/design
+  - action: filesystem:create_directory
+    path: features/{{ args.name }}/review
+  - action: filesystem:create_directory
+    path: features/{{ args.name }}/implementation
+  - action: filesystem:create_directory
+    path: features/{{ args.name }}/implementation/src
+  - action: filesystem:write_file
+    path: features/{{ args.name }}/.sdd-manifest.yaml
+    content: |
+      name: {{ args.name }}
+      status: new
+  - action: filesystem:write_file
+    path: features/{{ args.name }}/spec/requirements.md
+    content: "# {{ args.name }}: Requirements"
+  - action: filesystem:write_file
+    path: features/{{ args.name }}/spec/spec.md
+    content: "# {{ args.name }}: Specification"
+  - action: filesystem:write_file
+    path: features/{{ args.name }}/design/L1_architecture.md
+    content: "# {{ args.name }}: L1 Architecture"
+  - action: filesystem:write_file
+    path: features/{{ args.name }}/design/L2_component_design.md
+    content: "# {{ args.name }}: L2 Component Design"
+  - action: filesystem:write_file
+    path: features/{{ args.name }}/review/l1_review.md
+    content: "# {{ args.name }}: L1 Review"
+  - action: filesystem:write_file
+    path: features/{{ args.name }}/review/l2_review.md
+    content: "# {{ args.name }}: L2 Review"
+  - action: filesystem:write_file
+    path: features/{{ args.name }}/implementation/l3_plan.md
+    content: "# {{ args.name }}: L3 Implementation Plan"

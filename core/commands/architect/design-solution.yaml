@@ -1,0 +1,14 @@
+name: architect:design-solution
+description: Reads the business requirements and produces a technical design document.
+args:
+  - name: feature
+    type: string
+    description: The slug-cased name of the target feature workspace.
+    required: true
+action:
+  agent:
+    role: architect
+    task: |
+      Read the `spec.yaml` file from the `features/{{feature}}/spec.yaml`.
+      Generate a high-level technical design based on the requirements.
+      Write the output to `features/{{feature}}/design.md`.

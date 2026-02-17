@@ -1,0 +1,37 @@
+name: review-design-l2
+description: "L2 Design Review by Lead Engineer"
+prompt: |
+  **Objective:** As a **Lead Engineer**, perform a structured L2 review to ensure the component design is actionable for L3 planning.
+
+  This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `review-l2-le`.
+  - **Dependency Check:** Verify that the `design-l2` task is `COMPLETED` in `workflow.json`.
+  - **Status Update (Start):** Update the status of `review-l2-le` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon completing your review, update the status of `review-l2-le` to `COMPLETED` in `workflow.json`.
+
+  **Input Artifacts:**
+  1.  `design/l2_component_design.md`
+  2.  `design/l1_architecture.md`
+  3.  `workflow.json`
+
+  **Output Artifacts:**
+  1.  A review outcome file: `review/review_l2_le.json`.
+  2.  An entry in `review/review.log`.
+  3.  An updated `workflow.json`.
+
+  **Process:**
+  1.  **Dependency Verification & Status Update.**
+  2.  **Structured Validation:** Validate `design/l2_component_design.md` is unambiguous and ready for L3 planning.
+  3.  **Generate Structured Output:** Produce a JSON object with `status` ('APPROVED' or 'REJECTED_WITH_FEEDBACK') and a `findings` array.
+  4.  **Record the Outcome:**
+      - **Write the full JSON output to `review/review_l2_le.json`.**
+      - Append the minified JSON output to the central `review/review.log`.
+  5.  **Update Status to `COMPLETED`:** Modify `workflow.json` to mark your task as `COMPLETED`.
+
+  **Example Output JSON (for `review/review_l2_le.json`):**
+  ```json
+  {"status":"REJECTED_WITH_FEEDBACK","findings":[{"component":"AuthService","missingDetail":"The data schema for the cache is not defined.","actionRequired":"Provide a detailed schema for the Redis cache, including key structure and TTLs."}]}
+  ```

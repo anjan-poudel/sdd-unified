@@ -1,0 +1,40 @@
+# sdd_unified/commands/le/review-task.yaml
+name: review-task
+description: "Review a single implemented task by Lead Engineer"
+prompt: |
+  **Objective:** As a **Lead Engineer**, conduct a structured code review for a single completed task.
+
+  This command is the gatekeeper for every unit of implemented code.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` will be `review-task-{{ task_id }}`.
+  - **Dependency Check:** Verify `execute-task-{{ task_id }}` is `COMPLETED`.
+  - **Status Update:** Update your status in `workflow.json`.
+
+  **Input Artifacts:**
+  1.  The implemented code in the `src/` directory.
+  2.  The task definition: `implementation/tasks/task-{{ task_id }}.md`.
+  3.  `workflow.json`.
+
+  **Output Artifacts:**
+  1.  A review outcome file: `review/review_task_{{ task_id }}.json`.
+  2.  An entry in `review/review.log`.
+  3.  An updated `workflow.json`.
+
+  **Process:**
+  1.  **Dependency Verification & Status Update.**
+  2.  **Structured Validation:**
+      - Read the `acceptance_criteria` from `implementation/tasks/task-{{ task_id }}.md`.
+      - Review the code in `src/` that was written to satisfy this task.
+      - **Verify that the code correctly and robustly implements the acceptance criteria.**
+      - Check for code quality, adherence to standards, and correctness.
+  3.  **Generate Structured Output:** Produce a JSON object with `status` ('APPROVED' or 'REJECTED_WITH_FEEDBACK') and a `findings` array.
+  4.  **Record the Outcome:**
+      - **Write the full JSON output to `review/review_task_{{ task_id }}.json`.**
+      - Append the minified JSON output to the central `review/review.log`.
+  5.  **Update Status to `COMPLETED`:** Modify `workflow.json` to mark your task as `COMPLETED`.
+
+  **Example Output JSON (for `review/review_task_{{ task_id }}.json`):**
+  ```json
+  {"status":"REJECTED_WITH_FEEDBACK","findings":[{"file":"src/services/auth.js","line":42,"issue":"Inadequate error handling for database connection failure.","recommendation":"Implement a retry mechanism with exponential backoff and add structured logging for the failure."}]}

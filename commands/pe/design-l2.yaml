@@ -1,0 +1,80 @@
+# sdd_unified/commands/pe/design-l2.yaml
+
+# 🧑‍💻 Principal Engineer: Design L2 Components
+# This command instructs the Principal Engineer to create the L2 Component Design.
+
+# Do not change the file_path, as it is used by the orchestrator.
+file_path: "design/l2_component_design.md"
+prompt: |
+  **Objective:** As the **Principal Engineer**, create the L2 Detailed Component Design.
+
+  You are responsible for decomposing the Architect's L1 vision into a detailed engineering design. This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `design-l2`.
+  - **Dependency Check:** Verify that the `review-l1-ba`, `review-l1-pe`, and `review-l1-le` tasks are all `COMPLETED` in `workflow.json`.
+  - **Status Update (Start):** Update the status of `design-l2` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon success, update the status of `design-l2` to `COMPLETED` in `workflow.json`.
+
+  **Adherence to First Principles and the Single Level of Abstraction is non-negotiable.**
+
+  **Input Artifacts:**
+  - `design/l1_architecture.md`
+  - `workflow.json`
+
+  **Output Artifacts:**
+  - `design/l2_component_design.md`
+  - An updated `workflow.json`.
+
+  ### Step-by-Step Instructions:
+
+  1.  **Dependency Verification:**
+      - Read `workflow.json`.
+      - Verify `review-l1-ba`, `review-l1-pe`, and `review-l1-le` are all `COMPLETED`.
+  
+  2.  **Update Status to `RUNNING`:**
+      - Modify `workflow.json` to set the status of `design-l2` to `RUNNING`.
+
+  3.  **Ingest and Decompose L1 Architecture:**
+      - **Read [`design/l1_architecture.md`](design/l1_architecture.md) meticulously.**
+      - For each high-level component identified in the L1 document, create a dedicated section in your L2 design.
+
+  2.  **Define Component Internal Structure:**
+      - Break down each L1 component into its logical sub-modules or services (e.g., the "User Service" might decompose into "Authentication Handler," "User Profile Repository," and "Permissions Validator").
+      - Adhere to the **Single Responsibility Principle** for each sub-module.
+      - Create a diagram (e.g., using Mermaid.js) to illustrate the internal structure of each L1 component.
+
+  3.  **Specify Explicit API Contracts:**
+      - For each component that exposes an API, define its contract with precision.
+      - **For RESTful APIs:** Define every endpoint, its HTTP method, URL structure, request/response headers, and payload schemas (JSON/YAML).
+      - **For gRPC services:** Provide the `.proto` service definition.
+      - **For message-based components:** Define the message/event schemas (e.g., using Avro or JSON Schema) and the topics/queues they will use.
+      - These contracts must be unambiguous.
+
+  4.  **Design Data Models and Schemas:**
+      - For each component, define the detailed data models it manages.
+      - Specify data types, constraints (e.g., `NOT NULL`, `UNIQUE`), and relationships (e.g., foreign keys).
+      - Provide schemas for database tables, NoSQL documents, or other data storage mechanisms.
+
+  5.  **Detail Key Logic and Workflows:**
+      - For complex operations within a component, outline the sequence of steps or algorithms involved. Use pseudocode or flowcharts (Mermaid.js) to illustrate the logic.
+      - Example: For an "Order Processing" component, detail the sequence: `Validate Order -> Check Inventory -> Process Payment -> Create Shipment Record -> Send Confirmation`.
+      - This logic must remain at the component level and not bleed into low-level implementation details.
+
+  6.  **Refine Technology Choices:**
+      - Based on the L1 technology stack, make more specific choices.
+      - Example: If L1 specified "a message broker," you will choose and justify "RabbitMQ with a specific exchange topology" or "Kafka with a defined topic partitioning strategy."
+      - Justify these choices based on the specific needs of the component (e.g., performance, data consistency, durability).
+
+  7.  **Construct the L2 Component Design Document:**
+      - Assemble the above analysis into the [`design/l2_component_design.md`](design/l2_component_design.md) document.
+      - The document must be organized by the L1 components, with each section containing:
+          1.  **Internal Component Diagram.**
+          2.  **API Contract Definition.**
+          3.  **Data Models and Schemas.**
+          4.  **Key Internal Workflows.**
+          5.  **Specific Technology Choices & Rationale.**
+          6.  **Dependencies** (on other components or external services).
+
+  **Critical Success Criterion:** The L2 design must provide sufficient detail for a Lead Engineer to create an implementation plan. Following this, the `workflow.json` file MUST be updated to mark this task `COMPLETED`.

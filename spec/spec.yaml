@@ -1,0 +1,35 @@
+# Feature Specification: User Authentication
+# This file adheres to the schema defined in sdd_unified/spec/spec.schema.json
+
+metadata:
+  featureId: "auth-001"
+  title: "User Authentication"
+  description: "Provides core user authentication functionality, including registration, login, and secure session management."
+
+nonFunctionalRequirements:
+  performance: "Login and registration API endpoints must respond in <300ms p95."
+  security: "Passwords must be securely hashed using Argon2. JWTs must be signed using RS256 and have a short expiry (15 minutes)."
+  scalability: "The authentication service must support 1,000 login requests per second."
+  observability: "All authentication attempts (successful and failed) must be logged with relevant metadata. Key metrics like login duration and error rates must be exposed via Prometheus."
+
+functionalRequirements:
+  - id: "FR-001"
+    description: "A new user must be able to register for an account using their email and a password."
+    acceptanceCriteria:
+      - "Given a user provides a unique email and a valid password, when they submit the registration form, then a new user account is created."
+      - "Given a user attempts to register with an email that already exists, when they submit the form, then an appropriate error message is displayed."
+      - "Given a user provides a password that does not meet complexity requirements (e.g., min 8 characters), when they submit the form, then a validation error is returned."
+
+  - id: "FR-002"
+    description: "An existing user must be able to log in with their email and password."
+    acceptanceCriteria:
+      - "Given a registered user provides correct credentials, when they log in, then a signed JWT is returned."
+      - "Given a user provides incorrect credentials, when they attempt to log in, then an 'Invalid credentials' error is returned."
+      - "Given a user's account is locked or disabled, when they attempt to log in, then an appropriate access denied message is shown."
+
+  - id: "FR-003"
+    description: "A logged-in user's API requests must be authenticated using a valid JWT."
+    acceptanceCriteria:
+      - "Given a user makes a request to a protected endpoint with a valid JWT, when the request is processed, then access is granted."
+      - "Given a user makes a request with an expired JWT, when the request is processed, then a '401 Unauthorized' error is returned."
+      - "Given a user makes a request with a missing or malformed JWT, when the request is processed, then a '401 Unauthorized' error is returned."

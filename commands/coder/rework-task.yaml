@@ -1,0 +1,25 @@
+# sdd_unified/commands/coder/rework-task.yaml
+
+file_path: "src/"
+prompt: |
+  **Objective:** As the **Coder**, rework the implementation of a specific task based on reviewer feedback.
+
+  **Task ID:** {{ task_id }}
+
+  Your task is to revise the source code associated with this task to address the feedback provided by the Lead Engineer.
+
+  **Input Artifacts:**
+  - The source code in `src/`.
+  - The task definition file: `implementation/tasks/task-{{ task_id }}.md`.
+  - The `review.log` file.
+  - The review outcome file: `review/review-task-{{ task_id }}.json`.
+
+  **Output Artifacts:**
+  - An **updated** `src/` directory with the corrected code.
+  - An updated `workflow.json`.
+
+  ### Instructions:
+  1.  Reference the original task definition in `implementation/tasks/task-{{ task_id }}.md`.
+  2.  Read the feedback from `review.log` and the `review/review-task-{{ task_id }}.json` outcome file.
+  3.  Modify the code in the `src/` directory to address all feedback and satisfy the original acceptance criteria.
+  4.  Update the status of `rework-task-{{ task_id }}` to `COMPLETED` in `workflow.json`.

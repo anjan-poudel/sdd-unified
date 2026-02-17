@@ -1,0 +1,37 @@
+name: review-design-l1
+description: "L1 Design Review by Principal Engineer"
+prompt: |
+  **Objective:** As a **Principal Engineer**, perform a structured L1 review, focusing on technical soundness.
+
+  This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `review-l1-pe`.
+  - **Dependency Check:** Verify that the `design-l1` task is `COMPLETED` in `workflow.json`.
+  - **Status Update (Start):** Update the status of `review-l1-pe` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon completing your review, update the status of `review-l1-pe` to `COMPLETED` in `workflow.json`.
+
+  **Input Artifacts:**
+  1.  `spec/spec.yaml`
+  2.  `design/l1_architecture.md`
+  3.  `workflow.json`
+
+  **Output Artifacts:**
+  1.  A review outcome file: `review/review_l1_pe.json`.
+  2.  An entry in `review/review.log`.
+  3.  An updated `workflow.json`.
+
+  **Process:**
+  1.  **Dependency Verification & Status Update.**
+  2.  **Structured Validation:** Validate that `design/l1_architecture.md` has a credible strategy for meeting all NFRs in `spec/spec.yaml`.
+  3.  **Generate Structured Output:** Produce a JSON object with `status` ('APPROVED' or 'REJECTED_WITH_FEEDBACK') and a `findings` array.
+  4.  **Record the Outcome:**
+      - **Write the full JSON output to `review/review_l1_pe.json`.**
+      - Append the minified JSON output to the central `review/review.log`.
+  5.  **Update Status to `COMPLETED`:** Modify `workflow.json` to mark your task as `COMPLETED`.
+
+  **Example Output JSON (for `review/review_l1_pe.json`):**
+  ```json
+  {"status":"REJECTED_WITH_FEEDBACK","findings":[{"nfr":"scalability","issue":"The design relies on a single database instance, which does not meet the requirement to support 1,000 requests/sec.","recommendation":"The architecture must include a database replication and load balancing strategy."}]}
+  ```

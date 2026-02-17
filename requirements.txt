@@ -1,0 +1,7 @@
+# Basic dependencies for the SDD Unified Framework
+# This can be expanded as needed.
+
+pyyaml
+# Add other potential dependencies here, for example:
+# requests
+# jsonschema

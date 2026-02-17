@@ -1,0 +1,37 @@
+name: review-design-l1
+description: "L1 Design Review by Lead Engineer"
+prompt: |
+  **Objective:** As a **Lead Engineer**, conduct a structured L1 review focused on implementation feasibility and clarity.
+
+  This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `review-l1-le`.
+  - **Dependency Check:** Verify that the `design-l1` task is `COMPLETED` in `workflow.json`.
+  - **Status Update (Start):** Update the status of `review-l1-le` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon completing your review, update the status of `review-l1-le` to `COMPLETED` in `workflow.json`.
+
+  **Input Artifacts:**
+  1.  `spec/spec.yaml`
+  2.  `design/l1_architecture.md`
+  3.  `workflow.json`
+
+  **Output Artifacts:**
+  1.  A review outcome file: `review/review_l1_le.json`.
+  2.  An entry in `review/review.log`.
+  3.  An updated `workflow.json`.
+
+  **Process:**
+  1.  **Dependency Verification & Status Update.**
+  2.  **Structured Validation:** Validate `design/l1_architecture.md` is clear, unambiguous, and actionable for L2 design.
+  3.  **Generate Structured Output:** Produce a JSON object with `status` ('APPROVED' or 'REJECTED_WITH_FEEDBACK') and a `findings` array.
+  4.  **Record the Outcome:**
+      - **Write the full JSON output to `review/review_l1_le.json`.**
+      - Append the minified JSON output to the central `review/review.log`.
+  5.  **Update Status to `COMPLETED`:** Modify `workflow.json` to mark your task as `COMPLETED`.
+
+  **Example Output JSON (for `review/review_l1_le.json`):**
+  ```json
+  {"status":"REJECTED_WITH_FEEDBACK","findings":[{"area":"Dependencies","issue":"The design specifies an external 'Geo-IP Service' but does not define the API contract or failure modes.","recommendation":"An ADR must be created to define the integration contract and fault tolerance strategy for this dependency before L2 design can begin."}]}
+  ```

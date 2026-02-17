@@ -1,0 +1,67 @@
+name: feature
+description: Create and develop a new feature using the SDD Unified workflow
+category: Development
+handler: sdd-orchestrator
+
+parameters:
+  - name: description
+    type: string
+    required: true
+    description: Feature description or path to feature specification file
+    examples:
+      - "Create a REST API for user authentication with JWT tokens"
+      - "Add password reset functionality to the auth service"
+      - "@specs/user-profile-feature.md"
+  
+  - name: mode
+    type: enum
+    values:
+      - autonomous
+      - supervised
+      - manual
+    default: autonomous
+    description: |
+      Execution mode:
+      - autonomous: Fully automatic, no intervention
+      - supervised: Pause at milestones for approval
+      - manual: Step-by-step execution
+  
+  - name: feature_name
+    type: string
+    required: false
+    description: Override the auto-generated feature name (default: derived from description)
+
+execution:
+  entry_point: python3 sdd_unified/orchestrator/main.py
+  working_directory: "{{workspace_root}}"
+  args:
+    - "{{feature_path}}"
+    - "--mode={{mode}}"
+
+workflow:
+  initialization:
+    - Create feature workspace at features/{{feature_name}}
+    - Copy workflow.json.template to feature workspace
+    - Initialize state tracking
+  
+  orchestration:
+    - Load workflow DAG from workflow.json
+    - Execute tasks in dependency order
+    - Switch agents automatically per task
+    - Handle review/rework feedback loops
+    - Update workflow status in real-time
+  
+  completion:
+    - All tasks marked COMPLETED
+    - Generate summary report
+    - Optionally create PR/commit
+
+examples:
+  - command: "/feature \"User authentication API with JWT\""
+    description: Create a complete authentication feature autonomously
+  
+  - command: "/feature \"Payment processing\" --mode=supervised"
+    description: Create a payment feature with approval at milestones
+  
+  - command: "/feature @specs/advanced-search.md --feature-name=search-v2"
+    description: Create a feature from a detailed spec file with custom name

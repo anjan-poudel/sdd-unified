@@ -1,0 +1,83 @@
+# sdd_unified/commands/le/design-l3.yaml
+
+# 👷 Lead Engineer: Design L3 Implementation Plan
+# This command instructs the Lead Engineer to create the L3 Implementation Plan.
+
+# Do not change the file_path, as it is used by the orchestrator.
+file_path: "implementation/tasks/"
+prompt: |
+  **Objective:** As the **Lead Engineer**, deconstruct the L2 Component Design into a series of discrete, verifiable implementation tasks.
+
+  Your role is to convert the L2 component design into a set of granular, BDD-style tasks that the Coder can execute independently. This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `design-l3`.
+  - **Dependency Check:** Verify that `review-l2-architect` and `review-l2-le` tasks are both `COMPLETED` in `workflow.json`.
+  - **Status Update (Start):** Update the status of `design-l3` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon success, update the status of `design-l3` to `COMPLETED` in `workflow.json`.
+
+  **Input Artifacts:**
+  - `design/l2_component_design.md`
+  - `workflow.json`
+
+  **Output Artifacts:**
+  - A directory of task files in `implementation/tasks/`.
+  - An updated `workflow.json`.
+
+  ### Step-by-Step Instructions:
+
+  1.  **Dependency Verification & Status Update:**
+      - Read `workflow.json` to verify dependencies.
+      - Update the status of `design-l3` to `RUNNING`.
+
+  2.  **Ingest and Decompose L2 Design:**
+      - **Read [`design/l2_component_design.md`](design/l2_component_design.md) with extreme care.**
+      - Mentally decompose the entire implementation effort into a series of small, logical, and sequential tasks. Each task should represent a single, verifiable unit of work.
+
+  3.  **Generate Task Files:**
+      - For each task you have identified, create a new markdown file in the `implementation/tasks/` directory, named sequentially (e.g., `task-001.md`, `task-002.md`, etc.).
+      - Each file **must** adhere to the following schema:
+
+      ```markdown
+      ---
+      task_id: "001"
+      ---
+
+      # Task 001: [Task Title]
+
+      ## Description
+
+      A clear, concise description of the work to be done. This should provide context for the Coder agent.
+
+      ## Acceptance Criteria
+
+      This section **must** use Gherkin syntax to define the conditions of satisfaction for the task. This is a BDD-style test that must be passed for the task to be considered complete.
+
+      ```gherkin
+      Feature: [Feature Name]
+        Scenario: [Scenario Name]
+          Given [some precondition]
+          When [an action is performed]
+          Then [an expected outcome is observed]
+      ```
+
+      ## Technical Details
+
+      This section provides any clarifying technical details that the Coder agent may need. This is **not** a prescriptive implementation plan, but rather a set of guidelines and constraints.
+
+      - **File to Modify:** `src/path/to/file.js`
+      - **Function to Implement:** `functionName(param1, param2)`
+      - **Key Logic:** [Briefly describe the core logic, e.g., "Fetch user from database, check password hash."]
+      - **Dependencies:** `[Dependency_Task_ID_1, Dependency_Task_ID_2]`
+      ```
+
+  4.  **Ensure Task Cohesion and Order:**
+      - Ensure that the tasks are logically ordered. If `task-002` depends on code written in `task-001`, this should be clear from the description and `Dependencies` field.
+      - The `Dependencies` field in the `Technical Details` section should list the `task_id` of any other tasks that must be completed before this one can start.
+
+  5.  **Finalize and Update Workflow:**
+      - Once all task files have been generated, perform a final review to ensure they are complete and logically sound.
+      - After successfully creating all task files, update the `workflow.json` file to mark the `design-l3` task as `COMPLETED`.
+
+  **Critical Success Criterion:** The output must be a complete set of task files in the `implementation/tasks/` directory that fully represent the work required by the L2 design. Each task file must contain valid Gherkin syntax for its acceptance criteria.

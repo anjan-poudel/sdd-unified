@@ -1,0 +1,22 @@
+{
+  "workflow_id": "validation-001-dag-test",
+  "version": "1.0",
+  "description": "Simple 2-task workflow to test DAG execution",
+  "nodes": [
+    {
+      "id": "task-1",
+      "description": "Create a test file",
+      "command": "echo 'Task 1 completed successfully' > test1.txt",
+      "dependencies": [],
+      "outputs": ["test1.txt"]
+    },
+    {
+      "id": "task-2",
+      "description": "Read first file and create second file",
+      "command": "cat test1.txt && echo 'Task 2 completed successfully' > test2.txt",
+      "dependencies": ["task-1"],
+      "inputs": ["test1.txt"],
+      "outputs": ["test2.txt"]
+    }
+  ]
+}

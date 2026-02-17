@@ -1,0 +1,17 @@
+{
+  "init": {
+    "command": "echo 'Feature workspace initialized'",
+    "status": "COMPLETED",
+    "dependencies": []
+  },
+  "define-requirements": {
+    "command": "sdd-ba-define-requirements --task_id=define-requirements",
+    "status": "PENDING",
+    "dependencies": ["init"]
+  },
+  "design-l1": {
+    "command": "sdd-architect-design-l1 --task_id=design-l1",
+    "status": "PENDING",
+    "dependencies": ["define-requirements"]
+  }
+}

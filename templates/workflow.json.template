@@ -1,0 +1,88 @@
+{
+  "init": {
+    "command": "sdd-feature-init --task_id=init",
+    "status": "READY",
+    "dependencies": []
+  },
+  "define-requirements": {
+    "command": "sdd-ba-define-requirements --task_id=define-requirements",
+    "status": "PENDING",
+    "dependencies": [
+      "init"
+    ]
+  },
+  "design-l1": {
+    "command": "sdd-architect-design-l1 --task_id=design-l1",
+    "status": "PENDING",
+    "dependencies": [
+      "define-requirements"
+    ]
+  },
+  "review-l1-ba": {
+    "command": "sdd-ba-review-design-l1 --task_id=review-l1-ba",
+    "status": "PENDING",
+    "dependencies": [ "design-l1" ]
+  },
+  "review-l1-pe": {
+    "command": "sdd-pe-review-design-l1 --task_id=review-l1-pe",
+    "status": "PENDING",
+    "dependencies": [ "design-l1" ]
+  },
+  "review-l1-le": {
+    "command": "sdd-le-review-design-l1 --task_id=review-l1-le",
+    "status": "PENDING",
+    "dependencies": [ "design-l1" ]
+  },
+  "design-l1-rework": {
+    "command": "sdd-architect-design-l1-rework --task_id=design-l1-rework",
+    "status": "PENDING",
+    "dependencies": [ "review-l1-ba", "review-l1-pe", "review-l1-le" ]
+  },
+  "design-l2": {
+    "command": "sdd-pe-design-l2 --task_id=design-l2",
+    "status": "PENDING",
+    "dependencies": [
+      "review-l1-ba",
+      "review-l1-pe",
+      "review-l1-le"
+    ]
+  },
+  "review-l2-architect": {
+    "command": "sdd-architect-review-design-l2 --task_id=review-l2-architect",
+    "status": "PENDING",
+    "dependencies": [ "design-l2" ]
+  },
+  "review-l2-le": {
+    "command": "sdd-le-review-design-l2 --task_id=review-l2-le",
+    "status": "PENDING",
+    "dependencies": [ "design-l2" ]
+  },
+  "design-l2-rework": {
+    "command": "sdd-pe-design-l2-rework --task_id=design-l2-rework",
+    "status": "PENDING",
+    "dependencies": [ "review-l2-architect", "review-l2-le" ]
+  },
+  "design-l3": {
+    "command": "sdd-le-design-l3 --task_id=design-l3",
+    "status": "PENDING",
+    "dependencies": [
+      "review-l2-architect",
+      "review-l2-le"
+    ]
+  },
+  "review-l3-pe": {
+    "command": "sdd-pe-review-design-l3 --task_id=review-l3-pe",
+    "status": "PENDING",
+    "dependencies": [ "design-l3" ]
+  },
+  "review-l3-coder": {
+    "command": "sdd-coder-review-design-l3 --task_id=review-l3-coder",
+    "status": "PENDING",
+    "dependencies": [ "design-l3" ]
+  },
+  "design-l3-rework": {
+    "command": "sdd-le-design-l3-rework --task_id=design-l3-rework",
+    "status": "PENDING",
+    "dependencies": [ "review-l3-pe", "review-l3-coder" ]
+  }
+}

@@ -1,0 +1,37 @@
+name: review-design-l3
+description: "L3 Design Review by Principal Engineer"
+prompt: |
+  **Objective:** As a **Principal Engineer**, perform a final structured review of the L3 implementation plan.
+
+  This command operates as a task in a DAG-based workflow.
+
+  ### Workflow Engine Integration
+
+  - **Task Identification:** Your `task_id` is `review-design-l3-pe`.
+  - **Dependency Check:** Verify that the `design-l3` task is `COMPLETED` in `workflow.json`.
+  - **Status Update (Start):** Update the status of `review-design-l3-pe` to `RUNNING` in `workflow.json`.
+  - **Status Update (End):** Upon completing your review, update the status of `review-design-l3-pe` to `COMPLETED` in `workflow.json`.
+
+  **Input Artifacts:**
+  1.  `design/l2_component_design.md`
+  2.  `implementation/l3_plan.md`
+  3.  `workflow.json`
+
+  **Output Artifacts:**
+  1.  A review outcome file: `review/review_l3_pe.json`.
+  2.  An entry in `review/review.log`.
+  3.  An updated `workflow.json`.
+
+  **Process:**
+  1.  **Dependency Verification & Status Update.**
+  2.  **Structured Validation:** Validate that `implementation/l3_plan.md` is a technically excellent implementation of `l2_component_design.md`.
+  3.  **Generate Structured Output:** Produce a JSON object with `status` ('APPROVED' or 'REJECTED_WITH_FEEDBACK') and a `findings` array.
+  4.  **Record the Outcome:**
+      - **Write the full JSON output to `review/review_l3_pe.json`.**
+      - Append the minified JSON output to the central `review/review.log`.
+  5.  **Update Status to `COMPLETED`:** Modify `workflow.json` to mark your task as `COMPLETED`.
+
+  **Example Output JSON (for `review/review_l3_pe.json`):**
+  ```json
+  {"status":"REJECTED_WITH_FEEDBACK","findings":[{"planSection":"TokenGenerationModule","issue":"The proposed algorithm for JWT signing is inefficient and may cause bottlenecks.","recommendation":"Refactor to use the optimized library 'TurboJWT' for token signing operations."}]}
+  ```

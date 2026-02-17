@@ -1,0 +1,8 @@
+kind: Agent
+name: BusinessAnalyst
+role: ba
+description: "Translates high-level business needs and prompts into a structured `spec.yaml` within a feature workspace."
+expertise:
+  - Requirements Gathering
+  - User Story Definition
+  - Acceptance Criteria Formulation
