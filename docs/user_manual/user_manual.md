@@ -99,9 +99,19 @@ This approach offers several advantages:
 
 ### Iterative Review Cycles
 
-Quality is built into the process through a series of formal review cycles. At the end of each design stage (L1, L2, and L3), the generated artifacts are reviewed by other agents. For example, the L1 architecture is reviewed by the `sdd-ba`, `sdd-pe`, and `sdd-le`.
+Quality is built into the process through a series of formal review cycles. This is not a linear process, but a dynamic loop designed to refine and perfect the output at each stage.
 
-If a review is rejected, the workflow automatically triggers a "rework" task for the original agent, which must then address the feedback and resubmit its work. This iterative process continues until the design is approved, with built-in circuit breakers to prevent infinite loops.
+**How the Review-Rework Loop Works:**
+
+1.  **Submission:** An agent completes a design artifact (e.g., the `sdd-architect` finishes `l1_architecture.md`) and submits it.
+2.  **Review:** The designated reviewers assess the artifact. Each provides a status: `APPROVED` or `REJECTED_WITH_FEEDBACK`.
+3.  **Conditional Logic:**
+    *   If all reviewers return an `APPROVED` status, the workflow proceeds to the next step.
+    *   If any reviewer returns a `REJECTED_WITH_FEEDBACK` status, the workflow automatically triggers a **rework task**. This task is assigned back to the original agent, which must then address the feedback and resubmit its work.
+4.  **Circuit Breaker:** The rework loop is not infinite. To prevent endless cycles, a "circuit breaker" is built into the workflow, limiting the process to a maximum number of iterations (typically 2 or 3).
+5.  **Human Intervention:** If the artifact is still not approved after the maximum number of rework attempts, the workflow halts and flags the item for human intervention. This is a critical safety measure that indicates a deeper problem (e.g., ambiguous requirements, conflicting feedback) that requires a person to resolve.
+
+This iterative process ensures that no artifact proceeds to the next stage of development until it has met the quality standards of all required reviewers.
 
 ### Context Management
 
@@ -263,7 +273,72 @@ Integrating a specification-driven approach into an existing project requires a 
 
 By adhering to the workflow, you treat your specifications and design documents as living, executable artifacts, not as static documents that are created once and then forgotten. This is the key to eliminating spec-code drift and maintaining a codebase that is predictable, consistent, and easy to understand.
 
-## 6. Advanced Topics
+## 6. Examples
+
+This section provides practical examples of how to apply the SDD-Unified workflow in different scenarios.
+
+### Example 1: Greenfield Project - New User Authentication API
+
+In this scenario, we are building a user authentication service from scratch for a new web application.
+
+1.  **Feature Initialization:**
+    ```
+    /feature "Implement User Authentication API"
+    ```
+
+2.  **Requirements (`sdd-ba`):**
+    The `sdd-ba` is prompted to define the requirements for user registration (with email and password), login (returning a JWT), and a protected "profile" endpoint.
+
+3.  **L1 Architecture (`sdd-architect`):**
+    The architect designs the high-level components:
+    *   A `UserController` to handle incoming HTTP requests.
+    *   A `UserService` to contain the business logic.
+    *   A `UserRepository` to handle data access.
+    *   A `JWTService` to manage token creation and validation.
+    The L1 document also includes a database schema for the `users` table.
+
+4.  **L2 Component Design (`sdd-pe`):**
+    The `sdd-pe` provides the details for each component, specifying the exact API endpoints (`POST /register`, `POST /login`, `GET /profile`), the request and response models for each, and the method signatures for the services and repository.
+
+5.  **L3 Implementation Plan (`sdd-le`):**
+    The `sdd-le` breaks the work into discrete, verifiable tasks:
+    *   Task 1: Create the `users` table migration.
+    *   Task 2: Implement the `UserRepository` with `createUser` and `findUserByEmail` methods.
+    *   Task 3: Implement the `JWTService`.
+    *   Task 4: Implement the `UserService` with `register` and `login` methods.
+    *   Task 5: Implement the `UserController` and the API endpoints.
+    *   Task 6: Add password hashing to the registration logic.
+
+6.  **Implementation (`sdd-coder`):**
+    The `sdd-coder` implements each task one by one. The `sdd-le` reviews each implementation, potentially kicking off a rework loop if a task is not implemented correctly.
+
+### Example 2: Brownfield Project - Adding a PDF Export Feature
+
+In this scenario, we are adding a "PDF Export" button to an existing reporting page in a large, monolithic application.
+
+1.  **Feature Initialization:**
+    ```
+    /feature "Add PDF Export to Sales Reporting Page"
+    ```
+
+2.  **Boundary Definition (`sdd-architect`):**
+    Since this is a brownfield project, the first step is to define the boundary between the new feature and the legacy code. The `sdd-architect` is prompted to: "Define the interface for a new PDF export feature that will be added to the existing `SalesReportingService`."
+    The L1 architecture document will specify that the new code will be a self-contained `PDFExportService` that takes data from the existing (and largely unspecified) `SalesReportingService`.
+
+3.  **L2 Component Design (`sdd-pe`):**
+    The `sdd-pe` designs the `PDFExportService`, defining a single method: `generatePDF(reportData)`. It also specifies the structure of the `reportData` object that it expects to receive from the legacy service.
+
+4.  **L3 Implementation Plan (`sdd-le`):**
+    This is a smaller feature, so the L3 plan is simpler:
+    *   Task 1: Implement the `PDFExportService`.
+    *   Task 2: Add an "Export to PDF" button to the sales reporting page.
+    *   Task 3: Create a new API endpoint that calls the legacy `SalesReportingService` to get the data and then passes it to the new `PDFExportService`.
+    *   Task 4: Wire the new button to call the new API endpoint.
+
+5.  **Implementation (`sdd-coder`):**
+    The `sdd-coder` implements the new service, endpoint, and UI component. The key here is that the coder is only working on the new, well-specified components, and is only interacting with the legacy system through the narrow, well-defined interface designed by the architect.
+
+## 7. Advanced Topics
 
 ### The "Lite" Workflow
 
