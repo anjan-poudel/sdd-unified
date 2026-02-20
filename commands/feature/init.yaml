@@ -1,4 +1,4 @@
-# sdd_unified/commands/feature/init.yaml
+# .sdd_unified/commands/feature/init.yaml
 
 # 🚀 Feature: Initialize Workspace
 # This command scaffolds the entire directory structure for a new feature.
@@ -58,7 +58,7 @@ steps:
   - filesystem:write_file:
       path: "{{feature_name}}/workflow.json"
       content: |
-        {{ read_file('sdd_unified/templates/workflow.json.template') }}
+        {{ read_file('.sdd_unified/templates/workflow.json.template') }}
   - # Create core directories
   - filesystem:create_directory: "{{feature_name}}/spec"
   - filesystem:create_directory: "{{feature_name}}/design"
@@ -71,7 +71,7 @@ steps:
       path: "{{feature_name}}/spec/spec.yaml"
       content: |
         # Feature Specification: {{feature_name}}
-        # This file must adhere to the schema in sdd_unified/spec/spec.schema.json
+        # This file must adhere to the schema in .sdd_unified/spec/spec.schema.json
         metadata:
           featureId: "{{feature_name}}"
           title: "Title for {{feature_name}}"

@@ -18,7 +18,7 @@ Validate that Claude Code can:
 
 ## Why This Matters
 
-**If this fails:** The entire sdd_unified workflow model breaks. Without DAG execution, we need either:
+**If this fails:** The entire sdd-unified workflow model breaks. Without DAG execution, we need either:
 - A thin orchestration layer (2-4 weeks development)
 - Simplified sequential workflow (acceptable but less powerful)
 - Complete redesign of orchestration approach

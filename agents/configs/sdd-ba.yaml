@@ -33,5 +33,5 @@ commands:
   - review-design-l1
 
 related_files:
-  - sdd_unified/commands/ba/define-requirements.yaml
-  - sdd_unified/commands/ba/review-design-l1.yaml
+  - .sdd_unified/commands/ba/define-requirements.yaml
+  - .sdd_unified/commands/ba/review-design-l1.yaml

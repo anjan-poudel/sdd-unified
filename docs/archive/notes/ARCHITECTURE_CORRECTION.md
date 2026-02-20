@@ -16,7 +16,7 @@
 The framework is a collection of declarative configuration files that Claude Code interprets and executes.
 
 ```
-sdd_unified/
+sdd-unified/
 ├── agents/configs/          # Agent persona definitions
 │   ├── sdd-ba.yaml
 │   ├── sdd-architect.yaml
@@ -45,10 +45,10 @@ sdd_unified/
 ### ❌ What Should Be Removed
 
 ```
-sdd_unified/orchestrator/main.py       ← DELETE
-sdd_unified/orchestrator/status.py     ← DELETE  
-sdd_unified/requirements.txt           ← DELETE
-sdd_unified/scripts/install_*.sh       ← SIMPLIFY (just copy configs)
+sdd-unified/orchestrator/main.py       ← DELETE
+sdd-unified/orchestrator/status.py     ← DELETE  
+sdd-unified/requirements.txt           ← DELETE
+sdd-unified/scripts/install_*.sh       ← SIMPLIFY (just copy configs)
 ```
 
 **Why:** Claude Code handles all execution logic. We provide the configuration it interprets.
@@ -69,7 +69,7 @@ sdd_unified/scripts/install_*.sh       ← SIMPLIFY (just copy configs)
    - Updates workflow.json status
 6. Handles review loops automatically based on outcome files
 
-**sdd_unified Provides:**
+**sdd-unified Provides:**
 - workflow.json structure
 - Agent configuration YAMLs
 - Command prompt templates
@@ -92,10 +92,10 @@ pip3 install requirements.txt
 ```bash
 #!/bin/bash
 # Copy agent configs to Claude Code
-cp sdd_unified/agents/configs/*.yaml ~/.claude-code/agents/
+cp sdd-unified/agents/configs/*.yaml ~/.claude-code/agents/
 
 # Copy slash commands
-cp sdd_unified/commands/slash/*.yaml ~/.claude-code/commands/
+cp sdd-unified/commands/slash/*.yaml ~/.claude-code/commands/
 
 # Done.
 echo "Installation complete. Restart Claude Code."

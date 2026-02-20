@@ -1,10 +1,16 @@
-# Getting Started with the SDD Unified Framework using Claude Code
+# Getting Started with the SDD Unified Framework using Roo Code
 
-This guide provides a comprehensive walkthrough of installing and using the `sdd_unified` framework with the `claude-code` development environment.
+> Legacy note: This guide is retained for compatibility with older command examples.
+> For current integration and onboarding, use:
+> - `../3_integration/claude_code.md` (architecture and workflow model)
+> - `../1_getting_started/day1_checklist.md`
+> - `../2_architecture/pair_review_overlay.md`
+
+This guide provides a comprehensive walkthrough of installing and using the `sdd-unified` framework with the `roo-code` development environment.
 
 ## 1. Introduction
 
-The `sdd_unified` framework provides a robust, state-driven, and iterative process for developing software with AI agents. When paired with `claude-code`, it allows you to orchestrate a team of specialized AI agents, manage complex workflows, and ensure the quality of the final product through a structured review and rework cycle.
+The `sdd-unified` framework provides a robust, state-driven, and iterative process for developing software with AI agents. When paired with `roo-code`, it allows you to orchestrate a team of specialized AI agents, manage complex workflows, and ensure the quality of the final product through a structured review and rework cycle.
 
 This guide will show you how to get started.
 
@@ -15,19 +21,19 @@ Follow these steps to set up your environment.
 1.  **Clone the Repository:**
     ```bash
     git clone <repository_url>
-    cd sdd_unified
+    cd sdd-unified
     ```
 
 2.  **Run the Installation Script:**
-    This script will set up a Python virtual environment, install dependencies, and create a set of convenient aliases for using `claude-code` with the framework.
+    This script will set up a Python virtual environment, install dependencies, and create a set of convenient aliases for using `roo-code` with the framework.
     ```bash
-    bash scripts/install_claude.sh
+    bash scripts/install_roo.sh
     ```
 
 3.  **Activate the Aliases:**
-    The installer will create a file at `~/.sdd_aliases`. To activate the commands, you need to source this file.
+    The installer will create a file at `~/.sdd_aliases_roo`. To activate the commands, you need to source this file.
     ```bash
-    source ~/.sdd_aliases
+    source ~/.sdd_aliases_roo
     ```
     For permanent access, add this line to your shell's startup file (e.g., `~/.zshrc`, `~/.bashrc`, or `~/.profile`).
 
@@ -51,7 +57,7 @@ Let's walk through a complete end-to-end workflow for creating a simple user aut
 First, we'll use the `init` command to create a new, self-contained directory for our feature.
 
 ```bash
-# The alias calls claude-code with the correct prompt file
+# The alias calls roo-code with the correct prompt file
 sdd-feature-init --feature-name "user-auth-api"
 
 # Navigate into the new feature directory
@@ -69,7 +75,7 @@ Next, the Business Analyst agent will translate a high-level requirement into a 
 sdd-ba-define-requirements --prompt "Create a secure API endpoint at POST /login that accepts a username and password. It should return a JWT token on success and a 401 error on failure."
 ```
 
-The framework, via the alias, will invoke `claude-code` with the correct prompt and save the output to `spec/spec.yaml`. The result will look something like this:
+The framework, via the alias, will invoke `roo-code` with the correct prompt and save the output to `spec/spec.yaml`. The result will look something like this:
 
 ```yaml
 # spec/spec.yaml
@@ -105,7 +111,7 @@ Now, the review cycle begins. Let's say the Principal Engineer finds an issue.
 sdd-pe-review-design-l1
 ```
 
-The alias invokes `claude-code`, which analyzes the design. Let's imagine it finds a flaw. It will generate `review/review_l1_pe.json` with the following content:
+The alias invokes `roo-code`, which analyzes the design. Let's imagine it finds a flaw. It will generate `review/review_l1_pe.json` with the following content:
 
 ```json
 {"status":"REJECTED_WITH_FEEDBACK","findings":[{"nfr":"security","issue":"The L1 design does not mention password hashing. Storing or comparing plain-text passwords is a critical security vulnerability.","recommendation":"The architecture must specify a strong hashing algorithm (e.g., bcrypt) for password management."}]}
@@ -119,7 +125,7 @@ The workflow is now blocked until the design is fixed. The Architect agent is in
 sdd-architect-design-l1-rework
 ```
 
-This command feeds the original design and all the review feedback back into `claude-code`. The agent produces a new, improved `l1_architecture.md` that now includes details about `bcrypt` hashing. The review commands are then run again until all reviewers output an `APPROVED` status.
+This command feeds the original design and all the review feedback back into `roo-code`. The agent produces a new, improved `l1_architecture.md` that now includes details about `bcrypt` hashing. The review commands are then run again until all reviewers output an `APPROVED` status.
 
 ### Step 6: L2 & L3 Design Cycles
 
@@ -167,4 +173,4 @@ When all tasks have been successfully implemented and approved, the feature is c
 
 ## 5. Conclusion
 
-By using the `sdd_unified` framework with `claude-code`, you transform AI-driven development from a simple "prompt-to-code" activity into a mature, structured, and auditable engineering process. This ensures higher quality, greater predictability, and better alignment with requirements.
+By using the `sdd-unified` framework with `roo-code`, you transform AI-driven development from a simple "prompt-to-code" activity into a mature, structured, and auditable engineering process. This ensures higher quality, greater predictability, and better alignment with requirements.

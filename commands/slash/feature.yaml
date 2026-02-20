@@ -32,7 +32,7 @@ parameters:
     description: Override the auto-generated feature name (default: derived from description)
 
 execution:
-  entry_point: python3 sdd_unified/orchestrator/main.py
+  entry_point: python3 .sdd_unified/orchestrator/main.py
   working_directory: "{{workspace_root}}"
   args:
     - "{{feature_path}}"

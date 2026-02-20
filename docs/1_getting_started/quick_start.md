@@ -1,6 +1,18 @@
 # Quick Start Guide
 
-Get up and running with sdd_unified in 5 minutes.
+Get up and running with sdd-unified in 5 minutes.
+
+## Recommended Operating Mode
+
+For first adoption, use:
+
+- Manual or supervised execution mode
+- Pair execution inside each critical task (driver + challenger)
+- Independent formal review gates before advancing
+
+See:
+- [Day 1 Checklist](day1_checklist.md)
+- [Pair + Formal Review Overlay](../2_architecture/pair_review_overlay.md)
 
 ## Prerequisites
 
@@ -16,13 +28,15 @@ Get up and running with sdd_unified in 5 minutes.
 # Navigate to your project
 cd /path/to/your/project
 
-# Create sdd_unified directory structure
-mkdir -p .sdd_unified/{agents,commands,templates}
+# Create sdd-unified directory structure
+mkdir -p .sdd_unified/{agents,commands,templates,orchestrator,spec}
 
-# Copy sdd_unified configuration files
-cp -r /path/to/sdd_unified/agents .sdd_unified/
-cp -r /path/to/sdd_unified/commands .sdd_unified/
-cp -r /path/to/sdd_unified/templates .sdd_unified/
+# Copy sdd-unified configuration files
+cp -r /path/to/sdd-unified/agents .sdd_unified/
+cp -r /path/to/sdd-unified/commands .sdd_unified/
+cp -r /path/to/sdd-unified/templates .sdd_unified/
+cp -r /path/to/sdd-unified/orchestrator .sdd_unified/
+cp -r /path/to/sdd-unified/spec .sdd_unified/
 ```
 
 ### Step 2: Configure Your Agentic Tool
@@ -48,7 +62,7 @@ cp -r /path/to/sdd_unified/templates .sdd_unified/
 /feature "Create user authentication"
 
 # Or manually create feature directory
-mkdir -p features/feature-001-auth/{spec,design,implementation,review}
+mkdir -p features/feature-001-auth/{spec,design,implementation/tasks,review}
 ```
 
 ## Your First Feature
@@ -180,7 +194,7 @@ Check that your setup is working:
 ## Summary
 
 You now have:
-- ✅ sdd_unified configuration installed
+- ✅ sdd-unified configuration installed
 - ✅ Agents registered in your tool
 - ✅ Understanding of the basic workflow
 - ✅ Ability to create your first feature

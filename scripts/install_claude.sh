@@ -25,6 +25,10 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
 echo "Installation scope: $SCOPE"
 echo ""
 
@@ -65,19 +69,22 @@ echo "Registering SDD agents with Claude Code..."
 AGENTS=("sdd-ba" "sdd-architect" "sdd-pe" "sdd-le" "sdd-coder")
 
 for agent in "${AGENTS[@]}"; do
-    cp "sdd_unified/agents/configs/${agent}.yaml" "$CLAUDE_CONFIG_DIR/agents/"
+    cp "$REPO_ROOT/agents/configs/${agent}.yaml" "$CLAUDE_CONFIG_DIR/agents/"
     echo "✓ Registered agent: $agent"
 done
 
 # 5. Register slash commands
 echo ""
 echo "Registering slash commands..."
-cp sdd_unified/commands/slash/*.yaml "$CLAUDE_CONFIG_DIR/commands/"
+cp "$REPO_ROOT/commands/slash/"*.yaml "$CLAUDE_CONFIG_DIR/commands/"
 echo "✓ Registered /feature command"
 echo "✓ Registered /feature-status command"
 
 # 6. Make orchestrator executable
-chmod +x sdd_unified/orchestrator/main.py
+chmod +x "$REPO_ROOT/orchestrator/main.py"
+if [ -f "$REPO_ROOT/orchestrator/status.py" ]; then
+    chmod +x "$REPO_ROOT/orchestrator/status.py"
+fi
 echo ""
 echo "✓ Orchestrator configured"
 
@@ -118,6 +125,12 @@ The framework uses 5 specialized agents:
 The orchestrator switches between these agents automatically.
 
 ## Workflow
+
+Before running `/feature` in a project, copy framework files into that project:
+```bash
+mkdir -p .sdd_unified
+cp -R /path/to/sdd-unified/{agents,commands,templates,orchestrator,spec} .sdd_unified/
+```
 
 1. `/feature "your feature description"`
 2. Orchestrator initializes workspace

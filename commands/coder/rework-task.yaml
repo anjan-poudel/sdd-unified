@@ -1,4 +1,4 @@
-# sdd_unified/commands/coder/rework-task.yaml
+# .sdd_unified/commands/coder/rework-task.yaml
 
 file_path: "src/"
 prompt: |

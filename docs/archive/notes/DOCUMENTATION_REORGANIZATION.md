@@ -6,12 +6,12 @@
 
 ## What Was Done
 
-The sdd_unified documentation has been completely reorganized from a flat structure into a logical, hierarchical organization optimized for different user needs and use cases.
+The sdd-unified documentation has been completely reorganized from a flat structure into a logical, hierarchical organization optimized for different user needs and use cases.
 
 ## Before (Flat Structure)
 
 ```
-sdd_unified/docs/
+sdd-unified/docs/
 ├── ARCHITECTURE_CORRECTION.md
 ├── CLAUDE_ROO_INTEGRATION_DESIGN.md
 ├── CONTEXT_MANAGEMENT_DESIGN.md
@@ -40,7 +40,7 @@ sdd_unified/docs/
 ## After (Organized Structure)
 
 ```
-sdd_unified/docs/
+sdd-unified/docs/
 ├── README.md                      # Documentation home
 ├── INDEX.md                       # Complete navigation guide
 ├── 1_getting_started/             # New users
@@ -274,7 +274,7 @@ All reorganized documents follow:
 
 ### 1. Delete Deprecated Files
 ```bash
-cd sdd_unified/docs
+cd sdd-unified/docs
 rm CRITICAL_FRAMEWORK_ANALYSIS.md
 rm CRITICAL_FRAMEWORK_ANALYSIS_V2.md
 rm ARCHITECTURE_CORRECTION.md
@@ -321,4 +321,4 @@ The documentation reorganization provides:
 
 **Reorganization Version:** 1.0.0  
 **Completed:** 2025-10-16  
-**Maintained By:** sdd_unified Documentation Team
+**Maintained By:** sdd-unified Documentation Team

@@ -6,9 +6,9 @@
 
 ## Executive Summary
 
-This analysis compares sdd_unified against existing SDD (Specification-Driven Development) frameworks and related tools in the market.
+This analysis compares sdd-unified against existing SDD (Specification-Driven Development) frameworks and related tools in the market.
 
-**Key Finding:** sdd_unified is the first **configuration-driven orchestration system** for SDD with agentic tools. Other frameworks are either template libraries, process documentation, or imperative scripts.
+**Key Finding:** sdd-unified is the first **configuration-driven orchestration system** for SDD with agentic tools. Other frameworks are either template libraries, process documentation, or imperative scripts.
 
 ## Frameworks Analyzed
 
@@ -48,9 +48,9 @@ spec-kit/
 - ❌ No agent integration
 - ❌ Static templates, not workflow
 
-### Comparison to sdd_unified
+### Comparison to sdd-unified
 
-| Feature | spec-kit | sdd_unified |
+| Feature | spec-kit | sdd-unified |
 |---------|----------|-------------|
 | Templates | ✅ Yes | ✅ Yes |
 | Orchestration | ❌ No | ✅ Yes (DAG) |
@@ -59,7 +59,7 @@ spec-kit/
 | BDD Verification | ❌ No | ✅ Yes (Gherkin) |
 | Automation | ❌ None | ✅ Full workflow |
 
-**Verdict:** spec-kit is a template library. sdd_unified is an orchestration system that could USE spec-kit templates.
+**Verdict:** spec-kit is a template library. sdd-unified is an orchestration system that could USE spec-kit templates.
 
 ---
 
@@ -87,9 +87,9 @@ Conceptual framework, not software:
 - ❌ No automation tools
 - ❌ Requires human expertise
 
-### Comparison to sdd_unified
+### Comparison to sdd-unified
 
-| Feature | BMAD | sdd_unified |
+| Feature | BMAD | sdd-unified |
 |---------|------|-------------|
 | Business Focus | ✅ Strong | ⚠️ Medium |
 | Automation | ❌ None | ✅ Full |
@@ -97,7 +97,7 @@ Conceptual framework, not software:
 | Implementation | ❌ Manual | ✅ Automated |
 | Learning Curve | ⚠️ High | ⚠️ Medium |
 
-**Verdict:** BMAD is a process. sdd_unified automates similar processes with AI agents.
+**Verdict:** BMAD is a process. sdd-unified automates similar processes with AI agents.
 
 ---
 
@@ -130,9 +130,9 @@ a-sdd-starter/
 - ❌ No circuit breakers
 - ❌ Limited to bash environment
 
-### Comparison to sdd_unified
+### Comparison to sdd-unified
 
-| Feature | a-sdd-starter | sdd_unified |
+| Feature | a-sdd-starter | sdd-unified |
 |---------|---------------|-------------|
 | Execution | ✅ Shell scripts | ✅ Workflow DAG |
 | Declarative | ❌ No | ✅ Yes |
@@ -141,7 +141,7 @@ a-sdd-starter/
 | Customization | ⚠️ Modify scripts | ✅ Edit configs |
 | Circuit Breakers | ❌ No | ✅ Yes |
 
-**Verdict:** a-sdd-starter proves the concept works. sdd_unified is the next evolution with declarative config and sophisticated reviews.
+**Verdict:** a-sdd-starter proves the concept works. sdd-unified is the next evolution with declarative config and sophisticated reviews.
 
 ---
 
@@ -175,9 +175,9 @@ workflow.add_agent(MyAgent())
 - ❌ No SDD templates
 - ❌ Steep learning curve
 
-### Comparison to sdd_unified
+### Comparison to sdd-unified
 
-| Feature | AgentOS | sdd_unified |
+| Feature | AgentOS | sdd-unified |
 |---------|---------|-------------|
 | Agent Orchestration | ✅ Yes | ✅ Yes |
 | SDD-Specific | ❌ No | ✅ Yes |
@@ -186,7 +186,7 @@ workflow.add_agent(MyAgent())
 | Flexibility | ✅ Very High | ⚠️ Medium |
 | SDD Templates | ❌ None | ✅ Complete |
 
-**Verdict:** AgentOS is a platform you could BUILD sdd_unified ON. sdd_unified is an opinionated SDD configuration FOR a tool like Claude Code.
+**Verdict:** AgentOS is a platform you could BUILD sdd-unified ON. sdd-unified is an opinionated SDD configuration FOR a tool like Claude Code.
 
 ---
 
@@ -218,9 +218,9 @@ agent.run("Implement feature X")
 - ❌ No SDD workflow
 - ❌ No review mechanisms
 
-### Comparison to sdd_unified
+### Comparison to sdd-unified
 
-| Feature | LangChain | sdd_unified |
+| Feature | LangChain | sdd-unified |
 |---------|-----------|-------------|
 | LLM Integration | ✅ Built-in | ⚠️ Via tool |
 | SDD Workflow | ❌ None | ✅ Complete |
@@ -228,7 +228,7 @@ agent.run("Implement feature X")
 | Reviews | ❌ None | ✅ Formal |
 | Use Case | General AI apps | SDD only |
 
-**Verdict:** LangChain is for building AI apps. sdd_unified is for structuring SDD workflows.
+**Verdict:** LangChain is for building AI apps. sdd-unified is for structuring SDD workflows.
 
 ---
 
@@ -256,18 +256,18 @@ jobs:
 - ✅ Parallel execution
 - ✅ Mature and proven
 
-### Similarities to sdd_unified
+### Similarities to sdd-unified
 - Both use declarative config
 - Both have job dependencies
 - Both support conditions
 - Both track state
 
 ### Differences
-- GHA for CI/CD, sdd_unified for development
-- GHA runs on servers, sdd_unified uses agentic tools
-- GHA for automation, sdd_unified for orchestration
+- GHA for CI/CD, sdd-unified for development
+- GHA runs on servers, sdd-unified uses agentic tools
+- GHA for automation, sdd-unified for orchestration
 
-**Verdict:** sdd_unified is architecturally similar to GHA but for a different domain (SDD vs CI/CD).
+**Verdict:** sdd-unified is architecturally similar to GHA but for a different domain (SDD vs CI/CD).
 
 ---
 
@@ -279,7 +279,7 @@ jobs:
                     Configuration-Based
                            ↑
                            |
-                    sdd_unified ●
+                    sdd-unified ●
                            |
                            |
     Imperative ← ─ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ─ → Declarative
@@ -294,7 +294,7 @@ jobs:
 
 ### Unique Value Proposition
 
-**sdd_unified is the ONLY framework that combines:**
+**sdd-unified is the ONLY framework that combines:**
 1. Declarative configuration (like GHA)
 2. SDD-specific workflow (unlike general platforms)
 3. Multi-agent orchestration (like AgentOS but config-based)
@@ -305,7 +305,7 @@ jobs:
 
 ## Feature Comparison Matrix
 
-| Feature | spec-kit | BMAD | a-sdd | AgentOS | LangChain | sdd_unified |
+| Feature | spec-kit | BMAD | a-sdd | AgentOS | LangChain | sdd-unified |
 |---------|----------|------|-------|---------|-----------|-------------|
 | **SDD Focus** | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
 | **Declarative Config** | ⚠️ | ❌ | ❌ | ❌ | ❌ | ✅ |
@@ -393,19 +393,19 @@ Legend:
 
 **Opportunity:** No existing tool bridges SDD methodology with agentic AI
 
-**sdd_unified:** Fills this exact gap
+**sdd-unified:** Fills this exact gap
 
 ### 2. Claude Code Ecosystem
 
 **Opportunity:** Claude Code lacks SDD workflows
 
-**sdd_unified:** Provides comprehensive SDD configuration
+**sdd-unified:** Provides comprehensive SDD configuration
 
 ### 3. Enterprise SDD
 
 **Opportunity:** Enterprises want structured, auditable AI development
 
-**sdd_unified:** Provides formal reviews, audit trails, circuit breakers
+**sdd-unified:** Provides formal reviews, audit trails, circuit breakers
 
 ---
 
@@ -415,13 +415,13 @@ Legend:
 
 **Threat:** Claude Code might build native SDD workflow
 
-**Mitigation:** sdd_unified could become the standard they adopt
+**Mitigation:** sdd-unified could become the standard they adopt
 
 ### 2. Competitor Evolution
 
 **Threat:** a-sdd-starter could evolve to declarative config
 
-**Mitigation:** sdd_unified is already there, with more features
+**Mitigation:** sdd-unified is already there, with more features
 
 ### 3. Complexity Barrier
 
@@ -463,7 +463,7 @@ Legend:
 
 ### Market Position
 
-sdd_unified occupies a **unique position** as:
+sdd-unified occupies a **unique position** as:
 - The only declarative SDD orchestration framework
 - The only framework with formal iterative reviews
 - The only framework connecting SDD to BDD at task level
@@ -490,4 +490,4 @@ sdd_unified occupies a **unique position** as:
 
 **Document Version:** 1.0.0  
 **Next Review:** After validation testing  
-**Owner:** sdd_unified Strategy Team
+**Owner:** sdd-unified Strategy Team

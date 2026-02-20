@@ -1,4 +1,4 @@
-# sdd_unified/commands/coder/execute-task.yaml
+# .sdd_unified/commands/coder/execute-task.yaml
 
 file_path: "src/" # Operates on the source directory
 prompt: |

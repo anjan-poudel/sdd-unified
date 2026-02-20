@@ -21,10 +21,10 @@ Use the FSM Parallel Workflow Engine use case as a real-world test:
 
 ```bash
 # Install all 5 agent configurations
-cp sdd_unified/agents/configs/*.yaml ~/.claude-code/agents/
+cp /path/to/sdd-unified/agents/configs/*.yaml ~/.claude-code/agents/
 
 # Install all commands (if not already done)
-cp -r sdd_unified/commands/*/*.yaml ~/.claude-code/commands/
+cp /path/to/sdd-unified/commands/slash/*.yaml ~/.claude-code/commands/
 
 # Restart Claude Code
 ```
@@ -39,7 +39,7 @@ cp -r sdd_unified/commands/*/*.yaml ~/.claude-code/commands/
 ### Step 2: Initialize Feature Workspace
 
 ```bash
-cd sdd_unified/validation-tests
+cd sdd-unified/validation-tests
 mkdir -p phase3-fsm-engine/{spec,design,design/l3_tasks,implementation,review}
 cd phase3-fsm-engine
 

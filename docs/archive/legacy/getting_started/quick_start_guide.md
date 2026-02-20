@@ -1,10 +1,16 @@
-# Quick Start Guide: Getting Started with SDD-Unified
+# Quick Start Guide: Getting Started with SDD Unified
 
-Welcome to SDD-Unified! This guide will walk you through the initial setup and a basic workflow to get you started.
+> Legacy note: This guide is kept for backward compatibility.
+> Use these canonical docs for current setup and workflow:
+> - `../1_getting_started/quick_start.md`
+> - `../1_getting_started/day1_checklist.md`
+> - `../2_architecture/pair_review_overlay.md`
 
-## What is SDD-Unified?
+Welcome to SDD Unified! This guide will walk you through the initial setup and a basic workflow to get you started.
 
-SDD-Unified is a framework that brings structure and predictability to AI-powered software development. It uses a series of specialized AI agents, each with a specific role, to take a feature from an idea to fully implemented code, following a rigorous, specification-driven process.
+## What is SDD Unified?
+
+SDD Unified is a framework that brings structure and predictability to AI-powered software development. It uses a series of specialized AI agents, each with a specific role, to take a feature from an idea to fully implemented code, following a rigorous, specification-driven process.
 
 ## Prerequisites
 
@@ -12,31 +18,33 @@ Before you begin, ensure you have the following:
 
 *   An AI-powered coding assistant that supports custom agents (e.g., Claude Code, Roo Code).
 *   Basic knowledge of YAML and JSON.
-*   A project where you want to apply SDD-Unified.
+*   A project where you want to apply SDD Unified.
 
 ## 1. Installation and Setup
 
-First, you need to integrate SDD-Unified into your project.
+First, you need to integrate SDD Unified into your project.
 
 ### Copy Configuration
 
-Copy the core configuration of SDD-Unified into your project's root directory:
+Copy the core configuration of SDD Unified into your project's root directory:
 
 ```bash
-cp -r /path/to/sdd-unified/agents /path/to/your/project/.sdd-unified/
-cp -r /path/to/sdd-unified/commands /path/to/your/project/.sdd-unified/
-cp -r /path/to/sdd-unified/templates /path/to/your/project/.sdd-unified/
+cp -r /path/to/sdd-unified/agents /path/to/your/project/.sdd_unified/
+cp -r /path/to/sdd-unified/commands /path/to/your/project/.sdd_unified/
+cp -r /path/to/sdd-unified/templates /path/to/your/project/.sdd_unified/
+cp -r /path/to/sdd-unified/orchestrator /path/to/your/project/.sdd_unified/
+cp -r /path/to/sdd-unified/spec /path/to/your/project/.sdd_unified/
 ```
 
-This command copies the agent personas, command prompts, and workflow templates into a `.sdd-unified` directory in your project.
+This command copies the agent personas, command prompts, workflow templates, and orchestrator files into a `.sdd_unified` directory in your project.
 
 ### Configure Your AI Assistant
 
-Next, register the SDD-Unified agents with your AI assistant. The general steps are:
+Next, register the SDD Unified agents with your AI assistant. The general steps are:
 
 1.  Open your AI assistant's settings or preferences.
 2.  Find the section for managing custom agents.
-3.  Import the agent configurations from the `.sdd-unified/agents/configs/` directory.
+3.  Import the agent configurations from the `.sdd_unified/agents/configs/` directory.
 4.  Confirm that the following five agents are now available:
     *   `sdd-ba` (Business Analyst)
     *   `sdd-architect`
@@ -104,15 +112,15 @@ The `sdd-coder` will read the task files and generate the necessary source code 
 
 ## 3. The Review Process
 
-In a real project, each step would be followed by a review from other agents (e.g., the `sdd-pe` and `sdd-le` review the architect's work). This ensures quality and alignment at every stage. For this quick start, we've skipped the explicit review steps, but you can learn more about them in our comprehensive [User Manual](docs/user_manual/user_manual.md).
+In a real project, each step would be followed by a review from other agents (e.g., the `sdd-pe` and `sdd-le` review the architect's work). This ensures quality and alignment at every stage. For this quick start, we've skipped the explicit review steps, but you can learn more about them in our comprehensive [User Manual](../user_manual/user_manual.md).
 
 ## What's Next?
 
-Congratulations! You've successfully run your first feature through the SDD-Unified workflow.
+Congratulations! You've successfully run your first feature through the SDD Unified workflow.
 
 From here, you can:
 
-*   Dive deeper into the full capabilities of the framework in our **[User Manual](docs/user_manual/user_manual.md)**.
+*   Dive deeper into the full capabilities of the framework in our **[User Manual](../user_manual/user_manual.md)**.
 *   Explore the different agents and their roles in more detail.
 *   Learn about the iterative review cycles and how they improve code quality.
 *   Try a more complex feature and observe the full, multi-agent workflow in action.

@@ -51,7 +51,7 @@ echo ""
 
 echo "This test validates if Claude can execute workflow.json as a DAG"
 echo ""
-echo "Test workflow location: sdd_unified/specs/validation/test-workflows/v001-simple-dag.json"
+echo "Test workflow location: sdd-unified/specs/validation/test-workflows/v001-simple-dag.json"
 echo ""
 
 read -p "Do you want to run V001 test? (y/n) " -n 1 -r

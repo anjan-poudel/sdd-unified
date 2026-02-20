@@ -1,4 +1,4 @@
-# sdd_unified/commands/le/review-task.yaml
+# .sdd_unified/commands/le/review-task.yaml
 name: review-task
 description: "Review a single implemented task by Lead Engineer"
 prompt: |

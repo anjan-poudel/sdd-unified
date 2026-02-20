@@ -10,7 +10,7 @@ This use case demonstrates how to use the SDD Unified Framework with Claude Code
 
 ```bash
 # Ensure the framework is installed
-cd sdd_unified
+cd sdd-unified
 bash scripts/install_claude.sh --scope=global
 
 # Reload Claude Code to register agents and commands

@@ -1,4 +1,4 @@
-# sdd_unified/commands/le/design-l3-rework.yaml
+# .sdd_unified/commands/le/design-l3-rework.yaml
 
 file_path: "implementation/tasks/"
 prompt: |

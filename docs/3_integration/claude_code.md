@@ -6,7 +6,7 @@
 
 ## Overview
 
-This guide explains how to integrate sdd_unified with Claude Code, a powerful agentic coding tool that can execute workflows, switch between agents, and orchestrate multi-step development processes.
+This guide explains how to integrate sdd-unified with Claude Code, a powerful agentic coding tool that can execute workflows, switch between agents, and orchestrate multi-step development processes.
 
 ## Prerequisites
 
@@ -26,14 +26,14 @@ This guide explains how to integrate sdd_unified with Claude Code, a powerful ag
 - Manages file I/O
 - Persists state
 
-**sdd_unified (Configuration Layer):**
+**sdd-unified (Configuration Layer):**
 - Defines workflow structure
 - Provides agent personas
 - Specifies command templates
 - Sets quality gates
 
 ```
-User → /feature command → Claude Code → Reads sdd_unified configs → Executes workflow
+User → /feature command → Claude Code → Reads sdd-unified configs → Executes workflow
 ```
 
 ## Installation Steps
@@ -44,13 +44,15 @@ User → /feature command → Claude Code → Reads sdd_unified configs → Exec
 # Navigate to your project
 cd /path/to/your/project
 
-# Create sdd_unified directory
-mkdir -p .sdd_unified/{agents,commands,templates}
+# Create sdd-unified directory
+mkdir -p .sdd_unified/{agents,commands,templates,orchestrator,spec}
 
 # Copy all configuration files
-cp -r /path/to/sdd_unified/agents/configs .sdd_unified/agents/
-cp -r /path/to/sdd_unified/commands .sdd_unified/
-cp -r /path/to/sdd_unified/templates .sdd_unified/
+cp -r /path/to/sdd-unified/agents/configs .sdd_unified/agents/
+cp -r /path/to/sdd-unified/commands .sdd_unified/
+cp -r /path/to/sdd-unified/templates .sdd_unified/
+cp -r /path/to/sdd-unified/orchestrator .sdd_unified/
+cp -r /path/to/sdd-unified/spec .sdd_unified/
 ```
 
 ### Step 2: Register Agents in Claude Code
@@ -101,7 +103,7 @@ If Claude Code supports custom slash commands:
     "custom": [
       {
         "trigger": "/feature",
-        "description": "Start new feature with sdd_unified workflow",
+        "description": "Start new feature with sdd-unified workflow",
         "command": "load_workflow",
         "args": {
           "template": ".sdd_unified/templates/workflow.json.template"
@@ -118,6 +120,20 @@ If Claude Code supports custom slash commands:
 ```
 
 ## Usage
+
+## Recommended Adoption Path
+
+For current repo state, start with:
+
+1. Manual or supervised workflow execution
+2. Pair execution inside critical tasks (driver + challenger)
+3. Independent formal reviews as GO/NO-GO gates
+
+Then move to deeper automation after integration assumptions are validated.
+
+See:
+- [Day 1 Checklist](../1_getting_started/day1_checklist.md)
+- [Pair + Formal Review Overlay](../2_architecture/pair_review_overlay.md)
 
 ### Starting a New Feature
 
@@ -317,7 +333,7 @@ prompt: |
 
 ## Validation Checklist
 
-Before using sdd_unified with Claude Code in production:
+Before using sdd-unified with Claude Code in production:
 
 - [ ] Install and register all 5 agents
 - [ ] Verify agents appear in Claude Code
@@ -428,7 +444,7 @@ If you encounter issues:
 
 ## Summary
 
-sdd_unified + Claude Code provides:
+sdd-unified + Claude Code provides:
 - ✅ Structured SDD workflow
 - ✅ Multi-agent specialization
 - ✅ Quality gates and reviews

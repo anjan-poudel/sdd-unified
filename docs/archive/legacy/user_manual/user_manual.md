@@ -1,14 +1,21 @@
-# SDD-Unified User Manual
+# SDD Unified User Manual
+
+> Legacy note: This manual predates the latest docs structure.
+> Prefer these current references while using this manual:
+> - `../INDEX.md`
+> - `../1_getting_started/day1_checklist.md`
+> - `../2_architecture/pair_review_overlay.md`
+> - `../2_architecture/iterative_reviews.md`
 
 ## 1. Introduction
 
-Welcome to the comprehensive user manual for SDD-Unified. This document provides a deep dive into the framework, its architecture, and its practical application in your development workflow.
+Welcome to the comprehensive user manual for SDD Unified. This document provides a deep dive into the framework, its architecture, and its practical application in your development workflow.
 
-### What is SDD-Unified?
+### What is SDD Unified?
 
-SDD-Unified is a framework that brings structure, predictability, and rigor to AI-powered software development. It acts as a "steering layer" for AI coding assistants, ensuring they follow a structured, specification-driven development (SDD) process.
+SDD Unified is a framework that brings structure, predictability, and rigor to AI-powered software development. It acts as a "steering layer" for AI coding assistants, ensuring they follow a structured, specification-driven development (SDD) process.
 
-By using a system of specialized AI agents, a formal workflow, and iterative reviews, SDD-Unified transforms ad-hoc code generation into a deterministic and verifiable engineering process.
+By using a system of specialized AI agents, a formal workflow, and iterative reviews, SDD Unified transforms ad-hoc code generation into a deterministic and verifiable engineering process.
 
 ### Who is this for?
 
@@ -40,17 +47,19 @@ The framework is built on the following principles:
 ### Setup Steps
 
 1.  **Copy the Configuration:**
-    The first step is to copy the SDD-Unified configuration files into your project.
+    The first step is to copy the SDD Unified configuration files into your project.
     ```bash
-    mkdir -p /path/to/your/project/.sdd-unified
-    cp -r /path/to/sdd-unified/agents /path/to/your/project/.sdd-unified/
-    cp -r /path/to/sdd-unified/commands /path/to/your/project/.sdd-unified/
-    cp -r /path/to/sdd-unified/templates /path/to/your/project/.sdd-unified/
+    mkdir -p /path/to/your/project/.sdd_unified
+    cp -r /path/to/sdd-unified/agents /path/to/your/project/.sdd_unified/
+    cp -r /path/to/sdd-unified/commands /path/to/your/project/.sdd_unified/
+    cp -r /path/to/sdd-unified/templates /path/to/your/project/.sdd_unified/
+    cp -r /path/to/sdd-unified/orchestrator /path/to/your/project/.sdd_unified/
+    cp -r /path/to/sdd-unified/spec /path/to/your/project/.sdd_unified/
     ```
-    This creates a `.sdd-unified` directory in your project root, containing the definitions for the agents, their commands, and the workflow templates.
+    This creates a `.sdd_unified` directory in your project root, containing the definitions for agents, commands, templates, orchestrator utilities, and spec schema.
 
 2.  **Register the Agents:**
-    Next, you need to register the five SDD-Unified agents with your AI coding assistant. Refer to your assistant's documentation for the specific steps, but the general process is to import the agent configuration files located in `.sdd-unified/agents/configs/`.
+    Next, you need to register the five SDD Unified agents with your AI coding assistant. Refer to your assistant's documentation for the specific steps, but the general process is to import the agent configuration files located in `.sdd_unified/agents/configs/`.
 
     The five agents to register are:
     *   `sdd-ba`
@@ -64,11 +73,11 @@ The framework is built on the following principles:
 
 ## 3. Core Concepts
 
-Understanding the following core concepts is essential to using SDD-Unified effectively.
+Understanding the following core concepts is essential to using SDD Unified effectively.
 
 ### The Five Specialized Agents
 
-SDD-Unified divides the development process among five AI agents, each with a distinct role and expertise.
+SDD Unified divides the development process among five AI agents, each with a distinct role and expertise.
 
 *   **`sdd-ba` (Business Analyst):** This agent's primary role is to translate user requests and business needs into formal specifications. It creates the initial `requirements.md` and `spec.yaml` files that form the foundation for the rest of the workflow.
 
@@ -82,7 +91,7 @@ SDD-Unified divides the development process among five AI agents, each with a di
 
 ### The Three Layers of Design
 
-The design process in SDD-Unified is structured into three layers, ensuring a gradual and thorough progression from a high-level concept to a detailed implementation plan.
+The design process in SDD Unified is structured into three layers, ensuring a gradual and thorough progression from a high-level concept to a detailed implementation plan.
 
 *   **L1: High-Level Architecture:** Created by the `sdd-architect`, this layer defines the macro-level structure of the system.
 *   **L2: Component Design:** Developed by the `sdd-pe`, this layer details the internal design of each component.
@@ -117,9 +126,9 @@ This iterative process ensures that no artifact proceeds to the next stage of de
 
 Seamless handoffs between agents are made possible through a `context.json` file. This file acts as a central manifest for a feature, containing all the key information, decisions, and artifacts generated throughout the workflow. When an agent completes a task, it updates the `context.json`, which is then passed to the next agent in the workflow, ensuring that every agent has the full context of what has been done and why.
 
-## 4. The SDD-Unified Workflow
+## 4. The SDD Unified Workflow
 
-The SDD-Unified workflow is a structured, multi-stage process that guides a feature from initial concept to final implementation. The following is a detailed breakdown of each step in the standard workflow.
+The SDD Unified workflow is a structured, multi-stage process that guides a feature from initial concept to final implementation. The following is a detailed breakdown of each step in the standard workflow.
 
 ### Step 1: Feature Initialization
 
@@ -233,28 +242,28 @@ Once all tasks have been implemented and approved, the feature is considered com
 
 ## 5. Project Scenarios and Best Practices
 
-SDD-Unified is a versatile framework that can be adapted to different project contexts. This section provides specific guidance for using it in greenfield (new) and brownfield (existing) projects, and how to manage the common challenge of specification drift.
+SDD Unified is a versatile framework that can be adapted to different project contexts. This section provides specific guidance for using it in greenfield (new) and brownfield (existing) projects, and how to manage the common challenge of specification drift.
 
-### Using SDD-Unified in Greenfield Projects
+### Using SDD Unified in Greenfield Projects
 
-Starting a new project from scratch is the ideal scenario for SDD-Unified, as you can establish a specification-driven culture from day one.
+Starting a new project from scratch is the ideal scenario for SDD Unified, as you can establish a specification-driven culture from day one.
 
 **Strategy:**
 
-1.  **Foundation First:** Use the SDD-Unified workflow to define the core architectural components of your application *before* writing significant amounts of business logic. This could include setting up the web server, defining the database schema, establishing the authentication layer, and creating the basic CI/CD pipeline.
+1.  **Foundation First:** Use the SDD Unified workflow to define the core architectural components of your application *before* writing significant amounts of business logic. This could include setting up the web server, defining the database schema, establishing the authentication layer, and creating the basic CI/CD pipeline.
 2.  **Define Core Patterns:** Have the `sdd-architect` and `sdd-pe` agents create and document the primary design patterns that will be used throughout the application (e.g., repository pattern, service layer, dependency injection setup). This creates a reusable and consistent structure for all future features.
-3.  **Build Feature by Feature:** Once the foundational infrastructure is in place, use the standard, end-to-end SDD-Unified workflow for every new feature. This ensures that your codebase grows in a structured and predictable way, with a corresponding specification for every piece of functionality.
+3.  **Build Feature by Feature:** Once the foundational infrastructure is in place, use the standard, end-to-end SDD Unified workflow for every new feature. This ensures that your codebase grows in a structured and predictable way, with a corresponding specification for every piece of functionality.
 4.  **Full Workflow:** For greenfield projects, always favor the full, five-agent workflow. The initial investment in a thorough design and review process will pay significant dividends in the long run by ensuring quality and consistency.
 
-### Using SDD-Unified in Brownfield Projects
+### Using SDD Unified in Brownfield Projects
 
-Integrating a specification-driven approach into an existing project requires a more nuanced strategy. The goal is to introduce the rigor of SDD-Unified without having to re-engineer the entire application at once.
+Integrating a specification-driven approach into an existing project requires a more nuanced strategy. The goal is to introduce the rigor of SDD Unified without having to re-engineer the entire application at once.
 
 **Strategy:**
 
-1.  **Start with New Features:** The easiest way to introduce SDD-Unified is to apply it only to *new* features. Do not attempt to retroactively create specifications for the entire existing codebase. Instead, let the specification-driven part of your application grow organically over time.
+1.  **Start with New Features:** The easiest way to introduce SDD Unified is to apply it only to *new* features. Do not attempt to retroactively create specifications for the entire existing codebase. Instead, let the specification-driven part of your application grow organically over time.
 2.  **"Bubble" Context:** For a new feature that needs to interact with the existing (non-specified) codebase, the `sdd-architect`'s first task should be to define the boundaries. The L1 architecture should explicitly document the interfaces between the new, SDD-managed components and the legacy parts of the system. This creates a "bubble" of specification-driven code within the larger application.
-3.  **Refactoring as a Feature:** If you need to refactor a part of the legacy codebase, treat the refactoring effort itself as a feature within SDD-Unified.
+3.  **Refactoring as a Feature:** If you need to refactor a part of the legacy codebase, treat the refactoring effort itself as a feature within SDD Unified.
     *   The `sdd-ba` would define the requirements (e.g., "The user authentication module must be refactored to use our new service pattern.").
     *   The `sdd-architect` would then analyze the existing code and design a new architecture for it.
     *   The rest of the workflow proceeds as normal, resulting in a newly refactored, fully specified component.
@@ -262,9 +271,9 @@ Integrating a specification-driven approach into an existing project requires a 
 
 ### Preventing Specification and Code Drift
 
-"Drift" occurs when the implementation (the code) no longer matches the specification. This is a common problem in software development, and SDD-Unified is specifically designed to prevent it.
+"Drift" occurs when the implementation (the code) no longer matches the specification. This is a common problem in software development, and SDD Unified is specifically designed to prevent it.
 
-**How SDD-Unified Prevents Drift:**
+**How SDD Unified Prevents Drift:**
 
 1.  **Code is a Downstream Product of the Spec:** The core principle of the framework is that code is *generated from* the specification. You should never manually change the code generated by the `sdd-coder` to add new functionality. If a change is needed, you must go back and modify the specification first. The workflow's structure enforces this discipline.
 2.  **The "Single Source of Truth":** The collection of `spec.yaml`, `l1_architecture.md`, `l2_component_design.md`, and task files are the single source of truth for how a feature is intended to work. The code is merely the implementation of that truth.
@@ -275,7 +284,7 @@ By adhering to the workflow, you treat your specifications and design documents 
 
 ## 6. Examples
 
-This section provides practical examples of how to apply the SDD-Unified workflow in different scenarios.
+This section provides practical examples of how to apply the SDD Unified workflow in different scenarios.
 
 ### Example 1: Greenfield Project - New User Authentication API
 
@@ -355,15 +364,15 @@ You can customize the workflow by editing the `workflow.json.template` file or b
 ### Troubleshooting
 
 *   **Agent Not Found:** If you get an error that an agent cannot be found, make sure that all the agents are properly registered in your AI coding assistant and that their names match the names in the workflow configuration.
-*   **Incorrect Output:** If an agent is producing unexpected or incorrect output, you can often guide it by providing more specific instructions in your prompts. You can also modify the agent's persona and instructions in the `.sdd-unified/agents/roles/` directory to fine-tune its behavior.
+*   **Incorrect Output:** If an agent is producing unexpected or incorrect output, you can often guide it by providing more specific instructions in your prompts. You can also modify the agent's persona and instructions in the `.sdd_unified/agents/roles/` directory to fine-tune its behavior.
 *   **Workflow Stuck in a Loop:** If a review cycle gets stuck in a loop of rejection and rework, you may need to intervene manually. This usually indicates that the instructions are not clear enough or that there is a fundamental disagreement between the goals of the different agents.
 
 ### Customization
 
-SDD-Unified is designed to be customizable. You can adapt the framework to your team's specific needs by:
+SDD Unified is designed to be customizable. You can adapt the framework to your team's specific needs by:
 
-*   **Modifying Agent Personas:** You can change the behavior of the agents by editing their persona files in `.sdd-unified/agents/roles/`.
-*   **Customizing Commands:** The prompts and instructions for each command can be modified in the `.sdd-unified/commands/` directory.
+*   **Modifying Agent Personas:** You can change the behavior of the agents by editing their persona files in `.sdd_unified/agents/roles/`.
+*   **Customizing Commands:** The prompts and instructions for each command can be modified in the `.sdd_unified/commands/` directory.
 *   **Creating New Workflow Templates:** You can create new workflow templates for different types of tasks (e.g., a "bug-fix" template, a "refactoring" template).
 
 ## 6. Reference
@@ -412,4 +421,3 @@ components:
 ```
 
 This schema can be extended and customized to fit the needs of your project.
-

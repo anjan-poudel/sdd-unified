@@ -1,4 +1,4 @@
-# sdd_unified/commands/architect/design-l1-rework.yaml
+# .sdd_unified/commands/architect/design-l1-rework.yaml
 
 file_path: "design/l1_architecture.md"
 prompt: |

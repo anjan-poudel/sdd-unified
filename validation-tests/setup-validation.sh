@@ -19,7 +19,7 @@ NC='\033[0m' # No Color
 
 # Check if we're in the right directory
 if [ ! -f "VALIDATION_MASTER_PLAN.md" ]; then
-    echo -e "${RED}ERROR: Run this script from sdd_unified/validation-tests/${NC}"
+    echo -e "${RED}ERROR: Run this script from sdd-unified/validation-tests/${NC}"
     exit 1
 fi
 

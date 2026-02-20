@@ -19,7 +19,7 @@ We'll create a minimal 3-task workflow to test:
 ### Step 1: Create Test Feature Structure
 
 ```bash
-cd sdd_unified/validation-tests
+cd sdd-unified/validation-tests
 mkdir -p phase2-test-workflow/{spec,design,review}
 cd phase2-test-workflow
 ```

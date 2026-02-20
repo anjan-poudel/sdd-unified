@@ -1,5 +1,11 @@
 # The Specification-Driven Development (SDD) Playbook
 
+> Legacy note: This playbook remains as historical workflow guidance.
+> For current production guidance, use:
+> - `../1_getting_started/day1_checklist.md`
+> - `../2_architecture/workflow_engine.md`
+> - `../2_architecture/pair_review_overlay.md`
+
 This playbook provides a comprehensive guide to the Specification-Driven Development (SDD) framework. It covers the core principles, architecture, workflow, and practical usage instructions to help you get started.
 
 ## 1. Introduction & Guiding Principles

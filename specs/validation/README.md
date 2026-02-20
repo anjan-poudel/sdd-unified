@@ -6,7 +6,7 @@
 
 ## Purpose
 
-This validation specification defines systematic tests to validate the sdd_unified framework's core assumptions before production deployment.
+This validation specification defines systematic tests to validate the sdd-unified framework's core assumptions before production deployment.
 
 ## Critical Assumptions to Validate
 
@@ -70,7 +70,7 @@ specs/
 ### Prerequisites
 
 - Claude Code installed (version: TBD)
-- sdd_unified configuration files copied to test project
+- sdd-unified configuration files copied to test project
 - All 5 agents registered in Claude Code
 - Test project directory created
 
@@ -190,4 +190,4 @@ Results will be documented in [`test_results.md`](test_results.md) with:
 
 **Document Version:** 1.0.0  
 **Last Updated:** 2025-10-16  
-**Maintained By:** sdd_unified Validation Team
+**Maintained By:** sdd-unified Validation Team

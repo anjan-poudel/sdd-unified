@@ -10,7 +10,7 @@ parameters:
     description: Feature name (default: current directory)
 
 execution:
-  entry_point: python3 sdd_unified/orchestrator/status.py
+  entry_point: python3 .sdd_unified/orchestrator/status.py
   args:
     - "{{feature_path}}"
 

@@ -1,5 +1,5 @@
 # Feature Specification: User Authentication
-# This file adheres to the schema defined in sdd_unified/spec/spec.schema.json
+# This file adheres to the schema defined in spec/spec.schema.json
 
 metadata:
   featureId: "auth-001"

@@ -1,4 +1,4 @@
-# sdd_unified/commands/coder/implement-code.yaml
+# .sdd_unified/commands/coder/implement-code.yaml
 
 # ⌨️ Coder: Implement Source Code
 # This command instructs the Coder to write the source code based on the L3 plan.

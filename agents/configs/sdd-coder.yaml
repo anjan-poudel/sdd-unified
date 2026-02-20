@@ -49,6 +49,6 @@ commands:
   - review-design-l3
 
 related_files:
-  - sdd_unified/commands/coder/execute-task.yaml
-  - sdd_unified/commands/coder/rework-task.yaml
-  - sdd_unified/commands/coder/review-design-l3.yaml
+  - .sdd_unified/commands/coder/execute-task.yaml
+  - .sdd_unified/commands/coder/rework-task.yaml
+  - .sdd_unified/commands/coder/review-design-l3.yaml

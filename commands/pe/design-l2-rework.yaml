@@ -1,4 +1,4 @@
-# sdd_unified/commands/pe/design-l2-rework.yaml
+# .sdd_unified/commands/pe/design-l2-rework.yaml
 
 file_path: "design/l2_component_design.md"
 prompt: |

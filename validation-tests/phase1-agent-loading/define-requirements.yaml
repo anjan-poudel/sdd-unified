@@ -1,4 +1,4 @@
-# sdd_unified/commands/ba/define-requirements.yaml
+# .sdd_unified/commands/ba/define-requirements.yaml
 
 # 📈 Business Analyst: Define Requirements
 # This command instructs the Business Analyst to create the spec.yaml file.

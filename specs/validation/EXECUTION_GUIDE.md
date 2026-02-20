@@ -21,12 +21,12 @@ If not installed, visit: [Claude Code Installation Guide]
 ### 2. SDD Unified Configuration
 
 ```bash
-# Verify sdd_unified is set up
-ls ~/sdd_unified/
+# Verify sdd-unified is set up
+ls ~/sdd-unified/
 # Should show: agents/, commands/, templates/
 
 # OR in project directory
-ls sdd_unified/
+ls sdd-unified/
 ```
 
 ### 3. Agent Registration
@@ -74,8 +74,13 @@ Execute in this order (Phase 1 is critical):
 mkdir -p ~/sdd-validation-test
 cd ~/sdd-validation-test
 
-# Copy sdd_unified configuration
-cp -r /path/to/sdd_unified/.sdd_unified .
+# Copy sdd-unified configuration
+mkdir -p .sdd_unified
+cp -r /path/to/sdd-unified/agents .sdd_unified/
+cp -r /path/to/sdd-unified/commands .sdd_unified/
+cp -r /path/to/sdd-unified/templates .sdd_unified/
+cp -r /path/to/sdd-unified/orchestrator .sdd_unified/
+cp -r /path/to/sdd-unified/spec .sdd_unified/
 
 # Create test feature directory
 mkdir -p features/validation-001/{spec,design,implementation,review}
@@ -307,7 +312,7 @@ mkdir -p ~/sdd-validation-test/results
 
 ```bash
 # Copy template
-cp sdd_unified/specs/validation/tasks/task-VXXX.md results/VXXX-results.md
+cp sdd-unified/specs/validation/tasks/task-VXXX.md results/VXXX-results.md
 
 # Fill in results section
 # Document:
@@ -362,8 +367,8 @@ which claude
 
 ```bash
 # Re-register agents
-claude agents register sdd_unified/agents/configs/sdd-ba.yaml
-claude agents register sdd_unified/agents/configs/sdd-architect.yaml
+claude agents register sdd-unified/agents/configs/sdd-ba.yaml
+claude agents register sdd-unified/agents/configs/sdd-architect.yaml
 # ... repeat for all agents
 ```
 
@@ -419,7 +424,7 @@ If validation fails or behavior is unclear:
 
 **Document Version:** 1.0.0  
 **Last Updated:** 2025-10-16  
-**Maintained By:** sdd_unified Validation Team
+**Maintained By:** sdd-unified Validation Team
 
 ## Quick Reference Commands
 

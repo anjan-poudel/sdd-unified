@@ -6,21 +6,26 @@
 
 > A configuration-driven orchestration system for specification-driven development (SDD) using agentic AI tools.
 
-## What is sdd_unified?
+## What is sdd-unified?
 
-sdd_unified is a **steering configuration layer** that makes agentic coding tools (like Claude Code or Roo Code) follow rigorous specification-driven development methodology.
+sdd-unified is a **steering configuration layer** that makes agentic coding tools (like Claude Code or Roo Code) follow rigorous specification-driven development methodology.
 
 **Think of it as:**
 - Agentic Tool (Claude Code) = Capable but undisciplined developer
-- sdd_unified = Rigorous development process they must follow
+- sdd-unified = Rigorous development process they must follow
 
 **Result:** Deterministic, verifiable, specification-driven development instead of ad-hoc code generation.
 
 ## Quick Start
 
 ```bash
-# 1. Copy configuration files
-cp -r sdd_unified/.sdd_unified /your/project/
+# 1. Copy framework files into your app repo
+mkdir -p /your/project/.sdd_unified
+cp -r /path/to/sdd-unified/agents /your/project/.sdd_unified/
+cp -r /path/to/sdd-unified/commands /your/project/.sdd_unified/
+cp -r /path/to/sdd-unified/templates /your/project/.sdd_unified/
+cp -r /path/to/sdd-unified/orchestrator /your/project/.sdd_unified/
+cp -r /path/to/sdd-unified/spec /your/project/.sdd_unified/
 
 # 2. Register agents in Claude Code
 # See docs/3_integration/claude_code.md
@@ -82,7 +87,7 @@ User Request
 └─────────────┬───────────────────┘
               ↓ consults
 ┌─────────────────────────────────┐
-│  sdd_unified (Configuration)     │
+│  sdd-unified (Configuration)     │
 │  - workflow.json (structure)     │
 │  - agents/*.yaml (personas)      │
 │  - commands/*.yaml (prompts)     │
@@ -101,19 +106,20 @@ User Request
 
 **Getting Started:**
 - [Quick Start Guide](docs/1_getting_started/quick_start.md) - 5 minute setup
-- [Feature Development Workflow](docs/1_getting_started/feature_development_workflow.md) - End-to-end guide
+- [Day 1 Checklist](docs/1_getting_started/day1_checklist.md) - First-session copy-paste setup and runbook
+- [Feature Development Guide](docs/4_guides/feature_development.md) - End-to-end execution path
 - [Claude Code Integration](docs/3_integration/claude_code.md) - Installation
 
 **Understanding the Framework:**
-- [Architecture Overview](docs/2_architecture/overview.md) - What is sdd_unified?
+- [Architecture Overview](docs/2_architecture/overview.md) - What is sdd-unified?
 - [Workflow Engine](docs/2_architecture/workflow_engine.md) - DAG execution
 - [Task-Driven Implementation](docs/2_architecture/task_driven_implementation.md) - BDD tasks
 - [Iterative Reviews](docs/2_architecture/iterative_reviews.md) - Review cycles
 - [Context Management](docs/2_architecture/context_management.md) - Agent handover
+- [Pair + Formal Review Overlay](docs/2_architecture/pair_review_overlay.md) - Pair-driven execution overlay on current DAG
 
 **Evaluation & Analysis:**
 - [Framework Assessment](docs/6_analysis/framework_assessment.md) - Honest evaluation
-- [Competitive Analysis](docs/6_analysis/competitive_analysis.md) - vs other frameworks
 
 ### Documentation Organization
 
@@ -132,7 +138,7 @@ docs/
 ## Project Structure
 
 ```
-sdd_unified/
+sdd-unified/
 ├── README.md                    # This file
 ├── ARCHITECTURE.md              # High-level design
 ├── PLAYBOOK.md                  # Operational guide
@@ -178,7 +184,7 @@ sdd_unified/
 12. Done         → Complete, reviewed code
 ```
 
-**See:** [Feature Development Workflow](docs/1_getting_started/feature_development_workflow.md)
+**See:** [Feature Development Guide](docs/4_guides/feature_development.md)
 
 ## Current Status
 
@@ -188,7 +194,7 @@ sdd_unified/
 - Task-driven BDD implementation design
 - Formal iterative review system
 - Context management for agent handover
-- Complete documentation (60+ pages)
+- Consolidated core documentation set
 
 ### ⚠️ Needs Validation
 - Claude Code can execute workflow.json as DAG
@@ -211,14 +217,14 @@ sdd_unified/
 
 | Framework | Type | Strengths | Limitations |
 |-----------|------|-----------|-------------|
-| **sdd_unified** | Config orchestration | DAG workflow, formal reviews, BDD tasks | Unvalidated |
+| **sdd-unified** | Config orchestration | DAG workflow, formal reviews, BDD tasks | Unvalidated |
 | spec-kit | Template library | Good templates | No orchestration |
 | BMAD | Process methodology | Business alignment | No automation |
 | a-sdd-starter | Shell scripts | Works today | Imperative, not declarative |
 | AgentOS | Platform | Flexible | Requires coding |
 | LangChain | LLM framework | Mature ecosystem | Not SDD-specific |
 
-**See:** [Competitive Analysis](docs/6_analysis/competitive_analysis.md) for full comparison.
+Competitive analysis is available in archived docs if needed.
 
 ## Installation
 
@@ -229,12 +235,17 @@ sdd_unified/
 ### Quick Install
 
 ```bash
-# 1. Clone or download sdd_unified
-git clone https://github.com/your-org/sdd_unified.git
+# 1. Clone or download sdd-unified
+git clone https://github.com/your-org/sdd-unified.git
 
 # 2. Copy to your project
 cd /your/project
-cp -r /path/to/sdd_unified/.sdd_unified .
+mkdir -p .sdd_unified
+cp -r /path/to/sdd-unified/agents .sdd_unified/
+cp -r /path/to/sdd-unified/commands .sdd_unified/
+cp -r /path/to/sdd-unified/templates .sdd_unified/
+cp -r /path/to/sdd-unified/orchestrator .sdd_unified/
+cp -r /path/to/sdd-unified/spec .sdd_unified/
 
 # 3. Register agents in Claude Code
 # (See integration guide for your specific tool)
@@ -256,7 +267,7 @@ cp -r /path/to/sdd_unified/.sdd_unified .
 
 **Method 2: Manual**
 ```bash
-mkdir -p features/feature-001-auth/{spec,design,implementation,review}
+mkdir -p features/feature-001-auth/{spec,design,implementation/tasks,review}
 cp .sdd_unified/templates/workflow.json.template features/feature-001-auth/workflow.json
 # Then follow workflow manually
 ```
@@ -264,7 +275,7 @@ cp .sdd_unified/templates/workflow.json.template features/feature-001-auth/workf
 ### Monitor Progress
 
 ```
-/sdd-status
+/feature-status
 ```
 
 Shows:
@@ -306,7 +317,7 @@ Contributions welcome! Areas needing help:
 4. **Examples** - More complete workflow examples
 5. **Integration Guides** - For other agentic tools
 
-**See:** [Enhancement Proposal](docs/6_analysis/enhancement_proposal.md)
+See active docs index for the core roadmap and contribution paths: [docs/INDEX.md](docs/INDEX.md)
 
 ## Known Limitations
 
@@ -350,7 +361,7 @@ Contributions welcome! Areas needing help:
 
 ## Credits
 
-Built by the sdd_unified team with inspiration from:
+Built by the sdd-unified team with inspiration from:
 - GitHub Actions (workflow DAG)
 - spec-kit (SDD templates)
 - a-sdd-starter (practical SDD)
@@ -358,7 +369,7 @@ Built by the sdd_unified team with inspiration from:
 
 ## Summary
 
-**sdd_unified provides:**
+**sdd-unified provides:**
 - ✅ Rigorous SDD methodology for AI agents
 - ✅ Declarative configuration (YAML/JSON)
 - ✅ Sophisticated quality gates (reviews + circuit breakers)

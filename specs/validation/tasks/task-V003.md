@@ -395,7 +395,7 @@ For each test:
 ## Notes
 
 - Third critical validation (completes Phase 1)
-- Context is key differentiator for sdd_unified
+- Context is key differentiator for sdd-unified
 - Without context, framework loses major value
 - Alternative state management possible if fails
 - Focus on practical usability

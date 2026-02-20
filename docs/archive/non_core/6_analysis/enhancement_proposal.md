@@ -10,7 +10,7 @@ This document proposes critical enhancements to address fundamental architectura
 
 ## Current Status
 
-sdd_unified v1.0.0-alpha provides:
+sdd-unified v1.0.0-alpha provides:
 - ✅ Declarative workflow DAG
 - ✅ Multi-agent orchestration  
 - ✅ Task-driven BDD implementation
@@ -90,7 +90,7 @@ validation_rules:
 
 #### 2. Schema Definition
 
-Versioned JSON schema at `sdd_unified/spec/spec.schema.json`:
+Versioned JSON schema at `sdd-unified/spec/spec.schema.json`:
 
 ```json
 {
@@ -432,7 +432,7 @@ These three enhancements address fundamental gaps:
 2. **Human-in-the-Loop** → Process integrity and quality assurance
 3. **Decoupled Runtime** → Extensibility and parallel processing
 
-Together, they transform sdd_unified from a proof-of-concept into a production-grade framework.
+Together, they transform sdd-unified from a proof-of-concept into a production-grade framework.
 
 **Recommended Action:** Implement Phase 1 immediately after core validation completes.
 
@@ -440,4 +440,4 @@ Together, they transform sdd_unified from a proof-of-concept into a production-g
 
 **Document Version:** 1.0.0  
 **Last Updated:** 2025-10-16  
-**Owner:** sdd_unified Enhancement Team
+**Owner:** sdd-unified Enhancement Team

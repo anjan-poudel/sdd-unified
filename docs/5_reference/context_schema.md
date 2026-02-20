@@ -6,7 +6,7 @@
 
 ## Overview
 
-The `context.json` file is the central state management artifact for each feature in sdd_unified. It tracks workflow state, agent handover notes, iteration counts, and circuit breaker status.
+The `context.json` file is the central state management artifact for each feature in sdd-unified. It tracks workflow state, agent handover notes, iteration counts, and circuit breaker status.
 
 ## Template Structure
 
@@ -19,7 +19,7 @@ The `context.json` file is the central state management artifact for each featur
   "context_sources": {
     "requirements": {
       "file": "spec/spec.yaml",
-      "schema": "sdd_unified/spec/spec.schema.json",
+      "schema": "sdd-unified/spec/spec.schema.json",
       "last_modified": null,
       "summary": ""
     },
@@ -274,4 +274,4 @@ See: [`context_management.md`](../2_architecture/context_management.md#complete-
 
 **Document Version:** 1.0.0  
 **Last Updated:** 2025-10-16  
-**Maintained By:** sdd_unified Technical Team
+**Maintained By:** sdd-unified Technical Team

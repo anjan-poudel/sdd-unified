@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-This validation plan tests the **critical assumption** that Claude Code can natively execute the sdd_unified framework's workflow.json as a DAG with agent switching and status management.
+This validation plan tests the **critical assumption** that Claude Code can natively execute the sdd-unified framework's workflow.json as a DAG with agent switching and status management.
 
 **If validation succeeds:** Framework is production-ready, no code dependencies needed
 **If validation fails:** Need orchestrator.py or significant architecture revision
@@ -73,7 +73,7 @@ This validation plan tests the **critical assumption** that Claude Code can nati
 
 2. **Repository cloned**
    ```bash
-   cd /Users/anjan/workspace/projects/SDD/sdd_unified
+   cd /Users/anjan/workspace/projects/SDD/sdd-unified
    ```
 
 3. **Time allocated**
@@ -133,7 +133,7 @@ Phase 3: End-to-End
 ## Critical Questions Being Answered
 
 ### Question 1: Pure Configuration Model Viable?
-**Can sdd_unified work without any Python/code dependencies?**
+**Can sdd-unified work without any Python/code dependencies?**
 
 **Phase 1 tests:** Agent loading from YAML
 **Phase 2 tests:** Workflow execution from JSON
@@ -444,7 +444,7 @@ Create these files as you progress:
 **You can start Phase 1 immediately** (30-60 minutes):
 
 ```bash
-cd /Users/anjan/workspace/projects/SDD/sdd_unified/validation-tests/phase1-agent-loading
+cd /Users/anjan/workspace/projects/SDD/sdd-unified/validation-tests/phase1-agent-loading
 
 # Follow the README.md step-by-step
 # This will answer the first critical question:
@@ -469,4 +469,4 @@ Before starting, clarify:
 
 ---
 
-**Good luck! This validation will definitively answer whether the sdd_unified framework works as designed.**
+**Good luck! This validation will definitively answer whether the sdd-unified framework works as designed.**
