@@ -47,5 +47,6 @@ Each feature should produce:
 - `context_management.md`
 - `iterative_reviews.md`
 - `pair_review_overlay.md`
+- `confidence_routing_overlay.md`
 
 Full historical version: `../archive/non_core/2_architecture/overview-full.md`
