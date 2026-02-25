@@ -1,0 +1,81 @@
+{
+  "feature_id": "fixture-t2-human-queue",
+  "risk_tier": "T2",
+  "policy_gate": {
+    "policy_version": "v1",
+    "auto_approve_enabled": false,
+    "auto_review_enabled": true,
+    "enforce_mandatory_evidence": true,
+    "requirement_coverage": {
+      "enabled": true,
+      "mode": "blocking",
+      "min_coverage_percent": 80,
+      "measured_percent": 85
+    },
+    "evidence": {
+      "design-l1": {
+        "acceptance_evidence": "PASS",
+        "verification_results": "PASS",
+        "operational_readiness": "PASS",
+        "requirement_coverage_percent": 85
+      }
+    }
+  },
+  "handover_notes": {
+    "history": [
+      {
+        "timestamp": "2026-02-22T10:35:49.732807+00:00",
+        "from_agent": "sdd-le",
+        "to_agent": "next-ready-task",
+        "task_completed": "route-review-l1",
+        "message": "Policy route task completed",
+        "critical_points": [],
+        "artifacts_created": []
+      }
+    ]
+  },
+  "execution_log": [
+    {
+      "timestamp": "2026-02-22T10:35:49.732803+00:00",
+      "task_id": "route-review-l1",
+      "agent": "sdd-le",
+      "command": "sdd-route-review-l1 --task_id=route-review-l1",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Policy route task completed"
+    }
+  ],
+  "runtime": {
+    "adapter": "shell",
+    "strict": false,
+    "timeout_seconds": 120,
+    "selected_adapter": "shell"
+  },
+  "review_routing": {
+    "phase": "design-l1",
+    "route_task_id": "route-review-l1",
+    "artifact": "design/l1_architecture.md",
+    "risk_tier": "T2",
+    "route": "HUMAN_QUEUE",
+    "failed_criteria": [],
+    "warnings": [],
+    "evidence_summary": {
+      "acceptance_evidence": "PASS",
+      "verification_results": "PASS",
+      "operational_readiness": "PASS",
+      "requirement_coverage": "PASS"
+    },
+    "rationale": [
+      "T2 policy requires human sign-off"
+    ],
+    "timestamp": "2026-02-22T10:35:49.731006+00:00",
+    "queue_id": "30f00b29-862c-480d-98cf-904ff22cc2e3",
+    "status": "PENDING",
+    "backend": "file",
+    "created_at": "2026-02-22T10:35:49.732168+00:00",
+    "human_decision": "GO",
+    "human_resolved_by": "principal",
+    "human_resolved_at": "2026-02-22T10:35:49.918285+00:00"
+  },
+  "last_updated": "2026-02-22T10:35:49.732794+00:00"
+}

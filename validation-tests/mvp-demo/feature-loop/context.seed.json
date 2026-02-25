@@ -1,0 +1,53 @@
+{
+  "feature_id": "mvp-feature-loop",
+  "risk_tier": "T1",
+  "policy_gate": {
+    "policy_version": "v1",
+    "auto_approve_enabled": false,
+    "auto_review_enabled": true,
+    "enforce_mandatory_evidence": true,
+    "human_queue": {
+      "enabled": true,
+      "backend": "file",
+      "pause_on_enqueue": true,
+      "file_path": "review/human_review_queue.json"
+    },
+    "requirement_coverage": {
+      "enabled": true,
+      "mode": "advisory",
+      "min_coverage_percent": 75,
+      "measured_percent": 70
+    },
+    "evidence": {
+      "design-l1": {
+        "acceptance_evidence": "PASS",
+        "verification_results": "PASS",
+        "operational_readiness": "NOT_REQUIRED",
+        "requirement_coverage_percent": 70
+      },
+      "design-l2": {
+        "acceptance_evidence": "PASS",
+        "verification_results": "PASS",
+        "operational_readiness": "NOT_REQUIRED",
+        "requirement_coverage_percent": 80
+      },
+      "design-l3": {
+        "acceptance_evidence": "PASS",
+        "verification_results": "PASS",
+        "operational_readiness": "NOT_REQUIRED",
+        "requirement_coverage_percent": 82
+      }
+    }
+  },
+  "handover_notes": {
+    "history": []
+  },
+  "execution_log": [],
+  "circuit_breaker": {
+    "max_review_iterations": 3,
+    "max_task_rework_iterations": 2,
+    "intervention_required": false,
+    "blocked_task": null,
+    "reason": null
+  }
+}

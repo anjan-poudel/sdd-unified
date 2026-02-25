@@ -1,12 +1,14 @@
 # Context.json Schema Reference
 
-**Version:** 1.0.0  
+**Version:** 1.1.0  
 **Status:** Technical Specification  
-**Last Updated:** 2025-10-16
+**Last Updated:** 2026-02-21
 
 ## Overview
 
 The `context.json` file is the central state management artifact for each feature in sdd-unified. It tracks workflow state, agent handover notes, iteration counts, and circuit breaker status.
+
+This schema also supports evidence-based policy routing metadata for review orchestration.
 
 ## Template Structure
 
@@ -101,6 +103,9 @@ The `context.json` file is the central state management artifact for each featur
 | `created_at` | ISO-8601 | When context was created |
 | `last_updated` | ISO-8601 | Last modification timestamp |
 | `current_phase` | string | Current workflow phase (init, requirements, l1_design, etc.) |
+| `risk_tier` | string | Risk classification (`T0|T1|T2`) |
+| `policy_gate` | object | Evidence gate policy (automation flags + tunable requirement coverage) |
+| `review_routing` | object | Latest routing outcome (`AUTO_APPROVE|AUTO_REVIEW|HUMAN_QUEUE|NO_GO`) |
 
 ### Context Sources
 
@@ -173,6 +178,37 @@ Controls iteration limits and human intervention.
 | `intervention_required` | boolean | True when limits exceeded |
 | `blocked_task` | string | Task ID that triggered circuit breaker |
 | `reason` | string | Why circuit breaker triggered |
+
+### Policy Gate (Extension)
+
+Controls evidence-based review routing.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `policy_version` | string | Policy config version |
+| `auto_approve_enabled` | boolean | Allows T0 auto-approve route |
+| `auto_review_enabled` | boolean | Allows automated review route |
+| `enforce_mandatory_evidence` | boolean | If true, missing mandatory evidence causes `NO_GO` |
+| `human_queue.enabled` | boolean | Enables human queue handoff for `HUMAN_QUEUE` decisions |
+| `human_queue.backend` | string | Queue backend (`file` default) |
+| `human_queue.pause_on_enqueue` | boolean | Pause autonomous execution after enqueue |
+| `human_queue.file_path` | string | Queue file path for file backend |
+| `requirement_coverage.enabled` | boolean | Toggle requirement coverage evaluation |
+| `requirement_coverage.mode` | string | `advisory` or `blocking` |
+| `requirement_coverage.min_coverage_percent` | number | Threshold when coverage is enabled |
+| `evidence` | object | Phase-keyed evidence inputs used by route tasks |
+
+### Review Routing (Extension)
+
+Captures the latest route decision produced by `route-review-*` tasks.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `phase` | string | Phase routed (`design-l1|design-l2|design-l3`) |
+| `route` | string | `AUTO_APPROVE|AUTO_REVIEW|HUMAN_QUEUE|NO_GO` |
+| `failed_criteria` | array | Criteria that failed gate checks |
+| `warnings` | array | Non-blocking warnings (for example advisory requirement coverage) |
+| `evidence_summary` | object | Pass/fail summary per criterion |
 
 ## Usage
 

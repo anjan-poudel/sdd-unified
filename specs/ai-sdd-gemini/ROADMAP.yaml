@@ -1,0 +1,56 @@
+version: "1.0"
+project: ai-sdd
+milestones:
+  - id: M1
+    name: "The Core Foundation"
+    phase: 1
+    description: "Extensible configurations and basic execution."
+    deliverables:
+      - id: M1.1
+        title: "YAML schemas for Agents and Workflows"
+      - id: M1.2
+        title: "Agent Loader (extends, LLM routing, hyperparams)"
+      - id: M1.3
+        title: "Workflow DAG parser and thin core orchestrator"
+      - id: M1.4
+        title: "Recursive Constitutions context aggregator"
+      - id: M1.5
+        title: "Default agents and standard SDD workflow templates"
+
+  - id: M2
+    name: "Safety & Evaluation"
+    phase: 2
+    description: "Guardrails and measurable task success."
+    deliverables:
+      - id: M2.1
+        title: "MAX_ITERATION and exit condition primitives"
+      - id: M2.2
+        title: "Human-in-the-loop (HIL) overlay"
+      - id: M2.3
+        title: "Evaluation Metrics & Confidence Score calculator"
+
+  - id: M3
+    name: "Advanced Overlays"
+    phase: 2
+    description: "Agentic interaction loops."
+    deliverables:
+      - id: M3.1
+        title: "Confidence Level Loop overlay"
+      - id: M3.2
+        title: "Agentic Review Loop overlay"
+      - id: M3.3
+        title: "Paired Workflow Loop overlay"
+      - id: M3.4
+        title: "Overlay configuration toggles (disabled by default)"
+
+  - id: M4
+    name: "SDK & Ecosystem"
+    phase: 3
+    description: "Programmatic control and developer experience."
+    deliverables:
+      - id: M4.1
+        title: "Workflow SDK"
+      - id: M4.2
+        title: "Example projects and templates"
+      - id: M4.3
+        title: "Tradeoff tuning documentation"

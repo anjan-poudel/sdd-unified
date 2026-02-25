@@ -1,0 +1,411 @@
+{
+  "feature_id": "mvp-feature-loop",
+  "risk_tier": "T1",
+  "policy_gate": {
+    "policy_version": "v1",
+    "auto_approve_enabled": false,
+    "auto_review_enabled": true,
+    "enforce_mandatory_evidence": true,
+    "human_queue": {
+      "enabled": true,
+      "backend": "file",
+      "pause_on_enqueue": true,
+      "file_path": "review/human_review_queue.json"
+    },
+    "requirement_coverage": {
+      "enabled": true,
+      "mode": "advisory",
+      "min_coverage_percent": 75,
+      "measured_percent": 70
+    },
+    "evidence": {
+      "design-l1": {
+        "acceptance_evidence": "PASS",
+        "verification_results": "PASS",
+        "operational_readiness": "NOT_REQUIRED",
+        "requirement_coverage_percent": 70
+      },
+      "design-l2": {
+        "acceptance_evidence": "PASS",
+        "verification_results": "PASS",
+        "operational_readiness": "NOT_REQUIRED",
+        "requirement_coverage_percent": 80
+      },
+      "design-l3": {
+        "acceptance_evidence": "PASS",
+        "verification_results": "PASS",
+        "operational_readiness": "NOT_REQUIRED",
+        "requirement_coverage_percent": 82
+      }
+    }
+  },
+  "handover_notes": {
+    "history": [
+      {
+        "timestamp": "2026-02-22T10:35:48.802674+00:00",
+        "from_agent": "sdd-ba",
+        "to_agent": "next-ready-task",
+        "task_completed": "define-requirements",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:48.859325+00:00",
+        "from_agent": "sdd-architect",
+        "to_agent": "next-ready-task",
+        "task_completed": "design-l1",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:48.861149+00:00",
+        "from_agent": "sdd-le",
+        "to_agent": "next-ready-task",
+        "task_completed": "route-review-l1",
+        "message": "Policy route task completed",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:48.918501+00:00",
+        "from_agent": "sdd-ba",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l1-ba",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:48.976182+00:00",
+        "from_agent": "sdd-pe",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l1-pe",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.037076+00:00",
+        "from_agent": "sdd-le",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l1-le",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.093942+00:00",
+        "from_agent": "sdd-architect",
+        "to_agent": "next-ready-task",
+        "task_completed": "design-l1-rework",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.149996+00:00",
+        "from_agent": "sdd-ba",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l1-ba",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.215203+00:00",
+        "from_agent": "sdd-pe",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l1-pe",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.272878+00:00",
+        "from_agent": "sdd-le",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l1-le",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.329643+00:00",
+        "from_agent": "sdd-pe",
+        "to_agent": "next-ready-task",
+        "task_completed": "design-l2",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.332163+00:00",
+        "from_agent": "sdd-le",
+        "to_agent": "next-ready-task",
+        "task_completed": "route-review-l2",
+        "message": "Policy route task completed",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.393692+00:00",
+        "from_agent": "sdd-architect",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l2-architect",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.453413+00:00",
+        "from_agent": "sdd-le",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l2-le",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.509553+00:00",
+        "from_agent": "sdd-le",
+        "to_agent": "next-ready-task",
+        "task_completed": "design-l3",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.511896+00:00",
+        "from_agent": "sdd-le",
+        "to_agent": "next-ready-task",
+        "task_completed": "route-review-l3",
+        "message": "Policy route task completed",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.569007+00:00",
+        "from_agent": "sdd-pe",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l3-pe",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      },
+      {
+        "timestamp": "2026-02-22T10:35:49.626184+00:00",
+        "from_agent": "sdd-coder",
+        "to_agent": "next-ready-task",
+        "task_completed": "review-l3-coder",
+        "message": "Command succeeded",
+        "critical_points": [],
+        "artifacts_created": []
+      }
+    ]
+  },
+  "execution_log": [
+    {
+      "timestamp": "2026-02-22T10:35:48.802670+00:00",
+      "task_id": "define-requirements",
+      "agent": "sdd-ba",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id define-requirements --agent sdd-ba --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:48.859321+00:00",
+      "task_id": "design-l1",
+      "agent": "sdd-architect",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l1 --agent sdd-architect --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:48.861145+00:00",
+      "task_id": "route-review-l1",
+      "agent": "sdd-le",
+      "command": "sdd-route-review-l1 --task_id=route-review-l1",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Policy route task completed"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:48.918496+00:00",
+      "task_id": "review-l1-ba",
+      "agent": "sdd-ba",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l1-ba --agent sdd-ba --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:48.976178+00:00",
+      "task_id": "review-l1-pe",
+      "agent": "sdd-pe",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l1-pe --agent sdd-pe --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.037071+00:00",
+      "task_id": "review-l1-le",
+      "agent": "sdd-le",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l1-le --agent sdd-le --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.093937+00:00",
+      "task_id": "design-l1-rework",
+      "agent": "sdd-architect",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l1-rework --agent sdd-architect --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.149991+00:00",
+      "task_id": "review-l1-ba",
+      "agent": "sdd-ba",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l1-ba --agent sdd-ba --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.215199+00:00",
+      "task_id": "review-l1-pe",
+      "agent": "sdd-pe",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l1-pe --agent sdd-pe --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.272873+00:00",
+      "task_id": "review-l1-le",
+      "agent": "sdd-le",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l1-le --agent sdd-le --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.329638+00:00",
+      "task_id": "design-l2",
+      "agent": "sdd-pe",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l2 --agent sdd-pe --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.332158+00:00",
+      "task_id": "route-review-l2",
+      "agent": "sdd-le",
+      "command": "sdd-route-review-l2 --task_id=route-review-l2",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Policy route task completed"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.393687+00:00",
+      "task_id": "review-l2-architect",
+      "agent": "sdd-architect",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l2-architect --agent sdd-architect --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.453408+00:00",
+      "task_id": "review-l2-le",
+      "agent": "sdd-le",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l2-le --agent sdd-le --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.509549+00:00",
+      "task_id": "design-l3",
+      "agent": "sdd-le",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l3 --agent sdd-le --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.511893+00:00",
+      "task_id": "route-review-l3",
+      "agent": "sdd-le",
+      "command": "sdd-route-review-l3 --task_id=route-review-l3",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Policy route task completed"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.569004+00:00",
+      "task_id": "review-l3-pe",
+      "agent": "sdd-pe",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l3-pe --agent sdd-pe --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    },
+    {
+      "timestamp": "2026-02-22T10:35:49.626179+00:00",
+      "task_id": "review-l3-coder",
+      "agent": "sdd-coder",
+      "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l3-coder --agent sdd-coder --feature-dir .",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "summary": "Command succeeded"
+    }
+  ],
+  "circuit_breaker": {
+    "max_review_iterations": 3,
+    "max_task_rework_iterations": 2,
+    "intervention_required": false,
+    "blocked_task": null,
+    "reason": null
+  },
+  "runtime": {
+    "adapter": "shell",
+    "strict": false,
+    "timeout_seconds": 120,
+    "selected_adapter": "shell"
+  },
+  "sim_state": {
+    "l1_rejected_once": true,
+    "l1_rework_done": true
+  },
+  "last_updated": "2026-02-22T10:35:49.626157+00:00",
+  "review_routing": {
+    "phase": "design-l3",
+    "route_task_id": "route-review-l3",
+    "artifact": "implementation/l3_plan.md",
+    "risk_tier": "T1",
+    "route": "AUTO_REVIEW",
+    "failed_criteria": [],
+    "warnings": [
+      "requirement_coverage below threshold or missing in advisory mode"
+    ],
+    "evidence_summary": {
+      "acceptance_evidence": "PASS",
+      "verification_results": "PASS",
+      "operational_readiness": "NOT_REQUIRED",
+      "requirement_coverage": "FAIL"
+    },
+    "rationale": [
+      "T1 policy routes to AUTO_REVIEW"
+    ],
+    "timestamp": "2026-02-22T10:35:49.510949+00:00"
+  }
+}

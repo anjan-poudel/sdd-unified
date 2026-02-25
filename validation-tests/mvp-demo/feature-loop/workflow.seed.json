@@ -1,0 +1,92 @@
+{
+  "init": {
+    "command": "echo 'init done'",
+    "status": "COMPLETED",
+    "dependencies": []
+  },
+  "define-requirements": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id define-requirements --agent sdd-ba --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["init"]
+  },
+  "design-l1": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l1 --agent sdd-architect --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["define-requirements"]
+  },
+  "route-review-l1": {
+    "command": "sdd-route-review-l1 --task_id=route-review-l1",
+    "status": "PENDING",
+    "dependencies": ["design-l1"]
+  },
+  "review-l1-ba": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l1-ba --agent sdd-ba --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["route-review-l1"]
+  },
+  "review-l1-pe": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l1-pe --agent sdd-pe --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["route-review-l1"]
+  },
+  "review-l1-le": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l1-le --agent sdd-le --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["route-review-l1"]
+  },
+  "design-l1-rework": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l1-rework --agent sdd-architect --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["review-l1-ba", "review-l1-pe", "review-l1-le"]
+  },
+  "design-l2": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l2 --agent sdd-pe --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["review-l1-ba", "review-l1-pe", "review-l1-le"]
+  },
+  "route-review-l2": {
+    "command": "sdd-route-review-l2 --task_id=route-review-l2",
+    "status": "PENDING",
+    "dependencies": ["design-l2"]
+  },
+  "review-l2-architect": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l2-architect --agent sdd-architect --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["route-review-l2"]
+  },
+  "review-l2-le": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l2-le --agent sdd-le --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["route-review-l2"]
+  },
+  "design-l2-rework": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l2-rework --agent sdd-pe --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["review-l2-architect", "review-l2-le"]
+  },
+  "design-l3": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l3 --agent sdd-le --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["review-l2-architect", "review-l2-le"]
+  },
+  "route-review-l3": {
+    "command": "sdd-route-review-l3 --task_id=route-review-l3",
+    "status": "PENDING",
+    "dependencies": ["design-l3"]
+  },
+  "review-l3-pe": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l3-pe --agent sdd-pe --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["route-review-l3"]
+  },
+  "review-l3-coder": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id review-l3-coder --agent sdd-coder --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["route-review-l3"]
+  },
+  "design-l3-rework": {
+    "command": "python3 ../../../orchestrator/sim_agent_task.py --task-id design-l3-rework --agent sdd-le --feature-dir .",
+    "status": "PENDING",
+    "dependencies": ["review-l3-pe", "review-l3-coder"]
+  }
+}

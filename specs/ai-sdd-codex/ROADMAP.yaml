@@ -1,0 +1,133 @@
+version: "0.1.0-draft"
+date: "2026-02-24"
+status: "draft"
+
+goals:
+  - id: G1
+    description: "Functional MVP with multi-agent orchestration, handovers, loops, overlays, and HIL fallback."
+  - id: G2
+    description: "Production hardening via reliability, security, observability, and governance tracks."
+
+milestones:
+  - id: M1
+    name: "Core Runtime"
+    outcome: "YAML pipeline runs end-to-end"
+    groups: [A, B, C, D]
+  - id: M2
+    name: "Safe Gates"
+    outcome: "HIL + evidence policy gate active"
+    groups: [E]
+  - id: M3
+    name: "Overlay Modes"
+    outcome: "Confidence/paired/review overlays operational"
+    groups: [F]
+  - id: M4
+    name: "Usability"
+    outcome: "CLI + config + adapters usable"
+    groups: [G]
+  - id: M5
+    name: "MVP Demo"
+    outcome: "Repeatable demo with docs/artifacts"
+    groups: [H]
+
+task_groups:
+  - id: A
+    name: "Agent Foundation"
+    exit_criteria:
+      - "Agent schema validates"
+      - "Default agents load"
+      - "Overrides/inheritance resolve"
+  - id: B
+    name: "Workflow Foundation"
+    exit_criteria:
+      - "DAG validation and cycle detection pass"
+      - "Topological execution verified"
+      - "Loop guards enforced"
+  - id: C
+    name: "Constitution Resolution"
+    exit_criteria:
+      - "Recursive merge deterministic"
+      - "Nearest override wins"
+  - id: D
+    name: "Core Engine and State"
+    exit_criteria:
+      - "Persisted state transitions"
+      - "Resume from checkpoint works"
+  - id: E
+    name: "Safety and Governance"
+    exit_criteria:
+      - "HIL default-on with file queue"
+      - "Evidence gate active"
+      - "Requirement coverage optional+tunable"
+      - "Risk tiers T0/T1/T2 route correctly"
+  - id: F
+    name: "Overlay Capabilities"
+    exit_criteria:
+      - "Overlays independently toggled"
+      - "Deterministic overlay composition"
+      - "Bounded loops with escalation"
+  - id: G
+    name: "CLI and Config DX"
+    exit_criteria:
+      - "run/resume/validate/hil commands work"
+      - "Config errors are actionable"
+  - id: H
+    name: "Demo and Verification"
+    exit_criteria:
+      - "Fresh clone demo run succeeds"
+      - "Expected artifacts produced"
+
+functional_mvp_definition:
+  - "Groups A-H complete at baseline depth"
+  - "Reference run shows handovers and bounded loops"
+  - "Evidence-based gate decisions are visible"
+  - "HIL fallback and queue lifecycle are demonstrable"
+
+production_readiness_tracks:
+  reliability:
+    - "retries/backoff/idempotency"
+    - "crash-safe resume"
+  security:
+    - "secret handling policy"
+    - "prompt/output sanitization"
+  observability:
+    - "structured logs/traces"
+    - "task metrics and alerts"
+  governance:
+    - "audit export"
+    - "risk-tier policy packs"
+
+sequencing_recommendation:
+  - "Complete A-D first"
+  - "Add E before expanding autonomy"
+  - "Implement F after policy/HIL stabilization"
+  - "Finalize G-H for MVP demonstration"
+
+risks:
+  - id: R1
+    risk: "Confidence overuse"
+    mitigation: "Never use confidence as standalone gate"
+  - id: R2
+    risk: "Noisy requirement coverage"
+    mitigation: "Keep requirement coverage optional and tunable"
+  - id: R3
+    risk: "Overlay interaction complexity"
+    mitigation: "Lock execution order and test composition matrix"
+
+status_tracking_template:
+  - group: A
+    status: planned
+  - group: B
+    status: planned
+  - group: C
+    status: planned
+  - group: D
+    status: planned
+  - group: E
+    status: planned
+  - group: F
+    status: planned
+  - group: G
+    status: planned
+  - group: H
+    status: planned

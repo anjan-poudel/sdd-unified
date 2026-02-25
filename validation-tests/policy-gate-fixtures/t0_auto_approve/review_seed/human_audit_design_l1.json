@@ -1,0 +1,6 @@
+{
+  "reviewerRole": "human-auditor",
+  "decision": "GO",
+  "status": "APPROVED",
+  "summary": "Audit agrees with low-risk automated approval."
+}

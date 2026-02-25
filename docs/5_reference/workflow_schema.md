@@ -12,6 +12,8 @@ Core task fields:
 - `status` (`PENDING|READY|RUNNING|COMPLETED|FAILED`)
 - `dependencies` (string array of task IDs)
 
+Route gate tasks are supported as standard workflow tasks (for example, `route-review-l1`, `route-review-l2`, `route-review-l3`) and use the same schema.
+
 ## Example Task
 
 ```json

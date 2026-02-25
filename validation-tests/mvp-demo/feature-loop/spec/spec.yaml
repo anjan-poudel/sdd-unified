@@ -1,0 +1,11 @@
+{
+  "metadata": {
+    "featureId": "feature-loop"
+  },
+  "functionalRequirements": [
+    {
+      "id": "REQ-001",
+      "description": "Loop behavior"
+    }
+  ]
+}

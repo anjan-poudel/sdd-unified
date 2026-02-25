@@ -1,0 +1,21 @@
+{
+  "phase": "design-l3",
+  "route_task_id": "route-review-l3",
+  "artifact": "implementation/l3_plan.md",
+  "risk_tier": "T1",
+  "route": "AUTO_REVIEW",
+  "failed_criteria": [],
+  "warnings": [
+    "requirement_coverage below threshold or missing in advisory mode"
+  ],
+  "evidence_summary": {
+    "acceptance_evidence": "PASS",
+    "verification_results": "PASS",
+    "operational_readiness": "NOT_REQUIRED",
+    "requirement_coverage": "FAIL"
+  },
+  "rationale": [
+    "T1 policy routes to AUTO_REVIEW"
+  ],
+  "timestamp": "2026-02-22T10:35:49.510949+00:00"
+}

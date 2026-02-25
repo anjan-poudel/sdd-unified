@@ -1,0 +1,9 @@
+{
+  "featureId": "feature-loop",
+  "artifactReviewed": "design/l2_component_design.md",
+  "reviewerRole": "sdd-le",
+  "status": "APPROVED",
+  "decision": "GO",
+  "timestamp": "2026-02-22T10:35:49.447809+00:00",
+  "summary": "Approved"
+}

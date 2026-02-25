@@ -24,6 +24,7 @@ This is the canonical navigation for active docs.
 - `4_guides/feature_development.md`
 - `4_guides/agent_roles.md`
 - `4_guides/best_practices.md`
+- `4_guides/mvp_runbook.md`
 - `4_guides/troubleshooting.md`
 
 ## Core Reference

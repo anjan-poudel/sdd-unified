@@ -59,6 +59,25 @@ This validation plan tests the **critical assumption** that Claude Code can nati
 
 → [Phase 3 Guide](phase3-end-to-end/README.md)
 
+### Phase 4: Policy Gate Routing + Audit Metrics (30-60 min)
+**Tests:** Validate evidence-based routing for `T0/T1/T2` and audit disagreement reporting.
+
+- Run deterministic fixtures for all three risk tiers
+- Verify route distribution (`AUTO_APPROVE`, `AUTO_REVIEW`, `HUMAN_QUEUE`)
+- Verify human-audit disagreement metric pipeline
+
+→ [Policy Gate Fixtures](policy-gate-fixtures/README.md)
+
+### MVP Demonstration Bundle (30-60 min)
+**Tests:** Demonstrate concepts in one runnable flow.
+
+- Multi-agent sequence + handover logs
+- Rejection/rework loop
+- Optional human queue resolution
+- Metrics export
+
+→ [MVP Demo](mvp-demo/README.md)
+
 ---
 
 ## Quick Start
@@ -102,6 +121,13 @@ cd ../phase2-workflow-execution
 cd ../phase3-end-to-end
 # Follow README.md - full feature development
 # This is the comprehensive test
+```
+
+**Day 2/3: Phase 4** (after Phase 3)
+```bash
+cd ../policy-gate-fixtures
+bash run-fixtures.sh
+cat results/audit_metrics.json
 ```
 
 ---

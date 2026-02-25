@@ -1,0 +1,28 @@
+name: MVP CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  mvp-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Orchestrator Tests
+        run: python3 -m unittest discover -s orchestrator -p 'test_*.py' -v
+
+      - name: Run MVP Demo
+        run: bash validation-tests/mvp-demo/run-mvp-demo.sh
+
+      - name: Verify MVP Acceptance
+        run: python3 validation-tests/mvp-demo/verify_mvp_acceptance.py

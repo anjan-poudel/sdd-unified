@@ -1,0 +1,6 @@
+{
+  "reviewerRole": "human-auditor",
+  "decision": "NO_GO",
+  "status": "REJECTED_WITH_FEEDBACK",
+  "summary": "Audit found missing rollback detail despite automated GO."
+}

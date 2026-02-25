@@ -3,6 +3,11 @@
   "artifactReviewed": "{{ artifactPath }}",
   "reviewerRole": "{{ reviewerRole }}",
   "status": "{{ status }}",
+  "route": "{{ route }}",
+  "risk_tier": "{{ riskTier }}",
+  "evidence_summary": {{ evidenceSummary }},
+  "failed_criteria": {{ failedCriteria }},
+  "required_rework": {{ requiredRework }},
   "timestamp": "{{ timestamp }}",
   "summary": "{{ summary }}"
 }

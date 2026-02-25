@@ -1,0 +1,22 @@
+{
+  "feature_id": "fixture-t0-auto-approve",
+  "risk_tier": "T0",
+  "policy_gate": {
+    "policy_version": "v1",
+    "auto_approve_enabled": true,
+    "auto_review_enabled": true,
+    "enforce_mandatory_evidence": true,
+    "requirement_coverage": {
+      "enabled": false,
+      "mode": "advisory",
+      "min_coverage_percent": 80
+    },
+    "evidence": {
+      "design-l1": {
+        "acceptance_evidence": "PASS",
+        "verification_results": "PASS",
+        "operational_readiness": "NOT_REQUIRED"
+      }
+    }
+  }
+}

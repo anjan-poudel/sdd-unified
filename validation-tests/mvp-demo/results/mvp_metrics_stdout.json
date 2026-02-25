@@ -1,0 +1,17 @@
+{
+  "features_scanned": 6,
+  "routes_total": 4,
+  "route_distribution": {
+    "AUTO_APPROVE": 0,
+    "AUTO_REVIEW": 3,
+    "HUMAN_QUEUE": 1,
+    "NO_GO": 0,
+    "UNKNOWN": 0
+  },
+  "rework_events_completed": 1,
+  "handover_events": 19,
+  "audit_comparisons": 0,
+  "audit_disagreements": 0,
+  "audit_disagreement_rate": null,
+  "compared_items": []
+}

@@ -1,0 +1,45 @@
+{
+  "init": {
+    "command": "echo 'init complete'",
+    "status": "COMPLETED",
+    "dependencies": []
+  },
+  "design-l1": {
+    "command": "sdd-architect-design-l1 --task_id=design-l1",
+    "status": "COMPLETED",
+    "dependencies": [
+      "init"
+    ]
+  },
+  "route-review-l1": {
+    "command": "sdd-route-review-l1 --task_id=route-review-l1",
+    "status": "COMPLETED",
+    "dependencies": [
+      "design-l1"
+    ]
+  },
+  "review-l1-ba": {
+    "command": "sdd-ba-review-design-l1 --task_id=review-l1-ba",
+    "status": "COMPLETED",
+    "dependencies": [
+      "route-review-l1"
+    ],
+    "human_resolved_by": "principal"
+  },
+  "review-l1-pe": {
+    "command": "sdd-pe-review-design-l1 --task_id=review-l1-pe",
+    "status": "COMPLETED",
+    "dependencies": [
+      "route-review-l1"
+    ],
+    "human_resolved_by": "principal"
+  },
+  "review-l1-le": {
+    "command": "sdd-le-review-design-l1 --task_id=review-l1-le",
+    "status": "COMPLETED",
+    "dependencies": [
+      "route-review-l1"
+    ],
+    "human_resolved_by": "principal"
+  }
+}

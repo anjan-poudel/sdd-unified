@@ -1,0 +1,19 @@
+{
+  "phase": "design-l1",
+  "route_task_id": "route-review-l1",
+  "artifact": "design/l1_architecture.md",
+  "risk_tier": "T2",
+  "route": "HUMAN_QUEUE",
+  "failed_criteria": [],
+  "warnings": [],
+  "evidence_summary": {
+    "acceptance_evidence": "PASS",
+    "verification_results": "PASS",
+    "operational_readiness": "PASS",
+    "requirement_coverage": "PASS"
+  },
+  "rationale": [
+    "T2 policy requires human sign-off"
+  ],
+  "timestamp": "2026-02-22T10:35:49.731006+00:00"
+}

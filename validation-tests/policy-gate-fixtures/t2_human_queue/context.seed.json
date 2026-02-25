@@ -1,0 +1,24 @@
+{
+  "feature_id": "fixture-t2-human-queue",
+  "risk_tier": "T2",
+  "policy_gate": {
+    "policy_version": "v1",
+    "auto_approve_enabled": false,
+    "auto_review_enabled": true,
+    "enforce_mandatory_evidence": true,
+    "requirement_coverage": {
+      "enabled": true,
+      "mode": "blocking",
+      "min_coverage_percent": 80,
+      "measured_percent": 85
+    },
+    "evidence": {
+      "design-l1": {
+        "acceptance_evidence": "PASS",
+        "verification_results": "PASS",
+        "operational_readiness": "PASS",
+        "requirement_coverage_percent": 85
+      }
+    }
+  }
+}
