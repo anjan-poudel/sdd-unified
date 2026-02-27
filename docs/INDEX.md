@@ -18,6 +18,7 @@ This is the canonical navigation for active docs.
 - `2_architecture/context_management.md`
 - `2_architecture/pair_review_overlay.md`
 - `2_architecture/confidence_routing_overlay.md`
+- `2_architecture/elderassist_execution_visualization.md`
 
 ## Core Operations
 
