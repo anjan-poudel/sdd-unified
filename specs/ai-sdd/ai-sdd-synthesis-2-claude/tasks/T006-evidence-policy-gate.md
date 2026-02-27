@@ -150,4 +150,6 @@ tasks:
 ## Rollback/Fallback
 
 - If evidence collection fails (e.g., test runner unavailable), the gate fails with reason "evidence collection error".
-- Gate failure does not corrupt state; task remains RUNNING until rework produces passing evidence.
+- Gate failure transitions task to `NEEDS_REWORK` (not left in `RUNNING`).
+  `NEEDS_REWORK` → agent reruns with gate failure reason injected into context.
+  `NEEDS_REWORK` after max rework iterations → `FAILED`.

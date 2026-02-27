@@ -90,6 +90,24 @@ Feature: Core engine execution
 
 ---
 
+## Task State Machine
+
+```
+PENDING ──► RUNNING ──► COMPLETED
+                │
+                ├──► NEEDS_REWORK ──► RUNNING  (rework loop)
+                │         └──────────► FAILED  (max rework iterations)
+                │
+                ├──► HIL_PENDING ──► RUNNING   (HIL resolved)
+                │         └──────────► FAILED  (HIL rejected)
+                │
+                └──► FAILED
+```
+
+- `NEEDS_REWORK`: set by evidence gate failure or reviewer NO_GO. Never `RUNNING` after gate fail.
+- `HIL_PENDING`: set when requires_human, loop exhaustion, or T2 gate awaiting sign-off.
+- Allowed transitions are enforced by `state_manager.py`; invalid transitions raise `StateError`.
+
 ## State File Schema
 
 ```json

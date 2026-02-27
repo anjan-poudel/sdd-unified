@@ -62,7 +62,9 @@ Feature: CLI
 
   Scenario: Init installs tool integration files
     When `ai-sdd init --tool claude_code --project /path/to/project` is executed
-    Then .claude/commands/sdd-*.md slash command files are copied to the project
+    Then .claude/agents/sdd-*.md subagent files are copied (one per SDD role)
+    And .claude/skills/sdd-run/SKILL.md orchestrating skill is copied
+    And .claude/skills/sdd-status/SKILL.md status skill is copied
     And CLAUDE.md template is added (or appended) to the project root
     And .ai-sdd/ config directory is created if absent
 
@@ -71,10 +73,13 @@ Feature: CLI
     Then .roomodes is copied to the project root
     And .roo/mcp.json is created with the ai-sdd MCP server config
 
-  Scenario: Init for OpenAI/Codex
-    When `ai-sdd init --tool openai --project /path/to/project` is executed
+  Scenario: Init for Codex CLI
+    When `ai-sdd init --tool codex --project /path/to/project` is executed
     Then AGENTS.md template is added to the project root
     And .ai-sdd/ config is created if absent
+    Note: --tool controls CLI UX path (AGENTS.md vs slash commands).
+          adapter.type: openai in ai-sdd.yaml controls the API runtime path.
+          These are independent settings.
 
   Scenario: MCP server starts on serve command
     When `ai-sdd serve --mcp` is executed
@@ -191,7 +196,8 @@ ai-sdd run --step                    # pause after each task for operator review
 # Status and monitoring
 ai-sdd status                        # show all task statuses
 ai-sdd status --metrics              # include tokens, cost, duration per task
-ai-sdd status --json                 # machine-readable JSON output
+ai-sdd status --json                 # machine-readable JSON (full workflow state)
+ai-sdd status --next --json          # JSON of next READY task(s) only; used by MCP get_next_task()
 
 # Configuration
 ai-sdd validate-config               # validate all YAML configs, no execution
@@ -204,9 +210,16 @@ ai-sdd hil show <item-id>            # show item context
 ai-sdd hil resolve <item-id>         # resolve (unblock task)
 ai-sdd hil reject <item-id>          # reject (fail task)
 
+# Task completion (used by MCP server — atomic write + validate + advance)
+ai-sdd complete-task --task <task-id> --output-path <path> --content-file <tmp>
+                                     # 1. validates path against allowlist
+                                     # 2. runs security sanitization
+                                     # 3. validates artifact contract
+                                     # 4. atomically writes file + advances state + updates manifest
+
 # Project setup
 ai-sdd init --tool <name> --project <path>   # install tool integration files
-                                             # <name>: claude_code | openai | roo_code
+                                             # <name>: claude_code | codex | roo_code
 
 # MCP server (for Roo Code / Claude Code MCP client)
 ai-sdd serve --mcp                   # start MCP server (default port 3000)

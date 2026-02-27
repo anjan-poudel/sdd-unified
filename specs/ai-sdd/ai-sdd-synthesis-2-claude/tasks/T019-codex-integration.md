@@ -72,28 +72,57 @@ Feature: OpenAI / Codex integration
 
 ### 1. AGENTS.md Template (for codex CLI)
 
-The `codex` CLI reads project instructions from a markdown file in the repo root.
-This is its native equivalent of Claude Code's `CLAUDE.md`.
+The `codex` CLI reads `AGENTS.md` from the project root on startup — equivalent to
+Claude Code's `CLAUDE.md`. The key difference from CLAUDE.md is that `AGENTS.md`
+contains an **autonomous workflow loop** instruction. Once `codex` starts, it runs
+the entire SDD workflow without the developer typing any further commands — only
+answering questions and approving HIL gates.
 
 ```markdown
 # AGENTS.md
 
-## Project Methodology
+## Project
 This project uses ai-sdd for Specification-Driven Development.
-Workflow state: `.ai-sdd/state/workflow-state.json`
-Artifact manifest: see `## Workflow Artifacts` in `constitution.md`
+Stack: TypeScript, NestJS, Prisma, PostgreSQL, Jest, Docker Compose.
 
-## How to Work
-- Run `ai-sdd status` to see the next task.
-- Read `constitution.md` to find available artifacts and your role.
-- Use shell tools to read input artifacts from the paths listed in the manifest.
-- Write output artifacts to the declared paths.
-- Run `ai-sdd run --task <task-id>` when a task is complete.
+## Autonomous Workflow Loop
+When you start, immediately enter this loop and keep running until the workflow
+is complete or the developer explicitly asks you to stop:
 
-## SDD Rules
-- Write acceptance criteria in Gherkin format.
-- Justify decisions against requirements.
-- Stay within your assigned agent role's scope.
+1. Run `ai-sdd status --json` to find the next READY task and its required agent role.
+2. Read `constitution.md` to get the project context and artifact manifest.
+3. The `ai-sdd status --json` output includes an `agent` field for each READY task.
+   Use the `agent` field to determine your role — do not infer it from the task name.
+   Role descriptions:
+   - agent: ba       → Business Analyst: requirements.md with Gherkin ACs
+   - agent: architect → Architect: design/l1.md (modules, REST API, schema outline)
+   - agent: pe       → Principal Engineer: design/l2.md (component specs, DTOs)
+   - agent: le       → Lead Engineer: implementation/tasks/*.md with Gherkin ACs
+   - agent: dev      → Developer: TypeScript implementation + Jest tests
+   - agent: reviewer → Reviewer: GO/NO_GO decision against constitution Standards
+
+   Note: multiple tasks may be READY simultaneously (e.g. review-l1-ba, review-l1-pe,
+   review-l1-le all become READY after design-l1). Execute them one at a time in the
+   order returned by ai-sdd status.
+4. Read the input artifacts listed in the manifest for your current task.
+5. Execute the task: produce and write the required output artifact.
+6. Run `ai-sdd run --task <task-id>` to advance the workflow.
+7. Run `ai-sdd hil list --json` to check for pending approvals.
+   If PENDING: present the item to the developer and wait for their decision.
+   On approval: run `ai-sdd hil resolve <id>`.
+   On rejection: run `ai-sdd hil reject <id> --reason "<reason>"`.
+8. Return to step 1.
+
+## Role Rules
+- Business Analyst: do not write code.
+- Architect: do not write implementation code or migrations.
+- Reviewer: do not modify artifacts; issue GO/NO_GO only.
+- Developer: write Jest tests before implementation. TypeScript strict mode.
+
+## SDD Standards
+- Gherkin acceptance criteria on all requirements.
+- First-principles justification for architectural decisions.
+- ESLint + Prettier enforced; Jest 80% minimum coverage.
 ```
 
 ### 2. CodexAdapter (OpenAI API direct)

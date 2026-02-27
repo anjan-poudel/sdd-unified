@@ -205,5 +205,10 @@ def is_compatible(producer: str, consumer: str) -> bool:
 ## Rollback/Fallback
 
 - Contract validation failure at load time: emit error, do not execute.
-- Runtime output validation failure: mark FAILED, persist state, do not advance.
-- If artifact schema registry is missing: warn and skip contract validation (backward compat for existing workflows).
+- Runtime output validation failure: mark NEEDS_REWORK, persist state, do not advance.
+- If artifact schema registry is missing **and any task declares a contract**: hard startup
+  error — "artifact schema registry not found but contracts are declared. Cannot validate."
+- If artifact schema registry is missing **and no tasks declare contracts**: warn once at
+  startup and continue (pure backward-compat mode for untyped legacy workflows).
+- To explicitly allow mixed typed/untyped: pass `--allow-legacy-untyped-artifacts` flag.
+  This must never be the silent default for new projects.

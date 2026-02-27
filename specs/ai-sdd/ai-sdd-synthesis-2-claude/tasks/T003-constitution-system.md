@@ -167,5 +167,11 @@ Merge strategy:
 
 ## Rollback/Fallback
 
-- Malformed constitution file: log warning, skip that level — do not fail the workflow.
-- Manifest write failure: log warning, continue — manifest is observability, not workflow state.
+- **Project root `constitution.md` malformed**: hard startup error — "root constitution is
+  malformed; fix before running". Silently dropping the root layer could silently remove
+  governance rules. Fail fast.
+- **Submodule `constitution.md` malformed**: warn and skip that layer. Submodule layers
+  are supplemental; dropping one is lower-risk than dropping the root.
+- To allow permissive mode for all layers (e.g. gradual adoption): set
+  `constitution.strict_parse: false` in `ai-sdd.yaml`. Off by default for new projects.
+- Manifest write failure: log warning, continue — manifest is observability, not state.

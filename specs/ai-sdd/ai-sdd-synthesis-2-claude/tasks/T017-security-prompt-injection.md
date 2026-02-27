@@ -62,9 +62,10 @@ Feature: Security baseline
     And none reach the agent context
 
   Scenario: Custom secret patterns configured
-    Given ai-sdd.yaml with observability.secret_patterns: ["MY_SECRET_[A-Z]+"]
-    When a log event contains a string matching the pattern
+    Given ai-sdd.yaml with security.secret_patterns: ["MY_SECRET_[A-Z]+"]
+    When a log event or artifact output contains a string matching the pattern
     Then it is replaced with "[REDACTED:CUSTOM]"
+    Note: secret patterns live under security.* — observability consumes them from there.
 ```
 
 ---
@@ -123,11 +124,11 @@ Runs on all task outputs and state file writes:
 ```yaml
 # ai-sdd.yaml
 security:
-  allow_external_urls_in_outputs: false   # prevent LLM from including external URLs in task outputs
+  allow_external_urls_in_outputs: false
   require_output_sanitization: true
-  injection_detection_level: warn         # pass | warn | quarantine
-  custom_secret_patterns:
-    - "MY_PROJECT_TOKEN_[A-Z]+"
+  injection_detection_level: warn      # pass | warn | quarantine
+  secret_patterns:                     # all secret redaction patterns live HERE
+    - "MY_PROJECT_TOKEN_[A-Z]+"        # consumed by both sanitizer and observability emitter
 ```
 
 ---

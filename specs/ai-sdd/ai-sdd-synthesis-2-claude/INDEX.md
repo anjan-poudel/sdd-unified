@@ -15,6 +15,8 @@
 | [ROADMAP.md](ROADMAP.md) | Milestones, task groups, effort, critical path, MVP gate |
 | [GAPS-ANALYSIS.md](GAPS-ANALYSIS.md) | 10 gaps found + solutions + prioritized remediation |
 | [TASK-VISUALIZATION.md](TASK-VISUALIZATION.md) | Full task dependency graph + greenfield & brownfield project walkthroughs |
+| [CONTRACTS.md](CONTRACTS.md) | Canonical contracts appendix: tool names, task states, idempotency keys, CLI flags, transaction boundaries |
+| [REVIEW-FEEDBACK.md](REVIEW-FEEDBACK.md) | Codex review of this synthesis — 9 findings, all addressed |
 
 ---
 

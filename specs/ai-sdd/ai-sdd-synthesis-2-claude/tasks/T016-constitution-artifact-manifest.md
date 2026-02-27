@@ -122,15 +122,9 @@ def write_artifact_manifest(constitution_path: Path, workflow_state: WorkflowSta
             manifest_lines.append(
                 f"| {task_id} | {output.description} | {output.path} | {task.status} |"
             )
-    manifest_lines += [
-        "",
-        "## Reading Convention",
-        "<!-- AUTO-GENERATED -->",
-        "Read only the artifacts relevant to your current task using your native tools.",
-        "Do not pre-load all artifacts.",
-    ]
-
     _replace_section(constitution_path, "## Workflow Artifacts", manifest_lines)
+    # Engine owns ONLY ## Workflow Artifacts.
+    # ## Reading Convention is user-authored in constitution.md and never touched.
 ```
 
 The writer is registered as a `post_task` hook in the engine:
@@ -140,11 +134,15 @@ engine.on_post_task("*", manifest_writer.write_artifact_manifest)
 
 ---
 
-## Reading Convention Customization
+## Manifest Ownership Contract
 
-Teams can customize the Reading Convention text in their project constitution. The engine only
-replaces the `## Workflow Artifacts` table — it leaves any manually written Reading Convention
-content above it untouched if the section already exists.
+The engine owns **exactly one section**: `## Workflow Artifacts`.
+It never reads, writes, or touches any other section in constitution.md.
+
+`## Reading Convention` is user-authored. Teams write it once at project init and
+the engine never modifies it. This avoids the ambiguity of "engine owns both but
+preserves user edits" — there are no user edits to the manifest, and the engine
+has no opinion about how agents should read artifacts.
 
 For Claude Code projects, the reading convention should reference Claude Code's native tools:
 ```markdown

@@ -54,13 +54,18 @@ Feature: Adapter reliability contract
     And the state file is updated atomically
     And all retry attempts are logged in observability
 
-  Scenario: Idempotency key prevents duplicate execution
-    Given a task dispatched with idempotency_key="workflow-xyz:task-design-l1:run-1"
-    When the adapter crashes after dispatch but before receiving response
-    And the engine retries the same task (resume)
-    Then the idempotency key is re-used
-    And if the provider supports deduplication, the same result is returned
-    And no duplicate LLM call is made
+  Scenario: operation_id is stable across retries — enables provider dedup
+    Given a task dispatched with operation_id="workflow-xyz:task-design-l1:run-uuid"
+    When the adapter crashes after dispatch and the engine retries
+    Then the same operation_id is reused on retry
+    And the provider deduplicates the call if it supports idempotency headers
+    And no duplicate LLM execution occurs
+
+  Scenario: attempt_id changes per retry — enables attempt-level tracing
+    Given a task being retried for the 2nd time
+    Then attempt_id = operation_id + ":attempt_2"
+    And both operation_id and attempt_id are logged in observability
+    And only operation_id is sent to the provider as the idempotency header
 
   Scenario: Mock and real adapter conform to same contract
     Given the MockRuntimeAdapter and ClaudeCodeAdapter
@@ -110,9 +115,15 @@ class RuntimeAdapter(ABC):
         """
         ...
 
-    def generate_idempotency_key(self, workflow_id: str, task_id: str,
-                                  run_id: str, attempt: int) -> str:
-        return f"{workflow_id}:{task_id}:{run_id}:{attempt}"
+    def operation_id(self, workflow_id: str, task_id: str,
+                     task_run_id: str) -> str:
+        """Stable across retries and resume. Sent to provider as idempotency key."""
+        return f"{workflow_id}:{task_id}:{task_run_id}"
+
+    def attempt_id(self, workflow_id: str, task_id: str,
+                   task_run_id: str, attempt: int) -> str:
+        """Changes per retry. Used for attempt-level observability only."""
+        return f"{workflow_id}:{task_id}:{task_run_id}:attempt_{attempt}"
 ```
 
 ---

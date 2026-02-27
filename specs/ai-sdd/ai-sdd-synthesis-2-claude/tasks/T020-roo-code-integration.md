@@ -39,24 +39,27 @@ Feature: Roo Code native integration
     Then modes sdd-ba, sdd-architect, sdd-pe, sdd-le, sdd-dev, sdd-reviewer are available
     And each mode has the correct persona and tool restrictions
 
-  Scenario: BA mode reads workflow state via MCP
-    Given Roo Code in "sdd-ba" mode with MCP server running
-    When the agent starts a task
-    Then it calls the get_next_task MCP tool
-    And reads the required inputs from the artifact manifest in constitution.md
-    And produces the output artifact using Roo Code's native Write tool
+  Scenario: Mode auto-starts workflow loop on activation
+    Given Roo Code with the sdd-ba mode and MCP server running
+    When the developer switches to "SDD: Business Analyst" mode
+    Then the mode immediately calls get_next_task() without waiting for a prompt
+    And calls get_constitution() to load context
+    And begins the requirements task automatically
 
-  Scenario: Task completed via MCP
-    Given a DEV agent completing an implementation task in Roo Code
-    When the agent calls the complete_task MCP tool with the output path
+  Scenario: Task completed and workflow advanced automatically
+    Given the sdd-ba mode has produced requirements.md
+    When the mode calls complete_task("define-requirements", path, content)
     Then ai-sdd marks the task COMPLETED in the state file
-    And the constitution manifest is updated to reflect the new artifact
+    And the constitution manifest is updated
+    And the mode then calls get_hil_queue() automatically
 
-  Scenario: HIL item surfaces in Roo Code
-    Given a PENDING HIL queue item
-    When Roo Code polls via the get_hil_queue MCP tool
-    Then the item is shown to the user with context
-    And the user can call resolve_hil_item or reject_hil_item from within Roo Code
+  Scenario: HIL surfaced and resolved inline without CLI
+    Given a PENDING HIL item after task completion
+    When the mode calls get_hil_queue() as part of its automatic sequence
+    Then the item context is shown to the developer inline in Roo Code
+    And the developer approves in the conversation
+    And the mode calls resolve_hil_item(id) automatically
+    And reports which mode to switch to next
 
   Scenario: Mode restrictions enforced
     Given Roo Code in "sdd-ba" mode
@@ -87,44 +90,44 @@ This is a JSON file with mode definitions — shipped as a static template.
     {
       "slug": "sdd-ba",
       "name": "SDD: Business Analyst",
-      "roleDefinition": "You are the Business Analyst in an ai-sdd Specification-Driven Development workflow. Translate business needs into formal requirements. Produce requirements.md with functional requirements, NFRs, and Gherkin acceptance criteria.",
+      "roleDefinition": "You are the Business Analyst in an ai-sdd Specification-Driven Development workflow. Translate business needs into formal requirements with Gherkin acceptance criteria. Do NOT write TypeScript code.",
       "groups": ["read", "edit", "browser", "command", "mcp"],
-      "customInstructions": "Read only. Do not write code. Use the get_next_task MCP tool to find your current task. Read constitution.md for project context and artifact locations. Use complete_task MCP tool when done."
+      "customInstructions": "On activation, immediately run this sequence automatically — do not wait for further instructions:\n1. Call MCP get_next_task() — store the returned task_id and output_path.\n2. Call MCP get_constitution() to read project context and the artifact manifest.\n3. Ask the developer any clarifying questions needed for requirements.\n4. Produce requirements.md with functional requirements, NFRs, and Gherkin ACs.\n5. Call MCP complete_task(task_id, output_path, content) using the task_id from step 1.\n6. Call MCP get_hil_queue() to check for pending approvals.\n   If pending: show the item to the developer inline and ask for approval.\n   On approval: call MCP resolve_hil_item(id).\n7. Report: 'Task complete. Switch to SDD: Architect for the next task.'"
     },
     {
       "slug": "sdd-architect",
       "name": "SDD: Architect",
-      "roleDefinition": "You are the System Architect in an ai-sdd workflow. Design high-level architecture from requirements. Produce design/l1.md covering architecture overview, component map, and API contracts.",
+      "roleDefinition": "You are the System Architect in an ai-sdd workflow. Design high-level architecture from requirements. Produce design/l1.md. Do NOT write implementation code or DB migrations.",
       "groups": ["read", "edit", "browser", "command", "mcp"],
-      "customInstructions": "Do not write implementation code. Read requirements.md before designing. Justify all architectural decisions. Use MCP tools to interact with workflow state."
+      "customInstructions": "On activation, immediately run this sequence automatically:\n1. Call MCP get_next_task() — store the returned task_id and output_path.\n2. Call MCP get_constitution() — note the artifact manifest for input paths.\n3. Read the requirements artifact listed in the manifest.\n4. Produce design/l1.md: module boundaries, REST API surface, schema outline, Docker topology.\n   Justify every major decision with first-principles reasoning.\n5. Call MCP complete_task(task_id, output_path, content) using values from step 1.\n6. Call MCP get_hil_queue() and handle any HIL inline.\n7. Report: 'Architecture complete. Switch to SDD: Principal Engineer.'"
     },
     {
       "slug": "sdd-pe",
       "name": "SDD: Principal Engineer",
-      "roleDefinition": "You are the Principal Engineer. Design detailed component specifications from the L1 architecture. Produce design/l2.md.",
+      "roleDefinition": "You are the Principal Engineer. Produce detailed component specifications (design/l2.md) from the L1 architecture. Do NOT write implementation code.",
       "groups": ["read", "edit", "command", "mcp"],
-      "customInstructions": "Do not write implementation code. Read design/l1.md before designing components."
+      "customInstructions": "On activation, immediately:\n1. Call MCP get_next_task() and get_constitution().\n2. Read design/l1.md from the manifest.\n3. Produce design/l2.md: full Prisma/TypeORM schema, service interfaces, DTOs, DI contracts.\n4. Call MCP complete_task(task_id, output_path, content) using values from get_next_task().\n5. Handle HIL via get_hil_queue() inline.\n6. Report: 'Component design complete. Switch to SDD: Lead Engineer.'"
     },
     {
       "slug": "sdd-le",
       "name": "SDD: Lead Engineer",
-      "roleDefinition": "You are the Lead Engineer. Break down L2 component design into discrete implementation tasks with Gherkin acceptance criteria.",
+      "roleDefinition": "You are the Lead Engineer. Break down the component design into discrete, testable implementation tasks with Gherkin acceptance criteria.",
       "groups": ["read", "edit", "command", "mcp"],
-      "customInstructions": "Produce implementation/tasks/*.md files. Each task must have Gherkin acceptance criteria."
+      "customInstructions": "On activation, immediately:\n1. Call MCP get_next_task() and get_constitution().\n2. Read design/l2.md from the manifest.\n3. Produce implementation/tasks/task-001.md through task-N.md.\n   Each task: description + Gherkin ACs + target files.\n4. Call MCP complete_task(task_id, output_path, content) for the task group using values from get_next_task().\n5. Handle HIL inline.\n6. Report: 'Task breakdown complete. Switch to SDD: Developer.'"
     },
     {
       "slug": "sdd-dev",
       "name": "SDD: Developer",
-      "roleDefinition": "You are the Developer. Implement code to satisfy the implementation task specifications. Follow BDD — write tests first.",
+      "roleDefinition": "You are the Developer. Implement TypeScript code to satisfy implementation task specs. Write Jest tests first (BDD). Use Prisma Client — no raw SQL.",
       "groups": ["read", "edit", "command", "mcp"],
-      "customInstructions": "Read the task spec before writing code. Write tests before implementation. Verify outputs match the artifact contract."
+      "customInstructions": "On activation, immediately:\n1. Call MCP get_next_task() and get_constitution().\n2. Read the current implementation task from the manifest.\n3. Write tests first, then implementation. TypeScript strict mode.\n4. Run `pnpm test -- --coverage` and `pnpm lint` in the terminal.\n   If tests fail or lint fails: fix before marking complete.\n5. Call MCP complete_task(task_id, output_path, content) using values from get_next_task().\n6. Handle HIL inline.\n7. Report: 'Implementation complete. Switch to SDD: Reviewer.'"
     },
     {
       "slug": "sdd-reviewer",
       "name": "SDD: Reviewer",
-      "roleDefinition": "You are the Reviewer. Evaluate artifacts against quality guidelines from the project constitution. Issue GO or NO_GO with specific rework feedback.",
+      "roleDefinition": "You are the Reviewer. Evaluate artifacts against the constitution Standards. Issue GO or NO_GO with specific rework feedback. Do NOT modify any artifacts.",
       "groups": ["read", "command", "mcp"],
-      "customInstructions": "Do not modify artifacts. Issue a structured review decision: { decision: GO|NO_GO, feedback: '...' }. Use constitution Standards section as your review criteria."
+      "customInstructions": "On activation, immediately:\n1. Call MCP get_next_task() — store the returned task_id and output_path.\n2. Call MCP get_constitution() — read Standards section (your review criteria).\n3. Read the artifact under review from the output_path in the manifest.\n4. Issue your decision as JSON: { \"decision\": \"GO\" | \"NO_GO\", \"feedback\": \"...\" }\n   NO_GO must include specific, actionable rework instructions.\n   Note: parallel review tasks (review-l1-ba, review-l1-pe, review-l1-le) each have a\n   separate task_id — always use the task_id returned by get_next_task().\n5. Call MCP complete_task(task_id, output_path, decision_json) using values from step 1.\n6. If GO: report 'Review passed.'\n   If NO_GO: report 'Rework required. Switch to SDD: Developer with the feedback above.'"
     }
   ]
 }
@@ -150,9 +153,25 @@ def get_next_task() -> dict:
 
 @mcp.tool()
 def complete_task(task_id: str, output_path: str, output_content: str) -> dict:
-    """Write task output file and mark task COMPLETED."""
-    Path(output_path).write_text(output_content)
-    return _run_cli(["ai-sdd", "run", "--task", task_id])
+    """
+    Atomically complete a task: validate path, sanitize, check artifact contract,
+    write output, advance workflow state, and update manifest — in one transaction.
+    Never writes the file directly; delegates to `ai-sdd complete-task` which owns
+    the transaction boundary (path allowlist, sanitization, contract, state mutation).
+    """
+    import tempfile, os
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".tmp", delete=False) as f:
+        f.write(output_content)
+        tmp_path = f.name
+    try:
+        return _run_cli([
+            "ai-sdd", "complete-task",
+            "--task", task_id,
+            "--output-path", output_path,   # validated against allowlist by engine
+            "--content-file", tmp_path,
+        ])
+    finally:
+        os.unlink(tmp_path)
 
 @mcp.tool()
 def get_hil_queue() -> list[dict]:
