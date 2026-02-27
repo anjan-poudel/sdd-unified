@@ -188,13 +188,19 @@ def reject_hil_item(item_id: str, reason: str) -> dict:
 
 @mcp.tool()
 def get_constitution(task_id: str = "") -> str:
-    """Return the merged constitution (includes artifact manifest)."""
-    return _run_cli(["ai-sdd", "constitution", "--task", task_id] if task_id
-                    else ["ai-sdd", "constitution"])
+    """Return the merged constitution as markdown text (includes artifact manifest)."""
+    return _run_cli_text(["ai-sdd", "constitution", "--task", task_id] if task_id
+                         else ["ai-sdd", "constitution"])
 
 def _run_cli(args: list[str]) -> Any:
+    """Run CLI command and parse JSON output. Used by all tools except get_constitution."""
     result = subprocess.run(args, capture_output=True, text=True, check=True)
     return json.loads(result.stdout)
+
+def _run_cli_text(args: list[str]) -> str:
+    """Run CLI command and return raw text output. Used by get_constitution."""
+    result = subprocess.run(args, capture_output=True, text=True, check=True)
+    return result.stdout
 ```
 
 Started via:

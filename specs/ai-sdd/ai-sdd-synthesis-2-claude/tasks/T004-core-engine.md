@@ -3,7 +3,7 @@
 **Phase:** 1 (Core Engine)
 **Status:** PENDING
 **Dependencies:** T001 (agent system), T002 (workflow system), T003 (constitution system)
-**Changes from synthesized-claude:** RuntimeAdapter signature includes `idempotency_key`; post-task hook registers manifest writer; concurrency budget config added; context assembly note updated (pull model).
+**Changes from synthesized-claude:** RuntimeAdapter signature uses `operation_id`/`attempt_id` (not `idempotency_key`); post-task hook registers manifest writer; concurrency budget config added; context assembly note updated (pull model).
 
 ---
 
@@ -69,7 +69,7 @@ Feature: Core engine execution
   Scenario: Runtime adapter decoupling
     Given the engine is initialized with a MockRuntimeAdapter
     When any task is dispatched
-    Then the mock adapter records the call with idempotency_key
+    Then the mock adapter records the call with operation_id and attempt_id
     And no real LLM calls are made
 ```
 

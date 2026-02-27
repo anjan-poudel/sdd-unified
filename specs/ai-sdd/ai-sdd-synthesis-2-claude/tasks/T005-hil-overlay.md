@@ -127,20 +127,21 @@ nobody is watching the queue. The notification hook fires whenever a HIL item is
 allowing the engine to ping external systems without polling.
 
 ```yaml
-# ai-sdd.yaml
-hil:
-  enabled: true
-  queue_path: ".ai-sdd/state/hil/"
-  poll_interval_seconds: 2
-  notify:
-    on_created:
-      - type: webhook
-        url: "https://hooks.slack.com/services/..."    # Slack incoming webhook
-      - type: command
-        command: "scripts/notify-hil.sh ${HIL_ITEM_ID} ${TASK_ID} ${TRIGGER}"
-    on_t2_gate:                                         # separate hook for T2 urgency
-      - type: webhook
-        url: "https://hooks.slack.com/services/..."
+# ai-sdd.yaml — HIL is configured under overlays.hil (consistent with all other overlays)
+overlays:
+  hil:
+    enabled: true
+    queue_path: ".ai-sdd/state/hil/"
+    poll_interval_seconds: 2
+    notify:
+      on_created:
+        - type: webhook
+          url: "https://hooks.slack.com/services/..."    # Slack incoming webhook
+        - type: command
+          command: "scripts/notify-hil.sh ${HIL_ITEM_ID} ${TASK_ID} ${TRIGGER}"
+      on_t2_gate:                                         # separate hook for T2 urgency
+        - type: webhook
+          url: "https://hooks.slack.com/services/..."
 ```
 
 Notification is **fire-and-forget** — a notification failure never blocks the HIL queue

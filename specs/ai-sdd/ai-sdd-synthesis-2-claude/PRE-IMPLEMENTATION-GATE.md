@@ -5,7 +5,7 @@
 **Purpose:** This gate must be fully PASSED before any Phase 1 implementation begins.
 Every item is a verifiable, binary check. A single OPEN item blocks implementation.
 
-**Current Status: ✅ PASSED** — all 24 items resolved.
+**Current Status: ⏳ READY_FOR_SIGNOFF** — all 24 spec checks resolved; awaiting implementation-time sign-off from Tech Lead and Security Reviewer.
 
 ---
 
@@ -155,10 +155,13 @@ Every item is a verifiable, binary check. A single OPEN item blocks implementati
 ```
 ┌────────────────────────────────────────────────┐
 │                                                │
-│   PRE-IMPLEMENTATION GATE:  ✅ PASSED          │
+│   PRE-IMPLEMENTATION GATE:  ⏳ READY_FOR_SIGNOFF│
 │                                                │
-│   All 24 checks resolved.                      │
-│   Phase 1 implementation is unblocked.         │
+│   All 24 spec checks resolved.                 │
+│   Awaiting Tech Lead + Security Reviewer       │
+│   sign-offs to move to PASSED.                 │
+│   Phase 1 is blocked until both sign-offs are  │
+│   recorded below.                              │
 │                                                │
 └────────────────────────────────────────────────┘
 ```

@@ -178,7 +178,7 @@ def compute_raw(metrics: list[EvalMetric]) -> list[float]:
 - The confidence score is computed post-task by the scorer.
 - The score and metric breakdown are included in the gate report (T006).
 - Overlays communicate via the shared `TaskContext` object — confidence writes its score there.
-- LLM-judge metric: the agent itself is asked to score its own output against the acceptance criteria; the score is extracted from the response.
+- LLM-judge metric: the **evaluator agent** (never the task agent) is invoked with a structured judge prompt. The task agent's session is not used for scoring — see LLM-as-Judge Independence Policy above.
 
 ---
 

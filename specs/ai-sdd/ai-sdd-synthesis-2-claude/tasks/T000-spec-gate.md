@@ -1,7 +1,7 @@
 # T000: Spec Gate — Pre-Implementation Review Sign-Off
 
 **Phase:** 0 (Pre-Implementation)
-**Status:** COMPLETED
+**Status:** PENDING
 **Dependencies:** none
 **Risk Tier:** T2 (mandatory human sign-off — blocks all implementation)
 **Size:** XS (1d to verify)

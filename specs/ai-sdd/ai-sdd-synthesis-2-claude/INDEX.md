@@ -20,6 +20,8 @@
 | [REVIEW-FEEDBACK.md](REVIEW-FEEDBACK.md) | Codex review — 9 findings, all addressed |
 | [GEMINI-REVIEW.md](GEMINI-REVIEW.md) | Gemini review — 6 findings, all addressed |
 | [deepseek-review.md](deepseek-review.md) | DeepSeek review — 10 action items, all addressed |
+| [UNIFIED-FEEDBACK-CODEX-DEEPSEEK.md](UNIFIED-FEEDBACK-CODEX-DEEPSEEK.md) | Unified review (Codex + DeepSeek + derailment risks) — 12 findings |
+| [unified-feedback-response.md](unified-feedback-response.md) | Response to unified review — 8 fixed, 4 pushed back with justification |
 
 ---
 

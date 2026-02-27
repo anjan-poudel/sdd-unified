@@ -259,7 +259,7 @@ See `constitution.md` for project purpose, rules, standards, and the artifact ma
 class ClaudeCodeAdapter(RuntimeAdapter):
     """Headless/CI use only. Interactive sessions use /sdd-run skill + subagents."""
     def dispatch(self, task: Task, context: AgentContext,
-                 idempotency_key: str) -> TaskResult:
+                 operation_id: str, attempt_id: str) -> TaskResult:
         prompt_path = self._write_prompt_file(task, context)
         result = subprocess.run(
             ["claude", "--print", "--prompt-file", str(prompt_path)],

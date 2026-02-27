@@ -135,7 +135,7 @@ class OpenAIAdapter(RuntimeAdapter):
     No Jinja2 — prompt assembly uses plain string formatting.
     """
     def dispatch(self, task: Task, context: AgentContext,
-                 idempotency_key: str) -> TaskResult:
+                 operation_id: str, attempt_id: str) -> TaskResult:
         response = self.client.chat.completions.create(
             model=task.agent.llm.model,
             messages=[

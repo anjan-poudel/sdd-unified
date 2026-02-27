@@ -503,7 +503,7 @@ Path B: OpenAI API (CI/batch)
   Human resolves via `ai-sdd hil resolve` locally; CI resumes automatically.
 ```
 
-**What `ai-sdd init --tool openai` creates:**
+**What `ai-sdd init --tool codex` creates:**
 ```
 AGENTS.md          ← codex CLI reads this; contains the full workflow loop
 .ai-sdd/           ← config + workflow
@@ -518,7 +518,7 @@ PROJECT: Invoice tracking SaaS for freelancers
 STACK:   TypeScript · NestJS · Prisma · PostgreSQL · Jest · Docker Compose
 
 ────────────────────────────── One-time setup (5 min, never repeated)
-$ ai-sdd init --tool openai --project ./invoice-saas
+$ ai-sdd init --tool codex --project ./invoice-saas
 
 User fills constitution.md (same content as other tools).
 
@@ -594,7 +594,7 @@ PROJECT: Add multi-currency support to existing invoice service
 EXISTING STACK: TypeScript · Express.js · TypeORM · PostgreSQL · Jest · Docker
 
 ────────────────────────────── One-time setup (10 min, never repeated)
-$ ai-sdd init --tool openai --project ./existing-invoice-service
+$ ai-sdd init --tool codex --project ./existing-invoice-service
 
 User fills constitution.md with existing codebase context.
 Configures workflow to skip completed phases (define-requirements, design-l1).

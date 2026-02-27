@@ -128,8 +128,8 @@ Feature: RuntimeAdapter
 
   Scenario: Mock adapter for tests
     Given the engine is initialized with a MockRuntimeAdapter
-    When a task is dispatched with an idempotency_key
-    Then the mock adapter records the call and key
+    When a task is dispatched with operation_id and attempt_id
+    Then the mock adapter records both IDs
     And returns a configurable response
     And no real LLM calls are made
 ```
@@ -192,7 +192,7 @@ adapter:
   max_retries: 3
   retry_backoff_seconds: 5
   timeout_seconds: 120       # per-dispatch timeout; escalates to FAILED on breach
-  max_context_tokens: 100000 # hard cap passed to ContextReducer / agent
+  max_context_tokens: 100000 # hard cap; context warning emitted at breach
 
 state:
   path: ".ai-sdd/state/workflow-state.json"
@@ -270,6 +270,16 @@ ai-sdd serve --mcp --port 3001
 Timeout breach → task transitions to `FAILED` with `error_type: timeout`.
 Memory: emits `observability.memory_warning` when process RSS exceeds `observability.memory_warning_mb` (default: 512).
 
+### Reliability and CI SLOs
+
+| Target | Value | Notes |
+|---|---|---|
+| Time to first successful workflow (new user) | ≤ 30 min | From `ai-sdd init` to first COMPLETED task |
+| Crash recovery (resume after interruption) | ≤ 5 min | `ai-sdd run --resume` from last persisted state |
+| PR validation CI job | ≤ 15 min | Unit + integration tests; see T014 for overlay matrix |
+| Full test suite | ≤ 30 min | All tests including contract suite |
+| Task completion reliability | ≥ 99% | Excluding explicit human rejection paths |
+
 ## Implementation Notes
 
 - CLI built with `typer`.
@@ -300,10 +310,10 @@ Memory: emits `observability.memory_warning` when process RSS exceeds `observabi
 ## Test Strategy
 
 - CLI integration tests: run, resume, step, status, status --metrics, validate-config, dry-run.
-- CLI integration tests: init --tool claude_code/openai/roo_code copies correct files.
+- CLI integration tests: init --tool claude_code/codex/roo_code copies correct files.
 - Unit tests: config merge precedence (CLI > project > defaults).
 - Unit tests: config validation (missing workflow file, invalid agent reference).
-- Unit tests: MockRuntimeAdapter records idempotency_key correctly.
+- Unit tests: MockRuntimeAdapter records operation_id and attempt_id correctly.
 
 ## Rollback/Fallback
 

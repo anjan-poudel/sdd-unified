@@ -108,10 +108,13 @@ class RuntimeAdapter(ABC):
 
     @abstractmethod
     def dispatch(self, task: Task, context: AgentContext,
-                 idempotency_key: str) -> TaskResult:
+                 operation_id: str, attempt_id: str) -> TaskResult:
         """
-        Dispatch task to underlying LLM. Must raise AdapterError with correct
-        error_type on failure. Must not raise raw provider exceptions.
+        Dispatch task to underlying LLM.
+        operation_id: stable across retries; sent to provider as idempotency key.
+        attempt_id: changes per retry; used for observability only, never sent to provider.
+        Must raise AdapterError with correct error_type on failure.
+        Must not raise raw provider exceptions.
         """
         ...
 
@@ -157,7 +160,7 @@ class AdapterContractTests:
     def test_rate_limit_waits_retry_after(self): ...
     def test_context_limit_not_retried(self): ...
     def test_content_policy_escalates_to_hil(self): ...
-    def test_idempotency_key_format(self): ...
+    def test_operation_id_and_attempt_id_format(self): ...
     def test_error_taxonomy_completeness(self): ...
 ```
 

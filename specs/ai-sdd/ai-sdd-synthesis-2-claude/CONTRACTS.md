@@ -187,7 +187,7 @@ ai-sdd migrate --from 1 --to 2  → explicit range
 
 ---
 
-## 9. Backward-Compatibility Modes
+## 11. Backward-Compatibility Modes
 
 | Mode | How to activate | Behavior |
 |---|---|---|
@@ -196,3 +196,39 @@ ai-sdd migrate --from 1 --to 2  → explicit range
 
 `legacy` mode is for gradual adoption only. Projects should migrate to `strict` mode.
 There are no hidden permissive fallbacks — every relaxation is explicit and flagged.
+
+---
+
+## 12. HIL Config Hierarchy
+
+HIL is configured at two independent levels:
+
+| Level | File | Path | Controls |
+|---|---|---|---|
+| **Project (global)** | `ai-sdd.yaml` | `overlays.hil.*` | Queue path, poll interval, notification hooks, default enabled state |
+| **Task (per-task)** | `workflow.yaml` | `tasks.<id>.overlays.hil.*` | Per-task enabled/disabled override, risk_tier override |
+
+Both use the `overlays.hil` key path — there is no root-level `hil:` key. This ensures all
+overlay config is discoverable under the single `overlays:` namespace.
+
+```yaml
+# ai-sdd.yaml — project-wide HIL settings
+overlays:
+  hil:
+    enabled: true                      # global default
+    queue_path: ".ai-sdd/state/hil/"
+    notify:
+      on_created: [...]
+      on_t2_gate: [...]
+
+# workflow.yaml — per-task HIL override
+tasks:
+  low-risk-task:
+    overlays:
+      hil:
+        enabled: false                 # disable for this specific task
+  critical-task:
+    overlays:
+      policy_gate:
+        risk_tier: T2                  # T2 always triggers HIL regardless of enabled flag
+```
