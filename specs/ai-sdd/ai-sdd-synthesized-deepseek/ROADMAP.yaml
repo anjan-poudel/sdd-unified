@@ -1,0 +1,231 @@
+version: "1.0.0-synthesized"
+date: "2026-02-27"
+status: "draft"
+title: "ai-sdd synthesized roadmap"
+
+goals:
+  - id: G1
+    description: "Deliver a functional MVP with multi-agent orchestration, configurable handovers, bounded loops, optional overlays, and HIL/file-queue fallback."
+  - id: G2
+    description: "Evolve to production-ready operation with hardened runtime adapters, security, observability, and reliability."
+
+milestones:
+  - id: M1
+    name: "Core Runtime"
+    target_outcome: "YAML-driven pipeline runs end-to-end."
+    primary_tasks: ["T001", "T002", "T003", "T004"]
+    groups: ["A", "B", "C", "D"]
+  - id: M2
+    name: "Safe Gates"
+    target_outcome: "HIL and evidence-based policy gate active."
+    primary_tasks: ["T005", "T006"]
+    groups: ["E"]
+  - id: M3
+    name: "Overlay Modes"
+    target_outcome: "Confidence/paired/review overlays operational."
+    primary_tasks: ["T007", "T008"]
+    groups: ["F"]
+  - id: M4
+    name: "Usability"
+    target_outcome: "CLI/config and runtime adapter scaffold complete."
+    primary_tasks: ["T009", "adapter_integration"]
+    groups: ["G"]
+  - id: M5
+    name: "MVP Demonstration"
+    target_outcome: "Deterministic demo scenario with artifacts and docs."
+    primary_tasks: ["demo_package", "runbook"]
+    groups: ["H"]
+  - id: M6
+    name: "Production Hardening"
+    target_outcome: "Reliability, security, and ops readiness gates pass."
+    primary_tasks: ["test_track", "security_track", "infra_track"]
+
+task_groups:
+  - id: A
+    name: "Agent Foundation"
+    scope: ["AGT-001", "AGT-002", "AGT-003", "AGT-004", "AGT-005", "AGT-006"]
+    deliverables:
+      - "YAML schema for agents"
+      - "Default agent definitions (BA, Architect, PE, LE, DEV, Reviewer)"
+      - "Inheritance and override rules"
+    exit_criteria:
+      - "Schema validation passes."
+      - "Default agents load without runtime patching."
+      - "Per-agent model and hyperparameter overrides resolve correctly."
+  - id: B
+    name: "Workflow Foundation"
+    scope: ["WF-001", "WF-002", "WF-003", "WF-004", "WF-005", "WF-006"]
+    deliverables:
+      - "Workflow schema"
+      - "DAG loader"
+      - "Dependency resolver"
+      - "Loop configuration support"
+    exit_criteria:
+      - "Invalid DAG is rejected with clear error."
+      - "Topological execution is verified."
+      - "Loop max-iteration and explicit exit conditions are enforced."
+  - id: C
+    name: "Constitution Resolution"
+    scope: ["CON-001", "CON-002", "CON-003", "CON-004"]
+    deliverables:
+      - "Hierarchical constitution merge engine"
+    exit_criteria:
+      - "Root and nested constitutions merge deterministically."
+      - "Nearest-scope override precedence is enforced."
+  - id: D
+    name: "Core Engine and State"
+    scope: ["ENG-001", "ENG-002", "ENG-003", "ENG-004", "ENG-005"]
+    deliverables:
+      - "Dispatcher"
+      - "Hooks"
+      - "State persistence and resume"
+    exit_criteria:
+      - "Task state transitions are persisted and resumable."
+      - "Hook lifecycle callbacks are invoked consistently."
+      - "Runtime adapter interface is callable from engine."
+  - id: E
+    name: "Safety and Governance Gates"
+    scope: ["HIL", "evidence_policy_gate"]
+    deliverables:
+      - "HIL approval flow (default on)"
+      - "File-based queue fallback (default)"
+      - "Evidence-based gate (not confidence-only)"
+    policy_dimensions:
+      - "Requirement coverage (optional, tunable)"
+      - "Acceptance evidence quality"
+      - "Verification results (tests, lint, security)"
+      - "Operational readiness evidence"
+      - "Risk-tier routing (T0, T1, T2)"
+    exit_criteria:
+      - "Tasks route by risk tier and evidence scorecard."
+      - "Missing required evidence blocks promotion and records reason."
+      - "Requirement coverage control can be disabled or tuned."
+  - id: F
+    name: "Overlay Capabilities"
+    scope: ["CL", "PW", "AR"]
+    deliverables:
+      - "Confidence loop overlay"
+      - "Paired workflow overlay"
+      - "Agentic review overlay"
+    exit_criteria:
+      - "Overlays can be independently enabled/disabled via config."
+      - "Loops exit on explicit rule or max-iteration."
+      - "Overlay stack order is deterministic and documented."
+  - id: G
+    name: "CLI, Config, and Developer Experience"
+    scope: ["T009", "project_ux"]
+    deliverables:
+      - "CLI commands (run, resume, validate, hil)"
+      - "Config discovery and merge"
+      - "Validation and error UX"
+    exit_criteria:
+      - "run, resume, and validate-config paths work."
+      - "Config errors fail fast with actionable diagnostics."
+  - id: H
+    name: "Demo and Verification Harness"
+    scope: ["mvp_demo", "repeatable_checks"]
+    deliverables:
+      - "Demo workflow"
+      - "Sample artifacts"
+      - "Sequence diagram"
+      - "Run/test script"
+    exit_criteria:
+      - "Fresh clone can run demo using documented steps."
+      - "Expected artifacts are generated deterministically."
+      - "Troubleshooting covers common failures."
+
+functional_mvp_definition:
+  - "Task groups A-H are complete at baseline depth."
+  - "A reference run demonstrates multi-agent handovers and at least one bounded loop."
+  - "Evidence-based gate and HIL routing decisions are visible in artifacts/logs."
+  - "Runtime adapter scaffold executes through one real provider path and one mock path."
+  - "Demo docs explain sequence, conditional logic, and script-vs-prompt responsibilities."
+
+production_readiness_tracks:
+  reliability:
+    - "retries/backoff/idempotency"
+    - "crash-safe resume"
+    - "load/soak testing for long-running workflows"
+  security:
+    - "secret handling policy"
+    - "prompt/output sanitization"
+    - "supply-chain/dependency scanning in CI"
+  observability:
+    - "structured logs/traces"
+    - "task metrics and alerts"
+    - "alertable SLOs"
+  runtime_integration:
+    - "hardened provider adapters (timeouts, quotas, failure mapping)"
+    - "model routing policy integration"
+    - "deterministic fallback behavior"
+  governance:
+    - "audit export"
+    - "risk-tier policy packs"
+    - "release-readiness checklist automation"
+
+sequencing_recommendation:
+  - "Complete groups A-D first."
+  - "Add group E immediately after D."
+  - "Implement group F after policy/HIL gates stabilize."
+  - "Finalize groups G and H for MVP consumability."
+  - "Start production tracks after MVP demo is stable and repeatable."
+
+risks:
+  - id: R1
+    risk: "Over-reliance on confidence score"
+    impact: "Unsafe auto-approval"
+    mitigation: "Enforce evidence-based gate as primary control."
+  - id: R2
+    risk: "Requirement coverage noise"
+    impact: "False blocks or false confidence"
+    mitigation: "Keep requirement coverage optional and tunable."
+  - id: R3
+    risk: "Overlay interaction complexity"
+    impact: "Non-deterministic execution"
+    mitigation: "Fix overlay order and test matrix per combination."
+  - id: R4
+    risk: "Provider/runtime instability"
+    impact: "Pipeline flakiness"
+    mitigation: "Adapter retries, circuit breakers, and mock fallback."
+  - id: R5
+    risk: "Human queue bottlenecks"
+    impact: "Slow throughput"
+    mitigation: "Risk-tier routing and queue SLA metrics."
+  - id: R6
+    risk: "Confidence overuse"
+    impact: "Suboptimal routing"
+    mitigation: "Never use confidence as standalone gate."
+
+status_tracking_template:
+  - group: A
+    status: planned
+    owner: TBD
+    notes: ""
+  - group: B
+    status: planned
+    owner: TBD
+    notes: ""
+  - group: C
+    status: planned
+    owner: TBD
+    notes: ""
+  - group: D
+    status: planned
+    owner: TBD
+    notes: ""
+  - group: E
+    status: planned
+    owner: TBD
+    notes: ""
+  - group: F
+    status: planned
+    owner: TBD
+    notes: ""
+  - group: G
+    status: planned
+    owner: TBD
+    notes: ""
+  - group: H
+    status: planned
+    owner: TBD
+    notes: ""

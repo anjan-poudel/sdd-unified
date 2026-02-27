@@ -1,0 +1,74 @@
+version: "1.0.0-synthesized"
+date: "2026-02-27"
+status: "draft"
+
+sources:
+  - "ai-sdd-claude"
+  - "ai-sdd-gemini"
+  - "ai-sdd-codex"
+
+goals:
+  - id: G1
+    description: "Deliver a configurable multi-agent SDD framework with safe autonomy controls."
+  - id: G2
+    description: "Ensure production readiness via reliability, security, observability, and governance."
+
+milestones:
+  - id: M1
+    name: "Core Runtime"
+    outcome: "YAML agents/workflows + constitution + stateful execution"
+    tasks: ["T001", "T002", "T003", "T004", "T005", "T009"]
+  - id: M2
+    name: "Safety and Overlay Suite"
+    outcome: "Policy-gated confidence/paired/review overlays with bounded loops"
+    tasks: ["T006", "T007", "T008"]
+  - id: M3
+    name: "Critical Gap Closure"
+    outcome: "Execution determinism, artifact contracts, adapter reliability, baseline observability/security"
+    tasks: ["T010", "T011", "T012", "T013", "T014", "T015"]
+  - id: M4
+    name: "SDK and Ecosystem"
+    outcome: "Workflow-as-code SDK + examples + migration assets"
+    tasks: ["T016"]
+  - id: M5
+    name: "Production Hardening"
+    outcome: "Operational gates and policy packs pass"
+    tasks: ["hardening_tracks"]
+
+acceptance_rules:
+  - "Confidence cannot be a standalone promotion gate."
+  - "All loops must define max_iterations and explicit exit conditions."
+  - "T2 paths require human sign-off."
+  - "Overlay order is deterministic and tested."
+  - "Adapter failures map to deterministic engine states."
+
+risks:
+  - id: R1
+    risk: "Unsafe or non-deterministic condition evaluation"
+    mitigation_task: "T010"
+  - id: R2
+    risk: "Overlay interactions create hidden regressions"
+    mitigation_task: "T012"
+  - id: R3
+    risk: "Provider instability causes flakiness"
+    mitigation_task: "T013"
+  - id: R4
+    risk: "Insufficient telemetry prevents debugging/governance"
+    mitigation_task: "T014"
+  - id: R5
+    risk: "Data leakage or prompt injection paths"
+    mitigation_task: "T015"
+
+hardening_tracks:
+  reliability:
+    - "retry/backoff/idempotency"
+    - "crash-safe resume and integrity checks"
+  security:
+    - "secret handling and sanitization policy"
+    - "dependency and supply-chain scan"
+  observability:
+    - "structured logs/traces/metrics with correlation IDs"
+    - "token/cost and queue latency dashboards"
+  governance:
+    - "risk-tier policy packs"
+    - "audit export of evidence and approvals"
