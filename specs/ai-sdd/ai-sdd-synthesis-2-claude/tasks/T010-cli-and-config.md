@@ -201,7 +201,7 @@ state:
 observability:
   log_level: INFO
   log_file: ".ai-sdd/logs/ai-sdd.log"
-  secret_patterns: []        # additional regex patterns (lives under security.*, not here)
+  # Note: secret patterns live under security.secret_patterns — not observability.*
 ```
 
 ---

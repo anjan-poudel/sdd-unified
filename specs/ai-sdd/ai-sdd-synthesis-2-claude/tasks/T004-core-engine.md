@@ -159,8 +159,10 @@ class RuntimeAdapter(ABC):
 
     @abstractmethod
     def dispatch(self, task: Task, context: AgentContext,
-                 operation_id: str) -> TaskResult:
+                 operation_id: str, attempt_id: str) -> TaskResult:
         """
+        operation_id: stable across retries; sent to provider as idempotency key.
+        attempt_id:   changes per retry; logged for observability only, never sent to provider.
         direct mode:    Engine-assembled full context sent to LLM API.
         delegation mode: Lightweight task brief sent; tool handles persona + context.
         Returns TaskResult with: status, outputs, handover_state, error, tokens_used.

@@ -127,7 +127,11 @@ It performs the following steps atomically — either all succeed or none are co
 
 ```
 1. Validate output_path against project allowlist  → reject path traversal (../../)
-2. Run security sanitization on content            → redact secrets, flag injection
+2. Run security sanitization on content:
+   - Injection pattern detected  → abort; task → NEEDS_REWORK; no write
+   - Secret detected in output   → abort; task → NEEDS_REWORK; no write
+     (the agent must remove/sanitize the secret and resubmit)
+   Note: secret *redaction* ([REDACTED:TYPE]) applies to logs/events only, not task output.
 3. Validate artifact contract                      → section/field presence check
 4. Write file to output_path                       → atomic write (tmp + rename)
 5. Update workflow state: task → COMPLETED         → atomic state file write

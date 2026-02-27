@@ -132,7 +132,7 @@ Every event:
 observability:
   log_level: INFO                      # DEBUG | INFO | WARN | ERROR
   log_file: ".ai-sdd/logs/ai-sdd.log"
-  secret_patterns: []                  # additional regex patterns to redact
+  # Secret patterns live under security.secret_patterns — not here.
   cost_tracking:
     enabled: true
     model_pricing:                     # USD per 1M tokens (input/output)
@@ -148,14 +148,14 @@ observability:
 Runs on all log writes (delegates to `security/output_sanitizer.py`):
 - Strip fields matching known patterns (API keys, tokens, passwords, JWTs).
 - Replace with `[REDACTED:<TYPE>]`.
-- Configurable additional patterns via `observability.secret_patterns`.
+- Configurable additional patterns via `security.secret_patterns` (canonical namespace — see CONTRACTS.md §10).
 
 ---
 
 ## Implementation Notes
 
 - Emitter is a singleton initialized at engine startup with the `run_id` UUID.
-- `task_run_id` is a new UUID generated at each task dispatch (stable within retries via idempotency key).
+- `task_run_id` is a new UUID generated at each task dispatch (stable within retries; forms part of `operation_id`).
 - Cost estimation: `tokens_used` comes from adapter `TaskResult.tokens_used`; `estimated_cost_usd` computed by `cost_tracker.py` using `model_pricing` config.
 - Log output: structured JSON to file + optionally stdout (`--verbose` flag).
 - Phase 4 extension: OpenTelemetry span wrapping each task; Prometheus counter/histogram.
