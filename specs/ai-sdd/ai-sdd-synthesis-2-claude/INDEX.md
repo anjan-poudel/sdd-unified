@@ -22,6 +22,8 @@
 | [deepseek-review.md](deepseek-review.md) | DeepSeek review — 10 action items, all addressed |
 | [UNIFIED-FEEDBACK-CODEX-DEEPSEEK.md](UNIFIED-FEEDBACK-CODEX-DEEPSEEK.md) | Unified review (Codex + DeepSeek + derailment risks) — 12 findings |
 | [unified-feedback-response.md](unified-feedback-response.md) | Response to unified review — 8 fixed, 4 pushed back with justification |
+| [feedback-updated-review.md](feedback-updated-review.md) | Post-fix review — 3 spec gaps + 3 safeguards + strategic risks |
+| [feedback-updated-review-response.md](feedback-updated-review-response.md) | Response — 5 fixed, 7 pushed back with justification |
 
 ---
 

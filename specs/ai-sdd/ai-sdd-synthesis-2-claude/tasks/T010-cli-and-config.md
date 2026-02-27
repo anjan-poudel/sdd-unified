@@ -162,7 +162,10 @@ constitution:
 engine:
   max_concurrent_tasks: 3
   rate_limit_requests_per_minute: 20
-  cost_budget_per_run_usd: 10.00    # pause → HIL when exceeded
+  cost_budget_per_run_usd: 10.00    # cost threshold
+  cost_enforcement: pause            # warn | pause | stop  (default: pause → HIL)
+  context_warning_threshold_pct: 80  # emit context.warning event at this % of max_context_tokens
+  context_hil_threshold_pct: 95      # trigger HIL when context exceeds this % (direct mode only)
 
 overlays:
   hil:

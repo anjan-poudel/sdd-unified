@@ -46,6 +46,21 @@ Feature: Structured event emission
     Given a task dispatched after context assembly
     Then a "context.assembled" event is emitted with: task_id, token_count
 
+  Scenario: Context warning emitted as agent approaches limit
+    Given engine.context_warning_threshold_pct=80 and adapter.max_context_tokens=100000
+    When a task context is assembled with token_count=83000 (83%)
+    Then a "context.warning" event is emitted with:
+      task_id, token_count, max_context_tokens, pct_used, largest_artifact_paths
+    And the task continues executing (warning is non-blocking)
+
+  Scenario: Context HIL escalation in direct mode
+    Given engine.context_hil_threshold_pct=95 and adapter.max_context_tokens=100000
+    And adapter.dispatch_mode=direct
+    When context assembly produces token_count=96000 (96%)
+    Then execution is paused and a HIL item is created
+    And the HIL context includes the largest_artifact_paths to guide pruning
+    And the operator can re-run with a smaller artifact scope
+
   Scenario: Constitution resolution is traced
     Given a task resolving constitutions from 3 levels
     When the resolver runs
@@ -117,9 +132,10 @@ Every event:
 | `hil.resolved` | HIL item resolved | hil_item_id, resolved_by |
 | `hil.rejected` | HIL item rejected | hil_item_id, reason |
 | `constitution.resolved` | Constitution merged | files_merged (ordered list) |
-| `context.assembled` | Context built for agent | token_count |
+| `context.assembled` | Context built for agent | token_count, max_context_tokens |
+| `context.warning` | Context nears token limit | token_count, max_context_tokens, pct_used, largest_artifact_paths |
 | `cost.budget_warning` | Cost nears budget | current_cost_usd, budget_usd, pct_used |
-| `cost.budget_exceeded` | Cost hits budget | current_cost_usd, budget_usd — triggers HIL |
+| `cost.budget_exceeded` | Cost hits budget | current_cost_usd, budget_usd — action per `cost_enforcement` |
 | `security.injection_detected` | Injection pattern found | source_file, pattern_matched, score, action |
 | `security.secret_redacted` | Secret found in output | secret_type, location |
 

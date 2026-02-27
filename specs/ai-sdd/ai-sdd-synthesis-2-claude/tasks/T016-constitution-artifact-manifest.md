@@ -149,6 +149,25 @@ the manifest writer can be extended with a post-write hook that calls
 `serena.write_memory(f"artifact/{task_id}", summary)` after each task completes.
 This is an optional enhancement and is not required by the core framework.
 
+## Pull Model: Advisory Guidance, Not Enforcement
+
+The pull model is **instructional**, not enforced. An agent can read all artifacts if it
+chooses — the engine cannot and should not prevent this. The constitution reading convention
+is guidance text that well-behaved agents follow to stay within context limits.
+
+The engine's safeguards against context overruns are:
+1. `context.warning` event at `engine.context_warning_threshold_pct` (default 80%) — emitted
+   after context is assembled; signals that the agent's context is large.
+2. HIL escalation at `engine.context_hil_threshold_pct` (default 95%) in `direct` mode — engine
+   pauses before dispatch and asks the operator to prune scope.
+3. `context_limit` error from the provider if the agent exceeds the hard token limit —
+   surfaces as a non-retryable `AdapterError`.
+
+These are event-based signals, not restrictions. The pull model's value is that agents which
+*follow* the reading convention stay well within limits throughout long workflows.
+
+---
+
 ## Manifest Ownership Contract
 
 The engine owns **exactly one section**: `## Workflow Artifacts`.

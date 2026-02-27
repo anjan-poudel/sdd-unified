@@ -186,7 +186,10 @@ ai-sdd migrate --from 1 --to 2  → explicit range
 | Constitution strict parse | `constitution.strict_parse` | `true` (default) = root malformed → hard error |
 | Legacy untyped artifacts | CLI flag `--allow-legacy-untyped-artifacts` | Never a config file default |
 | Concurrency budget | `engine.max_concurrent_tasks` | Semaphore on parallel dispatch |
-| Cost budget | `engine.cost_budget_per_run_usd` | Pause → HIL when exceeded |
+| Cost budget | `engine.cost_budget_per_run_usd` | Threshold; action set by `cost_enforcement` |
+| Cost enforcement mode | `engine.cost_enforcement` | `warn` / `pause` (→HIL) / `stop` (→FAILED); default `pause` |
+| Context warning threshold | `engine.context_warning_threshold_pct` | Emit `context.warning` event; default 80% |
+| Context HIL threshold | `engine.context_hil_threshold_pct` | Trigger HIL in direct mode; default 95% |
 | Observability log level | `observability.log_level` | `DEBUG` / `INFO` / `WARN` / `ERROR` |
 
 ---

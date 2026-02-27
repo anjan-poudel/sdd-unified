@@ -153,6 +153,12 @@ In `delegation` mode the engine is a **context provider** (supplies task_id, out
 handover_state) not a **context wrapper** (does not construct system prompts). This avoids
 collisions between the engine's prompt and the tool's own CLAUDE.md / .roomodes system prompt.
 
+**Delegation mode tool failures:** If a native tool call inside the delegated session fails
+(e.g. `Read` timeout, MCP server unavailable), this surfaces to the engine as a
+`TaskResult` with `status=FAILED` and `error_type=tool_error`. The adapter retry policy
+applies normally — `tool_error` is retryable (see T015 §Error Taxonomy). The engine
+never has visibility into individual tool calls within a delegation session.
+
 ```python
 class RuntimeAdapter(ABC):
     dispatch_mode: Literal["direct", "delegation"] = "direct"

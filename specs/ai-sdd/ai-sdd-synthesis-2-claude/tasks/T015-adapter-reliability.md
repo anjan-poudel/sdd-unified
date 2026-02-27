@@ -86,6 +86,7 @@ Feature: Adapter reliability contract
 | `context_limit` | **No** | FAILED (context_limit) | Input too long; agent should read fewer artifacts via constitution manifest |
 | `content_policy` | **No** | FAILED + HIL escalation | Needs human review |
 | `quota_exhausted` | **No** | PAUSED + HIL escalation | Budget exceeded |
+| `tool_error` | Yes | Retry with backoff | Tool call failure inside delegation mode (e.g. Read timeout, MCP error) |
 | `unknown` | Yes (1x) | Retry once, then FAILED | Catch-all |
 
 ---
@@ -96,7 +97,7 @@ Feature: Adapter reliability contract
 @dataclass
 class AdapterError:
     error_type: Literal["network", "rate_limit", "timeout", "context_limit",
-                        "content_policy", "quota_exhausted", "unknown"]
+                        "content_policy", "quota_exhausted", "tool_error", "unknown"]
     message: str
     retry_after_seconds: Optional[int] = None  # for rate_limit
     raw_error: Optional[str] = None
@@ -140,8 +141,10 @@ adapter:
   initial_backoff_seconds: 2.0
   backoff_multiplier: 2.0
   max_backoff_seconds: 60.0
-  retry_on: [network, rate_limit, timeout]
+  retry_on: [network, rate_limit, timeout, tool_error]
   no_retry_on: [context_limit, content_policy, quota_exhausted]
+  circuit_breaker_failures: 5       # disable adapter after N consecutive failures
+  circuit_breaker_reset_seconds: 60 # re-enable after this cool-off period
 ```
 
 ---
