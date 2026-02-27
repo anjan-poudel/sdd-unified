@@ -112,7 +112,7 @@ PENDING ──► RUNNING ──► COMPLETED
 
 ```json
 {
-  "version": "1",
+  "schema_version": "1",
   "workflow": "default-sdd",
   "project": "/path/to/project",
   "started_at": "2026-02-27T10:00:00Z",
@@ -141,14 +141,28 @@ PENDING ──► RUNNING ──► COMPLETED
 
 ## RuntimeAdapter Interface
 
+Adapters operate in one of two modes, declared in `ai-sdd.yaml`. The mode determines
+who assembles the agent's prompt and context:
+
+| Mode | Who assembles context | Used by |
+|---|---|---|
+| **`direct`** | Engine assembles full prompt (constitution + persona + task) → sends to LLM API | `OpenAIAdapter`, `ClaudeCodeAdapter` (headless) |
+| **`delegation`** | Engine passes a lightweight task brief → the tool manages its own context, persona, and constitution reading via its native mechanisms (CLAUDE.md, .roomodes, MCP) | Claude Code interactive (skills/subagents), Roo Code (MCP modes) |
+
+In `delegation` mode the engine is a **context provider** (supplies task_id, output_path,
+handover_state) not a **context wrapper** (does not construct system prompts). This avoids
+collisions between the engine's prompt and the tool's own CLAUDE.md / .roomodes system prompt.
+
 ```python
 class RuntimeAdapter(ABC):
+    dispatch_mode: Literal["direct", "delegation"] = "direct"
+
     @abstractmethod
     def dispatch(self, task: Task, context: AgentContext,
-                 idempotency_key: str) -> TaskResult:
+                 operation_id: str) -> TaskResult:
         """
-        Dispatch a task to the underlying AI runtime.
-        idempotency_key: stable key for safe retries (workflow:task:run:attempt).
+        direct mode:    Engine-assembled full context sent to LLM API.
+        delegation mode: Lightweight task brief sent; tool handles persona + context.
         Returns TaskResult with: status, outputs, handover_state, error, tokens_used.
         """
         ...
@@ -159,9 +173,11 @@ Context bundle passed to each agent:
 AgentContext(
     constitution=<merged constitution string including artifact manifest>,
     handover_state=<dict from previous tasks>,
-    task_definition=<task YAML definition>
-    # Note: task_inputs are NOT pre-loaded — agents read what they need
-    # via their native tools using paths from the artifact manifest
+    task_definition=<task YAML definition>,
+    dispatch_mode=<"direct" | "delegation">
+    # direct mode:     engine injects full constitution + persona into prompt
+    # delegation mode: engine passes task_id + output_path only;
+    #                  tool reads constitution via its own tools (Read, MCP)
 )
 ```
 
@@ -227,6 +243,21 @@ engine:
 - Integration tests: full workflow run (A → B → C); interruption + resume; parallel dispatch.
 - Integration test: failed task halts downstream; on-failure hook fires.
 - Integration test: manifest writer post-task hook fires after every task.
+
+## Phase 4: Persistent Session Mode (deferred)
+
+When consecutive tasks share the same agent persona (e.g. design-l1 → review-l1-pe
+both use `pe`), spawning a new adapter process per task adds 15–30s overhead.
+
+A future `session` dispatch mode allows the adapter to keep a live process/session
+across consecutive same-agent tasks and hand off context between them:
+```yaml
+adapter:
+  session_mode: enabled          # Phase 4 only; default: disabled
+  session_reuse_same_agent: true # reuse session when next task uses same agent
+```
+This is a Phase 4 optimization — not a Phase 1 requirement. Phase 1 always spawns
+a fresh adapter dispatch per task.
 
 ## Rollback/Fallback
 

@@ -134,6 +134,21 @@ engine.on_post_task("*", manifest_writer.write_artifact_manifest)
 
 ---
 
+## Serena Compatibility
+
+The manifest table is already Serena-readable without any changes.
+When a Serena-powered agent (Roo Code or Claude Code with Serena MCP) needs to find
+an artifact, it can call:
+```python
+serena.search_for_pattern("requirements.md", relative_path="constitution.md")
+```
+...and receive the exact row from the manifest table, including path and status.
+
+For projects that want Serena to **index** artifact content for long-term memory,
+the manifest writer can be extended with a post-write hook that calls
+`serena.write_memory(f"artifact/{task_id}", summary)` after each task completes.
+This is an optional enhancement and is not required by the core framework.
+
 ## Manifest Ownership Contract
 
 The engine owns **exactly one section**: `## Workflow Artifacts`.

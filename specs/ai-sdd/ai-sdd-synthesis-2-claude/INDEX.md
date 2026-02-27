@@ -16,9 +16,18 @@
 | [GAPS-ANALYSIS.md](GAPS-ANALYSIS.md) | 10 gaps found + solutions + prioritized remediation |
 | [TASK-VISUALIZATION.md](TASK-VISUALIZATION.md) | Full task dependency graph + greenfield & brownfield project walkthroughs |
 | [CONTRACTS.md](CONTRACTS.md) | Canonical contracts appendix: tool names, task states, idempotency keys, CLI flags, transaction boundaries |
-| [REVIEW-FEEDBACK.md](REVIEW-FEEDBACK.md) | Codex review of this synthesis — 9 findings, all addressed |
+| [PRE-IMPLEMENTATION-GATE.md](PRE-IMPLEMENTATION-GATE.md) | Pre-implementation gate — 24 checks from 3 reviews. Must PASS before Phase 1 begins. |
+| [REVIEW-FEEDBACK.md](REVIEW-FEEDBACK.md) | Codex review — 9 findings, all addressed |
+| [GEMINI-REVIEW.md](GEMINI-REVIEW.md) | Gemini review — 6 findings, all addressed |
+| [deepseek-review.md](deepseek-review.md) | DeepSeek review — 10 action items, all addressed |
 
 ---
+
+## Phase 0: Pre-Implementation Gate
+
+| Task | Title | Size | Notes |
+|---|---|---|---|
+| [T000](tasks/T000-spec-gate.md) | Spec Gate — review sign-off | XS (1d) | **T2 HIL gate. Blocks all Phase 1 tasks.** |
 
 ## Tasks — Phase 1: Core Engine
 
@@ -89,9 +98,12 @@
 
 ## Execution Order
 
-### Phase 1 (Critical Path)
+### Phase 0 → Phase 1 (Critical Path)
 
 ```
+T000 (Spec Gate — T2 HIL, two sign-offs required)
+    │
+    ▼  [all Phase 1 tasks blocked until T000 = COMPLETED]
 T001 ──┐
        ├──► T002 ──► T004 ──► T005 ──► T006 (Phase 2)
 T003 ──┘              │
@@ -99,9 +111,10 @@ T003 ──┘              │
                       ├──► T011 (Observability)
                       ├──► T012 (Expression DSL)  ← required before loops run
                       ├──► T013 (Artifact Contract)
-                      └──► T016 (Context Mgmt)
+                      └──► T016 (Manifest Writer)
 ```
 
+T000 is the pre-implementation gate — verified against PRE-IMPLEMENTATION-GATE.md.
 T012 (Expression DSL) must complete before any workflow with loop conditions executes.
 T013 (Artifact Contract) should complete before T002 (workflow loader) is finalized.
 

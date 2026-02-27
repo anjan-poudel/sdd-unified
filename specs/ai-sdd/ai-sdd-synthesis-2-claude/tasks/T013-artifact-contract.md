@@ -51,6 +51,13 @@ Feature: Artifact contract validation
     When the workflow loads
     Then a validation error is raised: "unknown artifact type: unknown_type"
 
+  Scenario: Inline contract — no registry entry required
+    Given a task with an inline output contract
+    When the workflow loads
+    Then the inline schema is used for validation directly
+    And no lookup against the artifact schema registry occurs
+    And no deprecation warning is emitted
+
   Scenario: No contract declared (backward compat)
     Given a task with outputs declared as bare file paths (no contract)
     When the workflow loads
@@ -112,6 +119,32 @@ artifact_types:
 
 ---
 
+## Contract Declaration Options
+
+Three levels, chosen based on project maturity:
+
+```yaml
+# Level 1: Bare path — no validation (backward compat, deprecation warning)
+outputs:
+  - path: requirements.md
+
+# Level 2: Inline contract — no registry required (recommended for new/small projects)
+outputs:
+  - path: requirements.md
+    contract:
+      required_sections: [functional_requirements, acceptance_criteria]
+      file_format: markdown
+
+# Level 3: Registry reference — shared across teams, versioned (recommended for teams)
+outputs:
+  - path: requirements.md
+    contract: requirements_doc@1
+```
+
+Inline contracts are anonymous and local to the workflow — they are not shared or versioned.
+Use registry references (`type@version`) when the same contract is used across multiple
+workflows or teams, or when schema evolution needs to be tracked.
+
 ## Workflow YAML with Contracts
 
 ```yaml
@@ -121,7 +154,7 @@ tasks:
     inputs: []
     outputs:
       - path: requirements.md
-        contract: requirements_doc@1
+        contract: requirements_doc@1      # registry reference
 
   design-l1:
     agent: architect

@@ -112,6 +112,18 @@ Feature: Project config
     Then an error is raised immediately: "workflow file not found: ..."
     And no tasks run
 
+  Scenario: Schema version mismatch detected on startup
+    Given a state file with schema_version: "1" and current framework expects version "2"
+    When `ai-sdd run` is executed
+    Then an error is raised: "state file schema version mismatch (found: 1, expected: 2)"
+    And the user is prompted to run `ai-sdd migrate` before continuing
+
+  Scenario: Schema migration dry-run shows changes
+    Given a state file at schema version 1
+    When `ai-sdd migrate --dry-run` is executed
+    Then the migration plan is printed (fields added, fields renamed, fields removed)
+    And no files are written
+
 Feature: RuntimeAdapter
 
   Scenario: Mock adapter for tests
@@ -157,6 +169,13 @@ overlays:
     enabled: true
     queue_path: ".ai-sdd/state/hil/"
     poll_interval_seconds: 2
+    notify:                               # optional; prevents T2 deadlocks in unmonitored runs
+      on_created:
+        - type: webhook                   # Slack, Teams, PagerDuty, etc.
+          url: "${HIL_WEBHOOK_URL}"       # resolved from env at runtime
+      on_t2_gate:
+        - type: command                   # run an arbitrary script
+          command: "scripts/notify.sh ${HIL_ITEM_ID} ${TASK_ID}"
   policy_gate:
     enabled: false
     default_risk_tier: T1
@@ -168,17 +187,21 @@ overlays:
     enabled: false
 
 adapter:
-  type: claude_code   # claude_code | openai | roo_code | mock
+  type: claude_code          # claude_code | openai | roo_code | mock
+  dispatch_mode: delegation  # direct | delegation (see CONTRACTS.md §8)
   max_retries: 3
   retry_backoff_seconds: 5
+  timeout_seconds: 120       # per-dispatch timeout; escalates to FAILED on breach
+  max_context_tokens: 100000 # hard cap passed to ContextReducer / agent
 
 state:
   path: ".ai-sdd/state/workflow-state.json"
+  schema_version: "1"        # bumped on breaking schema changes; read by ai-sdd migrate
 
 observability:
   log_level: INFO
   log_file: ".ai-sdd/logs/ai-sdd.log"
-  secret_patterns: []               # additional regex patterns to redact
+  secret_patterns: []        # additional regex patterns (lives under security.*, not here)
 ```
 
 ---
@@ -217,6 +240,11 @@ ai-sdd complete-task --task <task-id> --output-path <path> --content-file <tmp>
                                      # 3. validates artifact contract
                                      # 4. atomically writes file + advances state + updates manifest
 
+# Schema migration (Phase 5 implementation; CLI interface defined in Phase 1)
+ai-sdd migrate --dry-run            # show what would change, no writes
+ai-sdd migrate                      # migrate state + config files to current schema version
+ai-sdd migrate --from 1 --to 2      # explicit version range
+
 # Project setup
 ai-sdd init --tool <name> --project <path>   # install tool integration files
                                              # <name>: claude_code | codex | roo_code
@@ -228,10 +256,25 @@ ai-sdd serve --mcp --port 3001
 
 ---
 
+## Performance Budgets (Default Timeouts)
+
+| Operation | Default | Config key |
+|---|---|---|
+| Adapter dispatch — direct mode | 120s | `adapter.timeout_seconds` |
+| Adapter dispatch — delegation mode | 300s | `adapter.timeout_seconds` |
+| `ai-sdd complete-task` full transaction | 30s | non-configurable |
+| State file atomic write | 10s | non-configurable |
+| HIL queue write | 5s | non-configurable |
+| Constitution resolver | 2s | non-configurable |
+
+Timeout breach → task transitions to `FAILED` with `error_type: timeout`.
+Memory: emits `observability.memory_warning` when process RSS exceeds `observability.memory_warning_mb` (default: 512).
+
 ## Implementation Notes
 
 - CLI built with `typer`.
 - Config discovered from `.ai-sdd/ai-sdd.yaml` relative to CWD.
+- Config merge precedence: CLI flags > project `ai-sdd.yaml` > `config/defaults.yaml`.
 - `ai-sdd init` copies files from `integration/<tool>/` to the target project.
 - `ai-sdd serve --mcp` starts `integration/mcp_server/server.py`.
 - `ai-sdd constitution` calls `ConstitutionResolver` directly and prints to stdout (used by MCP server's `get_constitution` tool).

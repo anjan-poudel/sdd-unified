@@ -14,7 +14,11 @@ Agents receive user-provided spec files, constitution files, and task outputs as
 
 This task specifies two security layers:
 1. **Input sanitization**: detect and quarantine prompt injection attempts before content reaches an agent.
-2. **Output sanitization + secret hygiene**: scrub sensitive data from outputs before writing to state files, logs, or observability.
+2. **Output sanitization + secret hygiene**: two tiers:
+   - **Task outputs** (blocking): secret detected → task transitions to `NEEDS_REWORK`
+     before any filesystem write. Agent must fix the leak. Never silently redacts task output.
+   - **Observability events / logs** (non-blocking): secrets replaced with `[REDACTED:TYPE]`
+     in log writes. Task continues; redaction is transparent.
 
 ---
 
@@ -49,11 +53,20 @@ Feature: Security baseline
     Then the string "sk-abc123" does not appear in any log output
     And the state file does not contain the API key
 
-  Scenario: Task output with leaked token is scrubbed
+  Scenario: Task output with leaked secret blocks completion
     Given a task output containing "Bearer eyJhbGci..."
-    When the output sanitizer runs
-    Then the JWT token is replaced with "[REDACTED:JWT_TOKEN]"
-    And the scrubbed output is written to state files and logs
+    When the output sanitizer runs as part of ai-sdd complete-task
+    Then the task transitions to NEEDS_REWORK (NOT written to filesystem)
+    And the rework feedback is: "Output rejected: contains credentials (JWT_TOKEN).
+        Remove or redact before marking task complete."
+    And a security.secret_detected event is emitted
+    And the agent reruns with the feedback injected into context
+
+  Scenario: Secret in log output is redacted (non-blocking)
+    Given a secret appears in an observability event (not task output)
+    When the observability emitter runs its sanitization pass
+    Then the secret is replaced with "[REDACTED:TYPE]" in the log
+    And the task continues normally (log redaction is non-blocking)
 
   Scenario: Known injection fixtures are blocked
     Given the security fixture corpus of 20 known injection patterns
@@ -160,6 +173,23 @@ Security events are emitted as first-class observability events:
 ```
 
 ---
+
+## Non-Functional Requirements (Security Performance)
+
+These targets must be verified by the security baseline test suite before Phase 2 ships:
+
+| Requirement | Target | Rationale |
+|---|---|---|
+| Injection detector false-positive rate | < 1% on clean spec corpus | High FP rate makes the tool unusable (constant HIL escalations on legitimate specs) |
+| Injection detector false-negative rate | < 5% on known-bad corpus | Undetected injections are a security failure |
+| Input sanitizer latency | < 50ms per artifact (p95) | Must not add perceptible delay to task dispatch |
+| Output sanitizer latency | < 100ms per artifact (p95) | Must not bottleneck `ai-sdd complete-task` transaction |
+| Injection fixture corpus coverage | ≥ 20 patterns across ≥ 5 categories | Categories: override, persona-hijack, exfiltration, jailbreak, token-injection |
+| Secret pattern coverage | All patterns in T011 event schema verified | Each pattern type must have a test fixture that triggers and a fixture that passes cleanly |
+
+The injection detector false-positive rate is measured against a reference corpus of
+50 legitimate spec files (requirements.md, design docs, constitution files) that must
+pass through without triggering quarantine.
 
 ## Files to Create
 

@@ -48,6 +48,19 @@ Feature: HIL overlay
     Then a HIL queue item is created with the loop history and current state
     And execution pauses awaiting human decision
 
+  Scenario: HIL notification fires on item creation
+    Given hil.notify.on_created has a webhook configured
+    When a HIL queue item is created (any trigger)
+    Then the webhook is called asynchronously with item_id, task_id, trigger
+    And the queue file is already written before the webhook fires
+    And a notification failure does not block the workflow or the HIL queue
+
+  Scenario: T2 gate triggers dedicated notification
+    Given hil.notify.on_t2_gate has a separate webhook configured
+    When a T2 evidence gate creates a HIL item
+    Then the on_t2_gate webhook fires in addition to on_created
+    And the notification includes the full gate report for immediate triage
+
   Scenario: HIL disabled for low-risk workflow
     Given a workflow with `overlays.hil.enabled: false`
     And a task with `requires_human: true`
@@ -107,11 +120,39 @@ ai-sdd hil reject <item-id> --reason "..." # reject and fail the task
 
 ---
 
+## HIL Notification Hooks
+
+In parallel workflows, a T2 gate or long-running HIL item can stall the entire DAG if
+nobody is watching the queue. The notification hook fires whenever a HIL item is created,
+allowing the engine to ping external systems without polling.
+
+```yaml
+# ai-sdd.yaml
+hil:
+  enabled: true
+  queue_path: ".ai-sdd/state/hil/"
+  poll_interval_seconds: 2
+  notify:
+    on_created:
+      - type: webhook
+        url: "https://hooks.slack.com/services/..."    # Slack incoming webhook
+      - type: command
+        command: "scripts/notify-hil.sh ${HIL_ITEM_ID} ${TASK_ID} ${TRIGGER}"
+    on_t2_gate:                                         # separate hook for T2 urgency
+      - type: webhook
+        url: "https://hooks.slack.com/services/..."
+```
+
+Notification is **fire-and-forget** — a notification failure never blocks the HIL queue
+itself. The queue file is written first; the notification is best-effort.
+
 ## Implementation Notes
 
 - HIL overlay registers on the `pre_task` hook of the engine.
 - On loop exhaustion, the overlay intercepts the `on_loop_exit` hook.
 - Queue write failure is a critical error — block progression, emit critical event.
+- Notification hooks fire after queue write succeeds (fire-and-forget, async).
+- `${HIL_ITEM_ID}`, `${TASK_ID}`, `${TRIGGER}` are substituted by the engine.
 - Polling interval for queue file change detection: 2s (configurable).
 - The engine does not proceed until the queue item is RESOLVED or REJECTED.
 

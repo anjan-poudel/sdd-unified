@@ -95,8 +95,23 @@
 - **Size: L+L+M+M+S = ~36d**
 
 ### M. Production Hardening (M11)
-- Reliability, extended observability, governance, schema migration
+- Reliability, extended observability, governance, schema migration (`ai-sdd migrate`)
 - **Size: ~37d**
+
+### N. Multi-Project Support (Post-M11 — not yet scheduled)
+**Deliberately deferred.** The framework currently assumes single-project deployment.
+Multi-project scenarios are on the roadmap but require design decisions not yet resolved:
+
+| Question | Options |
+|---|---|
+| Agent registry scope | Per-repo, per-org, or configurable? |
+| Constitution inheritance | Cross-repo constitution hierarchy? |
+| Workflow sharing | Shared workflow templates across repos? |
+| State isolation | Separate state per project, or shared orchestrator? |
+
+When multi-project support is prioritised, the design should start from these questions.
+The MCP server (`ai-sdd serve --mcp`) already provides a network-accessible interface
+that could serve as a cross-project orchestration surface with minimal new work.
 
 ---
 

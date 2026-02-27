@@ -249,7 +249,25 @@ Every event now carries `run_id` and `task_run_id` for cross-event correlation:
 
 ---
 
-## 3. Phase 1: Core Engine (Enhanced)
+## 3. Phase 0: Pre-Implementation Gate
+
+**T000 — Spec Gate** must reach `COMPLETED` before any Phase 1 task starts.
+
+It is a T2-tier task: the `sdd-reviewer` agent verifies all checklist items against
+the spec, then the engine fires a HIL gate requiring **two human sign-offs**
+(tech lead + security reviewer). Only then do T001–T016 become `PENDING`.
+
+This is the framework gating its own implementation using its own overlay system.
+
+```
+T000 (Spec Gate — T2 HIL)
+    │
+    └──► T001, T002, T003 ... (all Phase 1 tasks become PENDING only after T000 = COMPLETED)
+```
+
+---
+
+## 4. Phase 1: Core Engine (Enhanced)
 
 **New additions vs. synthesized-claude:**
 

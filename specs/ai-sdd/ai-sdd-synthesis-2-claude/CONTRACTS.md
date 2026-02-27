@@ -138,7 +138,41 @@ If any step fails, no state mutation occurs. The task remains in its prior state
 
 ---
 
-## 8. Config Namespace Summary
+## 8. Adapter Dispatch Modes
+
+| Mode | Who assembles the prompt | Adapters |
+|---|---|---|
+| `direct` | Engine builds full system prompt (persona + constitution + task) → sends to LLM API | `OpenAIAdapter`, `ClaudeCodeAdapter` (headless/CI) |
+| `delegation` | Engine sends lightweight task brief only → tool manages its own context via CLAUDE.md / .roomodes / MCP | Claude Code (interactive skills/subagents), Roo Code (MCP modes) |
+
+`dispatch_mode` is declared per adapter. Mixing modes within one workflow is allowed —
+different tasks can use different adapters.
+
+---
+
+## 9. Schema Versioning
+
+Every schema file carries a `schema_version` field from day one:
+
+| File | Field | Phase 1 value |
+|---|---|---|
+| `workflow-state.json` | `schema_version` | `"1"` |
+| `ai-sdd.yaml` | `version` | `"1"` |
+| `workflow.yaml` | `version` | `"1"` |
+| `agent.yaml` | `version` | `"1"` |
+| `artifacts/schema.yaml` | `version` | `"1"` |
+
+**Version mismatch at startup** → hard error: `"schema version mismatch; run ai-sdd migrate"`.
+**Migration CLI** (interface defined Phase 1; implementation Phase 5):
+```
+ai-sdd migrate --dry-run        → print plan, no writes
+ai-sdd migrate                  → migrate to current version
+ai-sdd migrate --from 1 --to 2  → explicit range
+```
+
+---
+
+## 10. Config Namespace Summary
 
 | Setting | Location | Notes |
 |---|---|---|

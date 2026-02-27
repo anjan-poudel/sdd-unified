@@ -62,6 +62,24 @@ Feature: Confidence scoring
     Then the loop exits
     And if HIL is enabled, escalation occurs
 
+  Scenario: llm_judge requires a separate evaluator agent
+    Given a task using llm_judge metric without evaluator_agent configured
+    When the workflow loads
+    Then a validation error is raised: "llm_judge metric requires evaluator_agent"
+    And no tasks execute
+
+  Scenario: llm_judge evaluator must differ from task agent
+    Given a task assigned to agent "dev" using llm_judge with evaluator_agent "dev"
+    When the workflow loads
+    Then a validation error is raised: "llm_judge evaluator_agent must differ from task agent"
+
+  Scenario: llm_judge with separate evaluator scores fairly
+    Given a task assigned to agent "dev" with llm_judge evaluator_agent "reviewer"
+    When confidence scoring runs
+    Then the reviewer agent is called with a structured judge prompt
+    And the dev agent's session is not used for scoring
+    And the returned score is recorded in the gate report
+
   Scenario: Confidence score does not bypass policy gate
     Given a task with confidence=0.99 (above threshold)
     And policy_gate.risk_tier=T2
@@ -71,6 +89,36 @@ Feature: Confidence scoring
 ```
 
 ---
+
+## LLM-as-Judge Independence Policy
+
+When `llm_judge` is used as an evaluation metric, the judging model **must not be the
+same session** as the agent being evaluated. Allowing an agent to score its own output
+creates a bias loop — the agent will consistently report high confidence on its own work.
+
+```yaml
+# Workflow YAML — configure a separate evaluator
+tasks:
+  implement:
+    overlays:
+      confidence_loop:
+        enabled: true
+        metrics:
+          - type: llm_judge
+            weight: 0.5
+            evaluator_agent: reviewer   # REQUIRED when type=llm_judge
+                                        # must differ from task's assigned agent
+```
+
+Rules:
+- `evaluator_agent` is **required** when metric type is `llm_judge`. Omitting it is a
+  load-time validation error: "llm_judge metric requires evaluator_agent to be set."
+- `evaluator_agent` must not equal the task's assigned `agent` field.
+  Violation: load-time error: "llm_judge evaluator_agent must differ from task agent."
+- The evaluator agent is invoked with a structured judge prompt: "Score the following
+  output against these criteria on a 0.0–1.0 scale. Return only a JSON score object."
+- If no separate reviewer/evaluator agent is available, use `type: checklist_completion`
+  or `type: test_coverage` instead — these are objective metrics requiring no judge.
 
 ## EvalMetric Types
 
